@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, MapPin, Users, Copy, RefreshCw, Sparkles, Zap, Crown, Rocket } from 'lucide-react';
+import { CalendarDays, MapPin, Users, Copy, RefreshCw, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import VacationForm from '@/components/VacationForm';
@@ -47,7 +47,7 @@ const Index = () => {
         description: t('toast.generated.desc'),
         variant: "default"
       });
-    }, 2500);
+    }, 2000);
   };
 
   const generateVacationMessage = (data: any, style: string, lang: string) => {
@@ -76,15 +76,15 @@ Best regards,`
       },
 
       'millennial-pro': {
-        'fr': (data) => `Salut l'équipe! 👋
+        'fr': (data) => `Salut l'équipe ! 👋
 
-Je pars me ressourcer ${destination ? `en ${destination}` : ''} du ${startDate} au ${endDate}! ${activity ? `Au programme: ${activity.toLowerCase()}` : ''} 🌴
+Je pars me ressourcer ${destination ? `en ${destination}` : ''} du ${startDate} au ${endDate} ! ${activity ? `Au programme : ${activity.toLowerCase()}` : ''} 🌴
 
-Je serai complètement déconnecté(e) pendant cette période (promis, je ne regarderai pas Slack à 2h du matin 😅).
+Je serai complètement déconnecté(e) pendant cette période (promis, je ne regarderai pas Slack à 2h du matin 😅). 
 
 Pour tout ce qui ne peut pas attendre mon retour, ${backupContact || '[nom du contact]'} pourra vous aider.
 
-Hâte de revenir avec plein d'énergie pour attaquer la suite! 🚀
+Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
 
 À bientôt,`,
         'en': (data) => `Hey team! 👋
@@ -101,15 +101,15 @@ See you soon,`
       },
 
       'personal': {
-        'fr': (data) => `Hey! 😊
+        'fr': (data) => `Hey ! 😊
 
-Je m'absente quelques jours du ${startDate} au ${endDate} pour ${destination ? `profiter de ${destination}` : 'des vacances bien méritées'}!
+Je m'absente quelques jours du ${startDate} au ${endDate} pour ${destination ? `profiter de ${destination}` : 'des vacances bien méritées'} !
 
-Je ne serai pas disponible pendant cette période, mais promis je reviens avec plein d'histoires à raconter ${activity ? `et peut-être quelques photos de ${activity.toLowerCase()}` : ''}! 📸
+Je ne serai pas disponible pendant cette période, mais promis je reviens avec plein d'histoires à raconter ${activity ? `et peut-être quelques photos de ${activity.toLowerCase()}` : ''} ! 📸
 
 En cas d'urgence, vous pouvez contacter ${backupContact || '[personne de contact]'}.
 
-À très vite!`,
+À très vite !`,
         'en': (data) => `Hey! 😊
 
 I'm taking a few days off from ${startDate} to ${endDate} to ${destination ? `enjoy ${destination}` : 'have some well-deserved vacation'}!
@@ -124,13 +124,13 @@ See you very soon!`
       'creative': {
         'fr': (data) => `🌟 BREAKING NEWS 🌟
 
-Votre humble collègue s'évapore temporairement de l'écosystème digital du ${startDate} au ${endDate}!
+Votre humble collègue s'évapore temporairement de l'écosystème digital du ${startDate} au ${endDate} !
 
-📍 Localisation: ${destination || 'Quelque part où le wifi est optionnel'}
-🎯 Mission: ${activity || 'Recharger les batteries créatives'}
-📧 Statut emails: Mode hibernation activé
+📍 Localisation : ${destination || 'Quelque part où le wifi est optionnel'}
+🎯 Mission : ${activity || 'Recharger les batteries créatives'}
+📧 Statut emails : Mode hibernation activé
 
-En cas de situation critique nécessitant mon expertise légendaire, ${backupContact || '[votre sauveur désigné]'} prendra le relais avec brio!
+En cas de situation critique nécessitant mon expertise légendaire, ${backupContact || '[votre sauveur désigné]'} prendra le relais avec brio !
 
 Retour prévu avec 200% d'inspiration en plus ✨`,
         'en': (data) => `🌟 BREAKING NEWS 🌟
@@ -147,9 +147,9 @@ Expected return with 200% more inspiration ✨`
       },
 
       'minimalist': {
-        'fr': (data) => `Absent(e): ${startDate} - ${endDate}
-Lieu: ${destination || 'En congés'}
-Contact urgent: ${backupContact || '[contact]'}
+        'fr': (data) => `Absent(e) : ${startDate} - ${endDate}
+Lieu : ${destination || 'En congés'}
+Contact urgent : ${backupContact || '[contact]'}
 
 De retour bientôt.`,
         'en': (data) => `Away: ${startDate} - ${endDate}
@@ -162,13 +162,13 @@ Back soon.`
       'gen-z': {
         'fr': (data) => `no cap je pars en vacances bestie 🏖️
 
-dates: ${startDate} → ${endDate}
-localisation: ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
+dates : ${startDate} → ${endDate}
+localisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
 je serai en mode touch grass donc rip emails 💀
 si c'est vraiment important contactez ${backupContact || '[la personne responsable]'}
 
-see you on the flip side! ✨`,
+see you on the flip side ! ✨`,
         'en': (data) => `no cap going on vacation bestie 🏖️
 
 dates: ${startDate} → ${endDate}
@@ -202,15 +202,15 @@ Thank you for your understanding and please accept, Sir/Madam, the expression of
       },
 
       'friendly': {
-        'fr': (data) => `Coucou! 🌞
+        'fr': (data) => `Coucou ! 🌞
 
-Je pars en vacances du ${startDate} au ${endDate} ${destination ? `direction ${destination}` : ''}!
+Je pars en vacances du ${startDate} au ${endDate} ${destination ? `direction ${destination}` : ''} !
 
 ${activity ? `J'ai hâte de ${activity.toLowerCase()}` : 'J\'ai vraiment hâte de déconnecter'} et de prendre du temps pour moi. Je ne consulterai pas mes mails pendant cette période.
 
-Si c'est urgent, n'hésitez pas à écrire à ${backupContact || '[mon collègue]'} qui pourra vous aider!
+Si c'est urgent, n'hésitez pas à écrire à ${backupContact || '[mon collègue]'} qui pourra vous aider !
 
-Merci et à bientôt! 💙`,
+Merci et à bientôt ! 💙`,
         'en': (data) => `Hi there! 🌞
 
 I'm going on vacation from ${startDate} to ${endDate} ${destination ? `heading to ${destination}` : ''}!
@@ -228,80 +228,57 @@ Thanks and see you soon! 💙`
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50/30 to-orange-50 p-4 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full animate-pulse"></div>
-      <div className="absolute top-1/3 right-20 w-24 h-24 bg-gradient-to-br from-orange-400/10 to-pink-400/10 rounded-full animate-pulse delay-1000"></div>
-      <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-green-400/10 to-blue-400/10 rounded-full animate-pulse delay-500"></div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 p-4">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 relative">
-          <div className="flex justify-between items-start mb-6">
-            <div className="hidden lg:block w-32"></div>
-            <div className="inline-flex items-center gap-4 group">
-              <div className="p-3 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
-                <span className="text-5xl animate-bounce">🏖️</span>
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 bg-clip-text text-transparent">
+        <div className="text-center mb-8">
+          <div className="flex justify-between items-start mb-4">
+            <div></div>
+            <div className="inline-flex items-center gap-2">
+              <span className="text-4xl">🏖️</span>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">
                 {t('app.title')}
               </h1>
             </div>
-            <div className="hidden lg:block">
-              <LanguageSelector />
-            </div>
-            <div className="lg:hidden absolute top-0 right-0">
-              <LanguageSelector />
-            </div>
+            <LanguageSelector />
           </div>
-          
-          <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto font-medium leading-relaxed mb-8">
-            {t('app.subtitle')} ✨
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            {t('app.subtitle')}
           </p>
-          
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
-            <Badge variant="secondary" className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border-green-200 px-4 py-2 text-sm font-bold shadow-lg hover:shadow-xl transition-shadow duration-200">
-              <Zap className="mr-2 h-4 w-4" />
+          <div className="flex items-center justify-center gap-4 mt-4">
+            <Badge variant="secondary" className="bg-green-100 text-green-700">
               {t('app.badge.free')}
             </Badge>
-            <Badge variant="secondary" className="bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800 border-blue-200 px-4 py-2 text-sm font-bold shadow-lg hover:shadow-xl transition-shadow duration-200">
-              <Rocket className="mr-2 h-4 w-4" />
+            <Badge variant="secondary" className="bg-blue-100 text-blue-700">
               {t('app.badge.instant')}
             </Badge>
-            <Badge variant="secondary" className="bg-gradient-to-r from-orange-100 to-red-100 text-orange-800 border-orange-200 px-4 py-2 text-sm font-bold shadow-lg hover:shadow-xl transition-shadow duration-200">
-              <Crown className="mr-2 h-4 w-4" />
+            <Badge variant="secondary" className="bg-orange-100 text-orange-700">
               {t('app.badge.styles')}
             </Badge>
-          </div>
-
-          <div className="inline-flex items-center gap-2 text-sm text-gray-500 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 shadow-md">
-            <Sparkles className="h-4 w-4 text-yellow-500" />
-            <span className="font-medium">Alimenté par l'IA • Totalement gratuit • Sans inscription</span>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Column - Form */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1">
             <VacationForm formData={formData} setFormData={setFormData} />
             
-            <div className="sticky top-4">
+            <div className="mt-6">
               <Button 
                 onClick={handleGenerate} 
                 disabled={isGenerating}
-                className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white py-8 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 relative overflow-hidden group"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-semibold"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 group-hover:translate-x-full transition-transform duration-700"></div>
                 {isGenerating ? (
                   <>
-                    <RefreshCw className="mr-3 h-6 w-6 animate-spin" />
-                    <span>{t('generate.button.loading')}</span>
+                    <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                    {t('generate.button.loading')}
                   </>
                 ) : (
                   <>
-                    <Sparkles className="mr-3 h-6 w-6 animate-pulse" />
-                    <span>🚀 {t('generate.button')}</span>
+                    <Sparkles className="mr-2 h-5 w-5" />
+                    {t('generate.button')}
                   </>
                 )}
               </Button>
@@ -327,28 +304,14 @@ Thanks and see you soon! 💙`
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-16 py-12 border-t-2 border-gradient-to-r from-transparent via-gray-200 to-transparent relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
-          <div className="relative z-10">
-            <p className="text-lg text-gray-600 mb-4 font-semibold flex items-center justify-center gap-2">
-              <span className="text-red-500 text-xl animate-pulse">❤️</span>
-              {t('footer.created')}
-              <span className="text-red-500 text-xl animate-pulse">❤️</span>
-            </p>
-            <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-500 font-medium">
-              <span className="flex items-center gap-2 bg-white/60 px-3 py-1 rounded-full shadow-sm">
-                <span className="text-green-500">🔒</span>
-                {t('footer.secure')}
-              </span>
-              <span className="flex items-center gap-2 bg-white/60 px-3 py-1 rounded-full shadow-sm">
-                <span className="text-yellow-500">⚡</span>
-                {t('footer.instant')}
-              </span>
-              <span className="flex items-center gap-2 bg-white/60 px-3 py-1 rounded-full shadow-sm">
-                <span className="text-blue-500">🌍</span>
-                {t('footer.compatible')}
-              </span>
-            </div>
+        <div className="text-center mt-12 py-8 border-t border-gray-200">
+          <p className="text-gray-500 mb-2">
+            {t('footer.created')}
+          </p>
+          <div className="flex justify-center gap-6 text-sm text-gray-400">
+            <span>{t('footer.secure')}</span>
+            <span>{t('footer.instant')}</span>
+            <span>{t('footer.compatible')}</span>
           </div>
         </div>
       </div>
