@@ -266,15 +266,24 @@ Thanks and see you soon! 💙`
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Form Column */}
-          <div className="space-y-4">
-            <VacationForm formData={formData} setFormData={setFormData} />
+        {/* Main Content - Structured Layout */}
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Form Column - Takes more space */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bg-white rounded-xl shadow-sm border p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span className="text-blue-600 font-bold">1</span>
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">{t('form.title')}</h2>
+              </div>
+              <VacationForm formData={formData} setFormData={setFormData} />
+            </div>
+            
             <Button 
               onClick={handleGenerate} 
               disabled={isGenerating}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-6 text-lg font-bold shadow-lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 text-lg font-semibold shadow-lg rounded-xl"
             >
               {isGenerating ? (
                 <>
@@ -290,21 +299,37 @@ Thanks and see you soon! 💙`
             </Button>
           </div>
 
-          {/* Style Column */}
-          <div>
-            <StyleSelector 
-              selectedStyle={selectedStyle} 
-              onStyleSelect={setSelectedStyle} 
-            />
+          {/* Style Column - Compact width */}
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-xl shadow-sm border p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <span className="text-purple-600 font-bold">2</span>
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">{t('styles.title')}</h2>
+              </div>
+              <StyleSelector 
+                selectedStyle={selectedStyle} 
+                onStyleSelect={setSelectedStyle} 
+              />
+            </div>
           </div>
 
-          {/* Generated Message Column */}
-          <div>
-            <GeneratedMessage 
-              message={generatedMessage}
-              isGenerating={isGenerating}
-              onRegenerate={handleGenerate}
-            />
+          {/* Generated Message Column - Takes remaining space */}
+          <div className="lg:col-span-4">
+            <div className="bg-white rounded-xl shadow-sm border p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                  <span className="text-green-600 font-bold">3</span>
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">{t('message.title')}</h2>
+              </div>
+              <GeneratedMessage 
+                message={generatedMessage}
+                isGenerating={isGenerating}
+                onRegenerate={handleGenerate}
+              />
+            </div>
           </div>
         </div>
 
