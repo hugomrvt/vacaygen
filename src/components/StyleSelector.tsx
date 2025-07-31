@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Zap, Crown, Heart, Sparkles2, Coffee, Briefcase, Palette, Users } from 'lucide-react';
+import { Zap, Crown, Heart, Sparkles, Coffee, Briefcase, Palette, Users } from 'lucide-react';
 
 interface Style {
   id: string;
@@ -88,7 +88,7 @@ const StyleSelector = ({ selectedStyle, onStyleSelect }: StyleSelectorProps) => 
       emoji: '✨',
       popularity: 'hot',
       gradient: 'from-pink-500 to-rose-600',
-      icon: <Sparkles2 className="h-4 w-4" />
+      icon: <Sparkles className="h-4 w-4" />
     },
     {
       id: 'formal',
@@ -201,7 +201,7 @@ const StyleSelector = ({ selectedStyle, onStyleSelect }: StyleSelectorProps) => 
           <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full -translate-y-8 translate-x-8"></div>
           <div className="flex items-center gap-3 relative z-10">
             <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg text-white">
-              <Sparkles2 className="h-4 w-4" />
+              <Sparkles className="h-4 w-4" />
             </div>
             <p className="text-sm font-semibold text-gray-700">
               {t('styles.tip')} ✨
