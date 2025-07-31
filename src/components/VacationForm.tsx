@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { CalendarDays, MapPin, Activity, Users, UserCheck } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface VacationFormProps {
   formData: {
@@ -20,6 +21,8 @@ interface VacationFormProps {
 }
 
 const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
+  const { t } = useTranslation();
+  
   const handleInputChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
   };
@@ -36,7 +39,7 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-gray-800">
           <span className="text-2xl">📝</span>
-          Votre Message
+          {t('form.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -44,11 +47,11 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
         <div className="space-y-4">
           <Label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
             <CalendarDays className="h-4 w-4 text-blue-600" />
-            Dates de vacances
+            {t('form.dates')}
           </Label>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="start-date" className="text-xs text-gray-600">Du</Label>
+              <Label htmlFor="start-date" className="text-xs text-gray-600">{t('form.dates.from')}</Label>
               <Input
                 id="start-date"
                 type="date"
@@ -58,7 +61,7 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="end-date" className="text-xs text-gray-600">Au</Label>
+              <Label htmlFor="end-date" className="text-xs text-gray-600">{t('form.dates.to')}</Label>
               <Input
                 id="end-date"
                 type="date"
@@ -74,11 +77,11 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
         <div className="space-y-2">
           <Label htmlFor="destination" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
             <MapPin className="h-4 w-4 text-orange-500" />
-            Destination
+            {t('form.destination')}
           </Label>
           <Input
             id="destination"
-            placeholder="ex: Thaïlande, Bretagne, chez mes parents..."
+            placeholder={t('form.destination.placeholder')}
             value={formData.destination}
             onChange={(e) => handleInputChange('destination', e.target.value)}
             className="border-gray-200 focus:border-blue-500"
@@ -89,11 +92,11 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
         <div className="space-y-2">
           <Label htmlFor="activity" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
             <Activity className="h-4 w-4 text-green-500" />
-            Activité principale (optionnel)
+            {t('form.activity')}
           </Label>
           <Input
             id="activity"
-            placeholder="ex: plage et farniente, randonnée, visite familiale..."
+            placeholder={t('form.activity.placeholder')}
             value={formData.activity}
             onChange={(e) => handleInputChange('activity', e.target.value)}
             className="border-gray-200 focus:border-blue-500"
@@ -104,14 +107,14 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
         <div className="space-y-3">
           <Label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
             <Users className="h-4 w-4 text-purple-500" />
-            Destinataires
+            {t('form.recipients')}
           </Label>
           <div className="space-y-2">
             {[
-              { id: 'team', label: 'Mon équipe', value: 'team' },
-              { id: 'clients', label: 'Mes clients', value: 'clients' },
-              { id: 'management', label: 'Ma hiérarchie', value: 'management' },
-              { id: 'partners', label: 'Partenaires externes', value: 'partners' }
+              { id: 'team', label: t('form.recipients.team'), value: 'team' },
+              { id: 'clients', label: t('form.recipients.clients'), value: 'clients' },
+              { id: 'management', label: t('form.recipients.management'), value: 'management' },
+              { id: 'partners', label: t('form.recipients.partners'), value: 'partners' }
             ].map((recipient) => (
               <div key={recipient.id} className="flex items-center space-x-2">
                 <Checkbox
@@ -136,11 +139,11 @@ const VacationForm = ({ formData, setFormData }: VacationFormProps) => {
         <div className="space-y-2">
           <Label htmlFor="backup" className="flex items-center gap-2 text-sm font-semibold text-gray-700">
             <UserCheck className="h-4 w-4 text-indigo-500" />
-            Contact de substitution (optionnel)
+            {t('form.backup')}
           </Label>
           <Input
             id="backup"
-            placeholder="ex: Marie Dupont, Service Client..."
+            placeholder={t('form.backup.placeholder')}
             value={formData.backupContact}
             onChange={(e) => handleInputChange('backupContact', e.target.value)}
             className="border-gray-200 focus:border-blue-500"
