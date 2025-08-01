@@ -8,6 +8,7 @@ import StyleCard from './StyleCard';
 import GeneratedMessage from './GeneratedMessage';
 import FreeChatInput from './FreeChatInput';
 import BotResponseHandler from './BotResponseHandler';
+import ContextualSuggestions from './ContextualSuggestions';
 
 interface ConversationalFlowProps {
   onMessageGenerated?: (message: string) => void;
@@ -126,14 +127,12 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
   ];
 
   useEffect(() => {
-    // Auto-scroll to bottom
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [conversation, isTyping, currentStep]);
 
   useEffect(() => {
-    // Start with welcome message
     if (conversation.length === 0) {
       addBotMessage(steps[0].question, 800);
       setTimeout(() => setCurrentStep(1), 2000);
@@ -158,18 +157,37 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
     }
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    const currentStepData = steps[currentStep - 1];
+    
+    if (currentStepData && currentStep > 1 && currentStep <= steps.length) {
+      if (shouldTreatAsSuggestionAnswer(suggestion, currentStepData.id)) {
+        handleAnswer(currentStepData.id, suggestion, suggestion);
+        return;
+      }
+    }
+    
+    handleFreeMessage(suggestion);
+  };
+
+  const shouldTreatAsSuggestionAnswer = (suggestion: string, stepId: string): boolean => {
+    const directAnswerSteps = ['destination', 'activity', 'backup'];
+    if (directAnswerSteps.includes(stepId)) {
+      return !suggestion.includes('?') && !suggestion.toLowerCase().includes('comment') && 
+             !suggestion.toLowerCase().includes('aide') && !suggestion.toLowerCase().includes('peux-tu');
+    }
+    return false;
+  };
+
   const handleFreeMessage = (message: string) => {
-    // Ajouter le message de l'utilisateur
     addUserMessage(message, true);
     
-    // Générer une réponse du bot
     const botResponse = BotResponseHandler({
       userMessage: message,
       currentStep,
       formData
     });
     
-    // Ajouter la réponse du bot après un délai
     setTimeout(() => {
       addBotMessage(botResponse, 1200, true);
     }, 600);
@@ -178,10 +196,8 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
   const handleAnswer = (field: string, value: any, displayValue?: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
-    // Add user message
     addUserMessage(displayValue || value);
     
-    // Move to next step with more realistic timing
     const nextStepIndex = currentStep + 1;
     if (nextStepIndex < steps.length) {
       setTimeout(() => {
@@ -189,7 +205,6 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
         setCurrentStep(nextStepIndex + 1);
       }, 800);
     } else {
-      // All steps completed, generate message
       setTimeout(() => {
         addBotMessage("Parfait ! Je génère ton message personnalisé... ✨", 1000);
         setTimeout(() => generateMessage(), 1500);
@@ -275,7 +290,16 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
         {isTyping && <ChatBubble type="bot" message="" isTyping />}
       </div>
 
-      {/* Free Chat Input - Always visible except when generating/complete */}
+      {/* Contextual Suggestions */}
+      {!generatedMessage && !isGenerating && (
+        <ContextualSuggestions
+          currentStep={currentStepData?.id || 'general'}
+          onSuggestionClick={handleSuggestionClick}
+          formData={formData}
+        />
+      )}
+
+      {/* Free Chat Input */}
       {!generatedMessage && (
         <div className="mb-6">
           <FreeChatInput 
