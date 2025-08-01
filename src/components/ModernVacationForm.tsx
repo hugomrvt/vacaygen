@@ -1,8 +1,13 @@
-
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calendar, MapPin, Activity, User, Users, Handshake, Briefcase, Globe, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar as CalendarIcon, MapPin, Activity, User, Users, Handshake, Briefcase, Globe, AlertCircle } from 'lucide-react';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
 import AnimatedPlaceholder from './AnimatedPlaceholder';
@@ -38,6 +43,16 @@ const ModernVacationForm = ({
     });
   };
 
+  const handleDateChange = (field: 'startDate' | 'endDate', date: Date | undefined) => {
+    if (date) {
+      const formattedDate = format(date, 'yyyy-MM-dd');
+      setFormData({
+        ...formData,
+        [field]: formattedDate
+      });
+    }
+  };
+
   const handleRecipientsToggle = (recipient: string) => {
     const updatedRecipients = formData.recipients.includes(recipient) ? formData.recipients.filter(r => r !== recipient) : [...formData.recipients, recipient];
     setFormData({
@@ -58,6 +73,14 @@ const ModernVacationForm = ({
     } else {
       return "End date cannot be earlier than start date";
     }
+  };
+
+  const formatDateForDisplay = (dateString: string) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    return format(date, 'PPP', { 
+      locale: language === 'fr' ? fr : undefined 
+    });
   };
 
   const recipientOptions = [{
@@ -89,39 +112,81 @@ const ModernVacationForm = ({
       {/* Étape 1: Dates et Destination */}
       {currentStep >= 1 && <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
           <div className="flex items-center gap-2 mb-6">
-            <Calendar className="h-5 w-5 text-primary" />
+            <CalendarIcon className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">Basic information</h3>
           </div>
           
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="start-date" className="text-sm font-medium text-muted-foreground mb-2 block">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">
                   {t('form.dates.from')}
                 </Label>
-                <Input 
-                  id="start-date" 
-                  type="date" 
-                  value={formData.startDate} 
-                  onChange={e => handleInputChange('startDate', e.target.value)} 
-                  className="bg-input border-border focus:border-primary focus:ring-primary/20 h-12 text-base touch-manipulation"
-                  aria-describedby="start-date-desc"
-                  autoComplete="off"
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-12",
+                        !formData.startDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {formData.startDate ? formatDateForDisplay(formData.startDate) : 
+                        <span>{t('form.dates.selectStart') || 'Sélectionner une date'}</span>
+                      }
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={formData.startDate ? new Date(formData.startDate) : undefined}
+                      onSelect={(date) => handleDateChange('startDate', date)}
+                      initialFocus
+                      className="pointer-events-auto"
+                      locale={language === 'fr' ? fr : undefined}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
-              <div>
-                <Label htmlFor="end-date" className="text-sm font-medium text-muted-foreground mb-2 block">
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground">
                   {t('form.dates.to')}
                 </Label>
-                <Input 
-                  id="end-date" 
-                  type="date" 
-                  value={formData.endDate} 
-                  onChange={e => handleInputChange('endDate', e.target.value)} 
-                  className="bg-input border-border focus:border-primary focus:ring-primary/20 h-12 text-base touch-manipulation"
-                  aria-describedby="end-date-desc"
-                  autoComplete="off"
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-12",
+                        !formData.endDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {formData.endDate ? formatDateForDisplay(formData.endDate) : 
+                        <span>{t('form.dates.selectEnd') || 'Sélectionner une date'}</span>
+                      }
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={formData.endDate ? new Date(formData.endDate) : undefined}
+                      onSelect={(date) => handleDateChange('endDate', date)}
+                      initialFocus
+                      className="pointer-events-auto"
+                      locale={language === 'fr' ? fr : undefined}
+                      disabled={(date) => {
+                        // Désactiver les dates antérieures à la date de début si elle est sélectionnée
+                        if (formData.startDate) {
+                          return date < new Date(formData.startDate);
+                        }
+                        return false;
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
 
