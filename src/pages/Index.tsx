@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -326,14 +325,6 @@ Thanks and see you soon! 💙`
                 <p>
                   {t('app.subtitle')}
                 </p>
-                {totalGeneratedMessages > 0 && (
-                  <div className="flex items-center justify-center gap-2 mt-3">
-                    <Trophy className="w-4 h-4 text-primary" />
-                    <span className="text-sm text-primary font-medium">
-                      {totalGeneratedMessages} message{totalGeneratedMessages > 1 ? 's' : ''} généré{totalGeneratedMessages > 1 ? 's' : ''}
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -418,17 +409,27 @@ Thanks and see you soon! 💙`
 
         {/* Footer */}
         <div className="text-center mt-8 sm:mt-12 py-6 border-t border-border">
-          <p className="text-sm text-muted-foreground">
-            {t('footer.created')}{' '}
-            <a 
-              href="https://www.linkedin.com/in/hugomrvt/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline font-medium"
-            >
-              Hugo Mourlevat
-            </a>
-          </p>
+          <div className="space-y-2">
+            {totalGeneratedMessages > 0 && (
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Trophy className="w-4 h-4 text-primary" />
+                <span className="text-sm text-primary font-medium">
+                  {totalGeneratedMessages} message{totalGeneratedMessages > 1 ? 's' : ''} généré{totalGeneratedMessages > 1 ? 's' : ''}
+                </span>
+              </div>
+            )}
+            <p className="text-sm text-muted-foreground">
+              {t('footer.created')}{' '}
+              <a 
+                href="https://www.linkedin.com/in/hugomrvt/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:underline font-medium"
+              >
+                Hugo Mourlevat
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>;
