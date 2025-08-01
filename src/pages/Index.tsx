@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { RefreshCw, Sparkles, Zap, Waves } from 'lucide-react';
-import { CheckCircle, Refresh } from '@siimple/icons';
+import { CheckCircle } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import StepIndicator from '@/components/StepIndicator';
@@ -306,7 +306,7 @@ Emergency contact: ${backupContact || '[name]'}`
                 Gratuit
               </Badge>
               <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                <Refresh className="w-3 h-3 mr-1" />
+                <RefreshCw className="w-3 h-3 mr-1" />
                 Instantané
               </Badge>
             </div>
@@ -376,7 +376,7 @@ Emergency contact: ${backupContact || '[name]'}`
                 >
                   {isGenerating ? (
                     <>
-                      <Refresh className="mr-2 h-5 w-5 animate-spin" />
+                      <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
                       ✨ Création magique en cours...
                     </>
                   ) : (
