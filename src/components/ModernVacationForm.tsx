@@ -14,6 +14,8 @@ import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import TogglePills from './TogglePills';
+
 interface VacationFormData {
   startDate: string;
   endDate: string;
@@ -22,11 +24,13 @@ interface VacationFormData {
   recipients: string[];
   backupContact: string;
 }
+
 interface ModernVacationFormProps {
   formData: VacationFormData;
   setFormData: React.Dispatch<React.SetStateAction<VacationFormData>>;
   currentStep: number;
 }
+
 const activityIcons: {
   [key: string]: React.ComponentType<any>;
 } = {
@@ -38,38 +42,60 @@ const activityIcons: {
   culture: Music,
   wellness: Heart
 };
+
 export default function ModernVacationForm({
   formData,
   setFormData,
   currentStep
 }: ModernVacationFormProps) {
-  const {
-    t,
-    language
-  } = useTranslation();
+  const { t, language } = useTranslation();
   const [dateError, setDateError] = useState<string>('');
-  const activityOptions = [{
-    value: 'beach',
-    label: t('form.activity.beach')
-  }, {
-    value: 'city',
-    label: t('form.activity.city')
-  }, {
-    value: 'nature',
-    label: t('form.activity.nature')
-  }, {
-    value: 'food',
-    label: t('form.activity.food')
-  }, {
-    value: 'road',
-    label: t('form.activity.road')
-  }, {
-    value: 'culture',
-    label: t('form.activity.culture')
-  }, {
-    value: 'wellness',
-    label: t('form.activity.wellness')
-  }];
+
+  const activityOptions = [
+    {
+      id: 'beach',
+      label: t('form.activity.beach'),
+      icon: Camera,
+      color: 'from-blue-400 to-cyan-500'
+    },
+    {
+      id: 'city',
+      label: t('form.activity.city'),
+      icon: MapPin,
+      color: 'from-gray-400 to-gray-600'
+    },
+    {
+      id: 'nature',
+      label: t('form.activity.nature'),
+      icon: Activity,
+      color: 'from-green-400 to-emerald-500'
+    },
+    {
+      id: 'food',
+      label: t('form.activity.food'),
+      icon: Utensils,
+      color: 'from-orange-400 to-red-500'
+    },
+    {
+      id: 'road',
+      label: t('form.activity.road'),
+      icon: Car,
+      color: 'from-yellow-400 to-orange-500'
+    },
+    {
+      id: 'culture',
+      label: t('form.activity.culture'),
+      icon: Music,
+      color: 'from-purple-400 to-pink-500'
+    },
+    {
+      id: 'wellness',
+      label: t('form.activity.wellness'),
+      icon: Heart,
+      color: 'from-pink-400 to-rose-500'
+    }
+  ];
+
   const validateDates = (start: string, end: string) => {
     if (start && end && new Date(end) < new Date(start)) {
       const errorMessage = language === 'fr' ? 'La date de fin ne peut pas être antérieure à la date de début' : 'End date cannot be earlier than start date';
@@ -78,6 +104,7 @@ export default function ModernVacationForm({
       setDateError('');
     }
   };
+
   const handleDateChange = (field: 'startDate' | 'endDate', date: Date | undefined) => {
     if (date) {
       const dateString = date.toISOString().split('T')[0];
@@ -89,10 +116,21 @@ export default function ModernVacationForm({
       validateDates(field === 'startDate' ? dateString : formData.startDate, field === 'endDate' ? dateString : formData.endDate);
     }
   };
+
+  const handleActivityToggle = (activityId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      activity: activityId
+    }));
+  };
+
   const locale = language === 'fr' ? fr : enUS;
-  return <div className="space-y-6">
+
+  return (
+    <div className="space-y-6">
       {/* Step 1: Basic Information */}
-      {currentStep >= 1 && <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
+      {currentStep >= 1 && (
+        <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center gap-2">
               <Calendar className="w-5 h-5 text-primary" />
@@ -149,16 +187,35 @@ export default function ModernVacationForm({
                 <MapPin className="w-4 h-4" />
                 {t('form.destination')}
               </Label>
-              <Input id="destination" type="text" placeholder={t('form.destination.placeholder')} value={formData.destination} onChange={e => setFormData(prev => ({
-            ...prev,
-            destination: e.target.value
-          }))} />
+              <Input 
+                id="destination" 
+                type="text" 
+                placeholder={t('form.destination.placeholder')} 
+                value={formData.destination} 
+                onChange={e => setFormData(prev => ({
+                  ...prev,
+                  destination: e.target.value
+                }))} 
+              />
             </div>
 
-            {/* Activity */}
+            {/* Activity Selection */}
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2">
+                <Activity className="w-4 h-4" />
+                {t('form.activity')}
+              </Label>
+              <TogglePills
+                options={activityOptions}
+                selectedOptions={formData.activity ? [formData.activity] : []}
+                onToggle={handleActivityToggle}
+                multiSelect={false}
+              />
+            </div>
             
           </CardContent>
-        </Card>}
+        </Card>
+      )}
 
       {/* Step 2: Recipients */}
       {currentStep >= 2 && <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
@@ -189,5 +246,6 @@ export default function ModernVacationForm({
             </div>
           </CardContent>
         </Card>}
-    </div>;
+    </div>
+  );
 }
