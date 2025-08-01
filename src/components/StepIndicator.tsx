@@ -23,7 +23,7 @@ const StepIndicator = ({
   return <div className="w-full mb-8">
       <div className="relative flex items-center justify-between mb-4 px-4">
         {/* Background line with gradient overlay */}
-        <div className="absolute inset-0 flex items-center">
+        <div className="absolute inset-0 flex items-center mt-10">
           
         </div>
 
