@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Bot } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Bot, Palette } from 'lucide-react';
 import { CheckCircle } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -321,9 +321,10 @@ Emergency contact: ${backupContact || '[name]'}`
           {/* Style Selection */}
           {currentStep >= 3 && <div className="space-y-6">
               <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
-                <div className="text-center mb-6">
-                  <h2 className="text-xl font-bold text-foreground mb-2">
-                    🎭 {t('styles.title')}
+                <div className="text-left mb-6">
+                  <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                    <Palette className="h-5 w-5 text-primary" />
+                    {t('styles.title')}
                   </h2>
                   <p className="text-muted-foreground text-sm">
                     {t('styles.subtitle')}
