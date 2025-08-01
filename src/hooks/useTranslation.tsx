@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'fr' | 'en';
@@ -30,6 +31,8 @@ const translations = {
     'form.dates': 'Dates de vacances',
     'form.dates.from': 'Du',
     'form.dates.to': 'Au',
+    'form.dates.selectStart': 'Choisir la date de début',
+    'form.dates.selectEnd': 'Choisir la date de fin',
     'form.destination': 'Destination',
     'form.destination.placeholder': 'ex: Thaïlande, Bretagne, chez mes parents...',
     'form.activity': 'Activité principale (optionnel)',
@@ -139,6 +142,8 @@ const translations = {
     'form.dates': 'Vacation dates',
     'form.dates.from': 'From',
     'form.dates.to': 'To',
+    'form.dates.selectStart': 'Select start date',
+    'form.dates.selectEnd': 'Select end date',
     'form.destination': 'Destination',
     'form.destination.placeholder': 'e.g.: Thailand, Brittany, visiting family...',
     'form.activity': 'Main activity (optional)',
