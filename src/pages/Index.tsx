@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Waves } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Bot } from 'lucide-react';
 import { CheckCircle } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -288,7 +288,7 @@ Emergency contact: ${backupContact || '[name]'}`
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Waves className="h-8 w-8 text-primary" />
+                <Bot className="h-8 w-8 text-primary" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold gradient-text">
