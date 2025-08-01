@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
@@ -133,12 +132,12 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
   useEffect(() => {
     // Start with welcome message
     if (conversation.length === 0) {
-      addBotMessage(steps[0].question);
-      setTimeout(() => setCurrentStep(1), 1500);
+      addBotMessage(steps[0].question, 800);
+      setTimeout(() => setCurrentStep(1), 2000);
     }
   }, []);
 
-  const addBotMessage = (message: string, delay = 1000) => {
+  const addBotMessage = (message: string, delay = 1200) => {
     setIsTyping(true);
     setTimeout(() => {
       setConversation(prev => [...prev, { type: 'bot', message }]);
@@ -156,19 +155,19 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
     // Add user message
     addUserMessage(displayValue || value);
     
-    // Move to next step
+    // Move to next step with more realistic timing
     const nextStepIndex = currentStep + 1;
     if (nextStepIndex < steps.length) {
       setTimeout(() => {
-        addBotMessage(steps[nextStepIndex].question);
+        addBotMessage(steps[nextStepIndex].question, 1500);
         setCurrentStep(nextStepIndex + 1);
-      }, 1000);
+      }, 800);
     } else {
       // All steps completed, generate message
       setTimeout(() => {
-        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨");
-        generateMessage();
-      }, 1000);
+        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨", 1000);
+        setTimeout(() => generateMessage(), 1500);
+      }, 800);
     }
   };
 
@@ -178,14 +177,14 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
     const nextStepIndex = currentStep + 1;
     if (nextStepIndex < steps.length) {
       setTimeout(() => {
-        addBotMessage(steps[nextStepIndex].question);
+        addBotMessage(steps[nextStepIndex].question, 1200);
         setCurrentStep(nextStepIndex + 1);
-      }, 1000);
+      }, 800);
     } else {
       setTimeout(() => {
-        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨");
-        generateMessage();
-      }, 1000);
+        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨", 1000);
+        setTimeout(() => generateMessage(), 1500);
+      }, 800);
     }
   };
 
@@ -251,8 +250,8 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
       </div>
 
       {/* Current Question */}
-      {currentStepData && currentStep > 1 && currentStep <= steps.length && !isGenerating && !generatedMessage && (
-        <div className="mb-6">
+      {currentStepData && currentStep > 1 && currentStep <= steps.length && !isGenerating && !generatedMessage && !isTyping && (
+        <div className="mb-6 animate-fade-in">
           {currentStepData.type === 'style' ? (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
