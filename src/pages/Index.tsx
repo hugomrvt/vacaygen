@@ -32,7 +32,7 @@ const Index = () => {
   ];
 
   const handleGenerate = async () => {
-    await messageGenerator.generateVacationMessage(vacationForm.formData, selectedStyle);
+    await messageGenerator.generateVacationMessages(vacationForm.formData, selectedStyle);
     setCurrentStep(3);
   };
 
@@ -88,7 +88,7 @@ const Index = () => {
             currentStep={currentStep} 
             totalSteps={3} 
             steps={steps} 
-            messageGenerated={!!messageGenerator.generatedMessage} 
+            messageGenerated={messageGenerator.generatedMessages.length > 0} 
           />
         </div>
 
@@ -135,7 +135,7 @@ const Index = () => {
 
           {/* Generated Message */}
           <MessageDisplay 
-            message={messageGenerator.generatedMessage}
+            messages={messageGenerator.generatedMessages}
             isGenerating={messageGenerator.isGenerating}
             onRegenerate={handleRegenerate}
           />
