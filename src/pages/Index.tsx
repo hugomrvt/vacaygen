@@ -354,21 +354,11 @@ Emergency contact: ${backupContact || '[name]'}`
                       style={style}
                       isSelected={selectedStyle === style.id}
                       onSelect={() => setSelectedStyle(style.id)}
-                      onPreview={setPreviewMessage}
                     />
                   ))}
                 </div>
               </div>
 
-              {/* Preview Message */}
-              {previewMessage && (
-                <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
-                  <h3 className="text-sm font-medium text-muted-foreground mb-4">{t('generated.preview')}</h3>
-                  <div className="glass-card rounded-lg p-4">
-                    <p className="text-sm text-muted-foreground italic">"{previewMessage.slice(0, 150)}..."</p>
-                  </div>
-                </div>
-              )}
 
               {/* Generate Button */}
               <div className="text-center">

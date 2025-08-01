@@ -2,7 +2,7 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calendar, MapPin, Activity, User } from 'lucide-react';
+import { Calendar, MapPin, Activity, User, Users, Handshake, Briefcase, Globe } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
 import AnimatedPlaceholder from './AnimatedPlaceholder';
@@ -38,25 +38,25 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
     { 
       id: 'team', 
       label: t('form.recipients.team'), 
-      icon: '👥', 
+      icon: Users, 
       color: 'from-blue-500 to-blue-600' 
     },
     { 
       id: 'clients', 
       label: t('form.recipients.clients'), 
-      icon: '🤝', 
+      icon: Handshake, 
       color: 'from-purple-500 to-purple-600' 
     },
     { 
       id: 'management', 
       label: t('form.recipients.management'), 
-      icon: '👔', 
+      icon: Briefcase, 
       color: 'from-green-500 to-green-600' 
     },
     { 
       id: 'partners', 
       label: t('form.recipients.partners'), 
-      icon: '🌐', 
+      icon: Globe, 
       color: 'from-orange-500 to-orange-600' 
     }
   ];
@@ -148,12 +148,12 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
         }`}>
           <div className="flex items-center gap-2 mb-6">
             <User className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">Destinataires et Contact</h3>
+            <h3 className="text-lg font-semibold text-foreground">{t('form.recipients.section')}</h3>
           </div>
           
           <div className="space-y-6">
             <div>
-              <h4 className="text-sm font-medium text-muted-foreground mb-4">Pour qui ?</h4>
+              <h4 className="text-sm font-medium text-muted-foreground mb-4">{t('form.recipients.question')}</h4>
               <TogglePills
                 options={recipientOptions}
                 selectedOptions={formData.recipients}
@@ -164,11 +164,11 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
             <div className="space-y-2">
               <Label htmlFor="backup" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                 <User className="h-4 w-4 text-orange-500" />
-                Contact de substitution (optionnel)
+                {t('form.backup')}
               </Label>
               <Input
                 id="backup"
-                placeholder="ex: Marie Dupont, Service Client..."
+                placeholder={t('form.backup.placeholder')}
                 value={formData.backupContact}
                 onChange={(e) => handleInputChange('backupContact', e.target.value)}
                 className="bg-input border-border focus:border-primary focus:ring-primary/20"

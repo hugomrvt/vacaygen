@@ -45,6 +45,8 @@ const translations = {
     'form.example': 'ex:',
     'form.destination.examples': ['Thaïlande 🏝️', 'Bretagne 🌊', 'Chez mes parents 🏠', 'Montagne 🏔️', 'New York 🗽'],
     'form.activity.examples': ['Plage et farniente 🏖️', 'Randonnée en montagne 🥾', 'Visite familiale 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga et détente 🧘‍♀️'],
+    'form.recipients.section': 'Destinataires et Contact',
+    'form.recipients.question': 'Pour qui ?',
 
     // Style Selector
     'styles.title': 'Style d\'Écriture',
@@ -152,6 +154,8 @@ const translations = {
     'form.example': 'e.g.:',
     'form.destination.examples': ['Thailand 🏝️', 'Brittany 🌊', 'Visiting family 🏠', 'Mountains 🏔️', 'New York 🗽'],
     'form.activity.examples': ['Beach & relaxation 🏖️', 'Mountain hiking 🥾', 'Family visit 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga & relaxation 🧘‍♀️'],
+    'form.recipients.section': 'Recipients and Contact',
+    'form.recipients.question': 'For whom?',
 
     // Style Selector
     'styles.title': 'Writing Style',

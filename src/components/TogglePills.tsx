@@ -1,8 +1,9 @@
 
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface TogglePillsProps {
-  options: { id: string; label: string; icon: string; color: string }[];
+  options: { id: string; label: string; icon: LucideIcon | string; color: string }[];
   selectedOptions: string[];
   onToggle: (optionId: string) => void;
   multiSelect?: boolean;
@@ -26,8 +27,12 @@ const TogglePills = ({ options, selectedOptions, onToggle, multiSelect = true }:
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
               }
             `}
-          >
-            <span className="text-lg">{option.icon}</span>
+           >
+            {typeof option.icon === 'string' ? (
+              <span className="text-lg">{option.icon}</span>
+            ) : (
+              <option.icon className="h-5 w-5" />
+            )}
             <span>{option.label}</span>
             
             {isSelected && (
