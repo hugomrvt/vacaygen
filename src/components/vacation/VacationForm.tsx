@@ -59,6 +59,7 @@ export function VacationForm({ form, currentStep }: VacationFormProps) {
                 onDateChange={(date) => handleDateChange('endDate', date)}
                 placeholder={t('form.dates.selectEnd')}
                 language={language}
+                disabled={(date) => formData.startDate ? date < new Date(formData.startDate) : false}
               />
               {formData.startDate && formData.endDate && !isValidDateRange(formData.startDate, formData.endDate) && (
                 <p className="text-destructive text-sm">

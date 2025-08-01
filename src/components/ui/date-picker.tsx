@@ -13,9 +13,10 @@ interface DatePickerProps {
   onDateChange: (date: Date | undefined) => void
   placeholder?: string
   language?: string
+  disabled?: (date: Date) => boolean
 }
 
-export function DatePicker({ date, onDateChange, placeholder, language = 'fr' }: DatePickerProps) {
+export function DatePicker({ date, onDateChange, placeholder, language = 'fr', disabled }: DatePickerProps) {
   const locale = language === 'fr' ? fr : enUS
 
   return (
@@ -37,7 +38,9 @@ export function DatePicker({ date, onDateChange, placeholder, language = 'fr' }:
           mode="single"
           selected={date}
           onSelect={onDateChange}
+          disabled={disabled}
           initialFocus
+          className={cn("p-3 pointer-events-auto")}
         />
       </PopoverContent>
     </Popover>
