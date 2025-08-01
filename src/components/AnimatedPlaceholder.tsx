@@ -1,33 +1,33 @@
-
 import React, { useState, useEffect } from 'react';
 
 interface AnimatedPlaceholderProps {
-  placeholders: string[];
+  examples: string[];
+  prefix?: string;
   interval?: number;
 }
 
-const AnimatedPlaceholder = ({ placeholders, interval = 3000 }: AnimatedPlaceholderProps) => {
+function AnimatedPlaceholder({ examples, prefix = '', interval = 3000 }: AnimatedPlaceholderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    if (examples.length === 0) return;
+
     const timer = setInterval(() => {
-      setIsVisible(false);
-      
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % placeholders.length);
-        setIsVisible(true);
-      }, 200);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % examples.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [placeholders.length, interval]);
+  }, [examples.length, interval]);
+
+  if (examples.length === 0) return null;
 
   return (
-    <span className={`transition-opacity duration-200 ${isVisible ? 'opacity-100' : 'opacity-50'}`}>
-      {placeholders[currentIndex]}
-    </span>
+    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+      <span className="text-muted-foreground text-sm opacity-70 transition-opacity duration-500">
+        {prefix} {examples[currentIndex]}
+      </span>
+    </div>
   );
-};
+}
 
 export default AnimatedPlaceholder;
