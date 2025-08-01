@@ -42,6 +42,7 @@ const Index = () => {
       setTimeout(() => setCurrentStep(3), 800);
     }
   }, [formData, currentStep]);
+
   const steps = [{
     title: t('step.basic.title'),
     icon: 'calendar'
@@ -52,6 +53,7 @@ const Index = () => {
     title: t('step.style.title'),
     icon: 'sparkles'
   }];
+
   const styles = [{
     id: 'millennial-pro',
     name: t('style.millennial-pro.name'),
@@ -97,6 +99,7 @@ const Index = () => {
     emoji: '⚡',
     color: 'from-slate-500 to-zinc-600'
   }];
+
   const handleGenerate = async () => {
     if (!formData.startDate || !formData.endDate || !formData.destination) {
       // Shake animation for missing fields
@@ -141,6 +144,7 @@ const Index = () => {
       });
     }, 2500);
   };
+
   const generateVacationMessage = (data: any, style: string, lang: string) => {
     const {
       startDate,
@@ -275,41 +279,42 @@ Emergency contact: ${backupContact || '[name]'}`
     const template = styleTemplates[style]?.[lang] || styleTemplates['millennial-pro'][lang];
     return template(data);
   };
+
   return <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto p-4 sm:p-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 mb-6 sm:mb-8">
-          <div className="w-full sm:w-auto">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
-                </div>
-                <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold gradient-text">
-                    VacayGen
-                  </h1>
-                  <p className="text-sm sm:text-base text-muted-foreground">
-                    {t('app.subtitle')}
-                  </p>
-                </div>
-              </div>
+        <div className="text-center mb-8 sm:mb-12 relative">
+          {/* Language Selector - Top Right */}
+          <div className="absolute top-0 right-0">
+            <LanguageSelector />
+          </div>
+          
+          {/* Main Header Content */}
+          <div className="flex flex-col items-center gap-4 mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/10 flex items-center justify-center">
+              <Bot className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
             </div>
             
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20 text-xs sm:text-sm">
-                <Zap className="w-3 h-3 mr-1" />
-                {t('app.badge.free')}
-              </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
-                <RefreshCw className="w-3 h-3 mr-1" />
-                {t('app.badge.instant')}
-              </Badge>
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text">
+                VacayGen
+              </h1>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                {t('app.subtitle')}
+              </p>
             </div>
           </div>
           
-          <div className="w-full sm:w-auto flex justify-end">
-            <LanguageSelector />
+          {/* Badges */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+            <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20 text-sm px-4 py-2 rounded-full">
+              <Zap className="w-4 h-4 mr-2" />
+              {t('app.badge.free')}
+            </Badge>
+            <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-sm px-4 py-2 rounded-full">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              {t('app.badge.instant')}
+            </Badge>
           </div>
         </div>
 
