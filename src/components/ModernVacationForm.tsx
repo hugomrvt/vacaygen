@@ -107,7 +107,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
             <div className="space-y-2">
               <Label htmlFor="destination" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                 <MapPin className="h-4 w-4 text-primary" />
-                Destination
+                {t('form.destination')}
               </Label>
               <Input
                 id="destination"
@@ -124,7 +124,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
             <div className="space-y-2">
               <Label htmlFor="activity" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                 <Activity className="h-4 w-4 text-green-500" />
-                Activité principale (optionnel)
+                {t('form.activity')}
               </Label>
               <Input
                 id="activity"
