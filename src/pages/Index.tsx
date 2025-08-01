@@ -21,6 +21,7 @@ const Index = () => {
   } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [previewMessage, setPreviewMessage] = useState('');
+  const [totalGeneratedMessages, setTotalGeneratedMessages] = useState(0);
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
@@ -139,6 +140,7 @@ const Index = () => {
       const message = generateVacationMessage(formData, selectedStyle, language);
       setGeneratedMessage(message);
       setIsGenerating(false);
+      setTotalGeneratedMessages(prev => prev + 1);
 
       // Confetti effect
       const celebrateGeneration = () => {
@@ -321,6 +323,11 @@ Thanks and see you soon! 💙`
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 {t('app.subtitle')}
+                {totalGeneratedMessages > 0 && (
+                  <span className="block mt-2 text-sm text-primary font-medium">
+                    {totalGeneratedMessages} message{totalGeneratedMessages > 1 ? 's' : ''} généré{totalGeneratedMessages > 1 ? 's' : ''} 🎉
+                  </span>
+                )}
               </p>
             </div>
           </div>
