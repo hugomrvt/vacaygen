@@ -60,19 +60,19 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
   const charCount = message ? message.length : 0;
 
   return (
-    <Card className="w-full shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+    <Card className="w-full shadow-lg border-0 glass-card">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center justify-between text-gray-800">
+        <CardTitle className="flex items-center justify-between text-foreground">
           <div className="flex items-center gap-2">
             <span className="text-2xl">✨</span>
             {t('generated.title')}
           </div>
           {message && (
             <div className="flex gap-2 text-xs">
-              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
                 {wordCount} {t('generated.words')}
               </Badge>
-              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+              <Badge variant="outline" className="bg-success/10 text-success border-success/20">
                 {charCount} {t('generated.characters')}
               </Badge>
             </div>
@@ -82,13 +82,13 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
       <CardContent className="space-y-4">
         {isGenerating ? (
           <div className="text-center py-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mb-4">
-              <RefreshCw className="h-8 w-8 text-white animate-spin" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-full mb-4">
+              <RefreshCw className="h-8 w-8 text-primary-foreground animate-spin" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               {t('generated.generating')}
             </h3>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               {t('generated.generating.subtitle')}
             </p>
             <div className="flex justify-center mt-4">
@@ -96,7 +96,7 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
                 {[0, 1, 2].map((i) => (
                   <div
                     key={i}
-                    className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"
+                    className="w-2 h-2 bg-primary rounded-full animate-pulse"
                     style={{ animationDelay: `${i * 0.2}s` }}
                   ></div>
                 ))}
@@ -105,8 +105,8 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
           </div>
         ) : message ? (
           <>
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <pre className="whitespace-pre-wrap text-sm text-gray-800 font-sans leading-relaxed">
+            <div className="bg-muted/50 rounded-lg p-4 border border-border">
+              <pre className="whitespace-pre-wrap text-sm text-foreground font-sans leading-relaxed">
                 {message}
               </pre>
             </div>
@@ -115,7 +115,7 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
             <div className="flex flex-wrap gap-2">
               <Button 
                 onClick={() => handleCopy('text')} 
-                className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white"
+                className="flex-1 bg-gradient-to-r from-success to-success/80 hover:from-success/90 hover:to-success/70 text-success-foreground"
               >
                 {copied && copyFormat === 'text' ? (
                   <>
@@ -133,7 +133,7 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
               <Button
                 variant="outline"
                 onClick={onRegenerate}
-                className="border-blue-300 text-blue-700 hover:bg-blue-50"
+                className="border-primary/30 text-primary hover:bg-primary/5"
               >
                 <RefreshCw className="mr-2 h-4 w-4" />
                 {t('generated.regenerate')}
@@ -142,7 +142,7 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
 
             {/* Format Options */}
             <div className="border-t pt-4">
-              <p className="text-xs text-gray-600 mb-2 font-semibold">{t('generated.format.title')}</p>
+              <p className="text-xs text-muted-foreground mb-2 font-semibold">{t('generated.format.title')}</p>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
@@ -164,11 +164,11 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
             </div>
 
             {/* Usage Tips */}
-            <div className="bg-gradient-to-r from-blue-50 to-orange-50 rounded-lg p-3 border border-blue-100">
-              <p className="text-xs text-gray-600 mb-2">
+            <div className="bg-gradient-to-r from-primary/5 to-warning/5 rounded-lg p-3 border border-primary/10">
+              <p className="text-xs text-muted-foreground mb-2">
                 <strong>{t('generated.tips.title')}</strong>
               </p>
-              <ul className="text-xs text-gray-600 space-y-1">
+              <ul className="text-xs text-muted-foreground space-y-1">
                 <li>{t('generated.tips.email')}</li>
                 <li>{t('generated.tips.slack')}</li>
                 <li>{t('generated.tips.linkedin')}</li>
@@ -176,14 +176,14 @@ const GeneratedMessage = ({ message, isGenerating, onRegenerate }: GeneratedMess
             </div>
           </>
         ) : (
-          <div className="text-center py-12 text-gray-500">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-              <Sparkles className="h-8 w-8 text-gray-400" />
+          <div className="text-center py-12 text-muted-foreground">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-muted/30 rounded-full mb-4">
+              <Sparkles className="h-8 w-8 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               {t('generated.waiting.title')}
             </h3>
-            <p className="text-gray-500">
+            <p className="text-muted-foreground">
               {t('generated.waiting.subtitle')}
             </p>
           </div>
