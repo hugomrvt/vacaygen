@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Bot, Palette } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Bot, Palette, Trophy } from 'lucide-react';
 import { CheckCircle } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -321,14 +322,19 @@ Thanks and see you soon! 💙`
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text">
                 VacayGen
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-                {t('app.subtitle')}
+              <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                <p>
+                  {t('app.subtitle')}
+                </p>
                 {totalGeneratedMessages > 0 && (
-                  <span className="block mt-2 text-sm text-primary font-medium">
-                    {totalGeneratedMessages} message{totalGeneratedMessages > 1 ? 's' : ''} généré{totalGeneratedMessages > 1 ? 's' : ''} 🎉
-                  </span>
+                  <div className="flex items-center justify-center gap-2 mt-3">
+                    <Trophy className="w-4 h-4 text-primary" />
+                    <span className="text-sm text-primary font-medium">
+                      {totalGeneratedMessages} message{totalGeneratedMessages > 1 ? 's' : ''} généré{totalGeneratedMessages > 1 ? 's' : ''}
+                    </span>
+                  </div>
                 )}
-              </p>
+              </div>
             </div>
           </div>
           
