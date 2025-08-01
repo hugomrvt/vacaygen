@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Calendar, Users, MessageSquare } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import StepIndicator from '@/components/StepIndicator';
@@ -9,7 +9,6 @@ import ModernVacationForm from '@/components/ModernVacationForm';
 import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
-import DashboardCard from '@/components/DashboardCard';
 
 const Index = () => {
   const { toast } = useToast();
@@ -264,6 +263,14 @@ ${activity ? `I can't wait to ${activity.toLowerCase()}` : 'I really can\'t wait
 If it's urgent, don't hesitate to write to ${backupContact || '[my colleague]'} who can help you!
 
 Thanks and see you soon! 💙`
+      },
+      'minimalist': {
+        'fr': (data) => `Vacances du ${startDate} au ${endDate}.
+
+Contact d'urgence : ${backupContact || '[nom]'}`,
+        'en': (data) => `Vacation from ${startDate} to ${endDate}.
+
+Emergency contact: ${backupContact || '[name]'}`
       }
     };
 
@@ -273,7 +280,7 @@ Thanks and see you soon! 💙`
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
@@ -292,7 +299,7 @@ Thanks and see you soon! 💙`
             </div>
             
             <div className="flex gap-2">
-              <Badge variant="secondary" className="bg-success/10 text-success border-success/20">
+              <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20">
                 <Zap className="w-3 h-3 mr-1" />
                 Gratuit
               </Badge>
@@ -304,31 +311,6 @@ Thanks and see you soon! 💙`
           </div>
           
           <LanguageSelector />
-        </div>
-
-        {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <DashboardCard
-            title="Messages Générés"
-            value="1,247"
-            subtitle="vs 1,156 le mois dernier"
-            trend={{ value: "7.8%", isPositive: true }}
-            icon={<MessageSquare className="w-4 h-4" />}
-          />
-          <DashboardCard
-            title="Utilisateurs Actifs"
-            value="342"
-            subtitle="dernière semaine"
-            trend={{ value: "15.2%", isPositive: true }}
-            icon={<Users className="w-4 h-4" />}
-          />
-          <DashboardCard
-            title="Taux de Satisfaction"
-            value="96.4%"
-            subtitle="basé sur 2,456 évaluations"
-            trend={{ value: "2.1%", isPositive: true }}
-            icon={<Sparkles className="w-4 h-4" />}
-          />
         </div>
 
         {/* Step Indicator */}
@@ -348,20 +330,17 @@ Thanks and see you soon! 💙`
           {/* Style Selection */}
           {currentStep >= 3 && (
             <div className="space-y-6">
-              <DashboardCard
-                title="Style de Message"
-                value={
-                  <div className="text-center">
-                    <h2 className="text-xl font-bold text-foreground mb-2">
-                      🎭 Quel style te ressemble ?
-                    </h2>
-                    <p className="text-muted-foreground text-sm">
-                      Survole les styles pour un aperçu instantané
-                    </p>
-                  </div>
-                }
-              >
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+              <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
+                <div className="text-center mb-6">
+                  <h2 className="text-xl font-bold text-foreground mb-2">
+                    🎭 Quel style te ressemble ?
+                  </h2>
+                  <p className="text-muted-foreground text-sm">
+                    Survole les styles pour un aperçu instantané
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {styles.map((style) => (
                     <StyleCard
                       key={style.id}
@@ -372,18 +351,16 @@ Thanks and see you soon! 💙`
                     />
                   ))}
                 </div>
-              </DashboardCard>
+              </div>
 
               {/* Preview Message */}
               {previewMessage && (
-                <DashboardCard
-                  title="Aperçu du Style"
-                  value={
-                    <div className="glass-card rounded-lg p-4 mt-4">
-                      <p className="text-sm text-muted-foreground italic">"{previewMessage.slice(0, 150)}..."</p>
-                    </div>
-                  }
-                />
+                <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
+                  <h3 className="text-sm font-medium text-muted-foreground mb-4">Aperçu du Style</h3>
+                  <div className="glass-card rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground italic">"{previewMessage.slice(0, 150)}..."</p>
+                  </div>
+                </div>
               )}
 
               {/* Generate Button */}
@@ -393,7 +370,7 @@ Thanks and see you soon! 💙`
                   onClick={handleGenerate} 
                   disabled={isGenerating}
                   size="lg"
-                  className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-chart-3 hover:opacity-90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                  className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                 >
                   {isGenerating ? (
                     <>
