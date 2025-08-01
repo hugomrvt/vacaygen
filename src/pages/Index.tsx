@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { RefreshCw, Sparkles, Zap, Bot, Palette, Trophy } from 'lucide-react';
-import { CheckCircle } from '@siimple/icons';
+import { CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import { generateOutOfOfficeMessage } from '@/lib/openai';
