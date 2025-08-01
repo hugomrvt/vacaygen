@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Bot, Palette, Trophy, Settings } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Bot, Palette, Trophy } from 'lucide-react';
 import { CheckCircle } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -11,8 +11,6 @@ import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
 import SEOHead from '@/components/SEOHead';
-import SEOImageGenerator from '@/components/SEOImageGenerator';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const Index = () => {
   const { toast } = useToast();
@@ -20,7 +18,6 @@ const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [previewMessage, setPreviewMessage] = useState('');
   const [totalGeneratedMessages, setTotalGeneratedMessages] = useState(0);
-  const [showSEOTools, setShowSEOTools] = useState(false);
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
@@ -298,21 +295,8 @@ Thanks and see you soon! 💙`
       <div className="max-w-4xl mx-auto p-4 sm:p-6">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 relative">
-          {/* Language Selector and SEO Tools - Top Right */}
-          <div className="absolute top-0 right-0 flex gap-2">
-            <Dialog open={showSEOTools} onOpenChange={setShowSEOTools}>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Settings className="h-4 w-4" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Outils SEO - Génération d'Images</DialogTitle>
-                </DialogHeader>
-                <SEOImageGenerator />
-              </DialogContent>
-            </Dialog>
+          {/* Language Selector - Top Right */}
+          <div className="absolute top-0 right-0">
             <LanguageSelector />
           </div>
           
