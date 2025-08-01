@@ -386,7 +386,15 @@ Emergency contact: ${backupContact || '[name]'}`
         {/* Footer */}
         <div className="text-center mt-8 sm:mt-12 py-6 border-t border-border">
           <p className="text-sm text-muted-foreground">
-            {t('footer.created')}
+            {t('footer.created')}{' '}
+            <a 
+              href="https://www.linkedin.com/in/hugomrvt/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline font-medium"
+            >
+              Hugo Mourlevat
+            </a>
           </p>
         </div>
       </div>

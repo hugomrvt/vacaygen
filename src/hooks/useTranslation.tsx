@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'fr' | 'en';
@@ -117,7 +116,7 @@ const translations = {
     'toast.copy.error.desc': 'Impossible de copier le message. Essayez de le sélectionner manuellement.',
 
     // Footer
-    'footer.created': 'Créé avec ❤️ pour simplifier vos messages de vacances',
+    'footer.created': 'Vibe Coded par',
     'footer.secure': '🔒 Données sécurisées',
     'footer.instant': '⚡ Génération instantanée',
     'footer.compatible': '🌍 Compatible toutes plateformes'
@@ -227,7 +226,7 @@ const translations = {
     'toast.copy.error.desc': 'Unable to copy message. Try selecting it manually.',
 
     // Footer
-    'footer.created': 'Created with ❤️ to simplify your vacation messages',
+    'footer.created': 'Vibe Coded by',
     'footer.secure': '🔒 Secure data',
     'footer.instant': '⚡ Instant generation',
     'footer.compatible': '🌍 Compatible with all platforms'
