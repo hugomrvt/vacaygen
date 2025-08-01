@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, Calendar, Users, Sparkles } from 'lucide-react';
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -9,6 +9,15 @@ interface StepIndicatorProps {
 }
 
 const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorProps) => {
+  const getStepIcon = (stepIndex: number) => {
+    const iconMap = {
+      0: Calendar,
+      1: Users,
+      2: Sparkles
+    };
+    return iconMap[stepIndex as keyof typeof iconMap] || Calendar;
+  };
+
   return (
     <div className="w-full mb-8">
       <div className="flex items-center justify-between mb-4">
@@ -16,6 +25,7 @@ const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorProps) =
           const stepNumber = index + 1;
           const isCompleted = currentStep > stepNumber;
           const isCurrent = currentStep === stepNumber;
+          const IconComponent = getStepIcon(index);
           
           return (
             <div key={stepNumber} className="flex items-center">
@@ -28,7 +38,7 @@ const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorProps) =
                 {isCompleted ? (
                   <Check className="h-5 w-5" />
                 ) : (
-                  <span className="text-xl">{step.icon}</span>
+                  <IconComponent className="h-5 w-5" />
                 )}
               </div>
               

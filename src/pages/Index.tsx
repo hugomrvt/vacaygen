@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Calendar, Users, MessageSquare } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Calendar, Users, MessageSquare, Plane } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import StepIndicator from '@/components/StepIndicator';
@@ -279,7 +280,7 @@ Thanks and see you soon! 💙`
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <span className="text-2xl">🏖️</span>
+                <Plane className="text-2xl text-primary" size={24} />
               </div>
               <div>
                 <h1 className="text-3xl font-bold gradient-text">
@@ -393,7 +394,7 @@ Thanks and see you soon! 💙`
                   onClick={handleGenerate} 
                   disabled={isGenerating}
                   size="lg"
-                  className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-chart-3 hover:opacity-90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                  className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-blue-600 hover:opacity-90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                 >
                   {isGenerating ? (
                     <>
