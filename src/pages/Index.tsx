@@ -42,9 +42,9 @@ const Index = () => {
   }, [formData, currentStep]);
 
   const steps = [
-    { title: 'Infos de base', icon: 'calendar' },
-    { title: 'Destinataires', icon: 'users' },
-    { title: 'Style & Message', icon: 'sparkles' }
+    { title: t('step.basic.title'), icon: 'calendar' },
+    { title: t('step.recipients.title'), icon: 'users' },
+    { title: t('step.style.title'), icon: 'sparkles' }
   ];
 
   const styles = [
@@ -295,7 +295,7 @@ Emergency contact: ${backupContact || '[name]'}`
                   {t('app.title')}
                 </h1>
                 <p className="text-muted-foreground">
-                  Générateur de messages de vacances intelligent
+                  {t('app.subtitle')}
                 </p>
               </div>
             </div>
@@ -303,11 +303,11 @@ Emergency contact: ${backupContact || '[name]'}`
             <div className="flex gap-2">
               <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20">
                 <Zap className="w-3 h-3 mr-1" />
-                Gratuit
+                {t('app.badge.free')}
               </Badge>
               <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
                 <RefreshCw className="w-3 h-3 mr-1" />
-                Instantané
+                {t('app.badge.instant')}
               </Badge>
             </div>
           </div>
@@ -317,7 +317,12 @@ Emergency contact: ${backupContact || '[name]'}`
 
         {/* Step Indicator */}
         <div className="mb-8">
-          <StepIndicator currentStep={currentStep} totalSteps={3} steps={steps} />
+          <StepIndicator 
+            currentStep={currentStep} 
+            totalSteps={3} 
+            steps={steps} 
+            messageGenerated={!!generatedMessage}
+          />
         </div>
 
         {/* Main Content */}
@@ -335,10 +340,10 @@ Emergency contact: ${backupContact || '[name]'}`
               <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-bold text-foreground mb-2">
-                    🎭 Quel style te ressemble ?
+                    🎭 {t('styles.title')}
                   </h2>
                   <p className="text-muted-foreground text-sm">
-                    Survole les styles pour un aperçu instantané
+                    {t('styles.subtitle')}
                   </p>
                 </div>
                 
@@ -358,7 +363,7 @@ Emergency contact: ${backupContact || '[name]'}`
               {/* Preview Message */}
               {previewMessage && (
                 <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
-                  <h3 className="text-sm font-medium text-muted-foreground mb-4">Aperçu du Style</h3>
+                  <h3 className="text-sm font-medium text-muted-foreground mb-4">{t('generated.preview')}</h3>
                   <div className="glass-card rounded-lg p-4">
                     <p className="text-sm text-muted-foreground italic">"{previewMessage.slice(0, 150)}..."</p>
                   </div>
@@ -377,12 +382,12 @@ Emergency contact: ${backupContact || '[name]'}`
                   {isGenerating ? (
                     <>
                       <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                      ✨ Création magique en cours...
+                      {t('generate.button.loading')}
                     </>
                   ) : (
                     <>
                       <Sparkles className="mr-2 h-5 w-5" />
-                      🚀 Créer mon message parfait !
+                      {t('generate.button')}
                     </>
                   )}
                 </Button>
@@ -401,7 +406,7 @@ Emergency contact: ${backupContact || '[name]'}`
         {/* Footer */}
         <div className="text-center mt-12 py-6 border-t border-border">
           <p className="text-muted-foreground">
-            Créé avec ❤️ pour des messages de vacances mémorables
+            {t('footer.created')}
           </p>
         </div>
       </div>

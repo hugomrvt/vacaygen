@@ -20,6 +20,11 @@ const translations = {
     'app.badge.instant': '🚀 Instantané',
     'app.badge.styles': '🎨 8 Styles',
 
+    // Steps
+    'step.basic.title': 'Infos de base',
+    'step.recipients.title': 'Destinataires',
+    'step.style.title': 'Style & Message',
+
     // Form
     'form.title': 'Votre Message',
     'form.dates': 'Dates de vacances',
@@ -87,7 +92,7 @@ const translations = {
     'generated.tips.title': '💡 Conseils d\'utilisation :',
     'generated.tips.email': '• Email : Collez directement dans votre signature automatique',
     'generated.tips.slack': '• Slack/Teams : Utilisez le format Markdown pour plus de style',
-    'generated.tips.linkedin': '• LinkedIn : Adaptez en post si vous voulez partager publiquement',
+    'generated.preview': 'Aperçu du Style',
 
     // Generate Button
     'generate.button': 'Générer mon message',
@@ -118,6 +123,11 @@ const translations = {
     'app.badge.free': '✨ Free',
     'app.badge.instant': '🚀 Instant',
     'app.badge.styles': '🎨 8 Styles',
+
+    // Steps
+    'step.basic.title': 'Basic Info',
+    'step.recipients.title': 'Recipients',
+    'step.style.title': 'Style & Message',
 
     // Form
     'form.title': 'Your Message',
@@ -187,6 +197,7 @@ const translations = {
     'generated.tips.email': '• Email: Paste directly into your automatic signature',
     'generated.tips.slack': '• Slack/Teams: Use Markdown format for more style',
     'generated.tips.linkedin': '• LinkedIn: Adapt as a post if you want to share publicly',
+    'generated.preview': 'Style Preview',
 
     // Generate Button
     'generate.button': 'Generate my message',
