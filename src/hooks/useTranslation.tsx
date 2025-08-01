@@ -7,6 +7,7 @@ interface TranslationContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  tArray: (key: string) => string[];
 }
 
 const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
@@ -41,6 +42,9 @@ const translations = {
     'form.recipients.partners': 'Partenaires externes',
     'form.backup': 'Contact de substitution (optionnel)',
     'form.backup.placeholder': 'ex: Marie Dupont, Service Client...',
+    'form.example': 'ex:',
+    'form.destination.examples': ['Thaïlande 🏝️', 'Bretagne 🌊', 'Chez mes parents 🏠', 'Montagne 🏔️', 'New York 🗽'],
+    'form.activity.examples': ['Plage et farniente 🏖️', 'Randonnée en montagne 🥾', 'Visite familiale 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga et détente 🧘‍♀️'],
 
     // Style Selector
     'styles.title': 'Style d\'Écriture',
@@ -145,6 +149,9 @@ const translations = {
     'form.recipients.partners': 'External partners',
     'form.backup': 'Backup contact (optional)',
     'form.backup.placeholder': 'e.g.: Marie Dupont, Customer Service...',
+    'form.example': 'e.g.:',
+    'form.destination.examples': ['Thailand 🏝️', 'Brittany 🌊', 'Visiting family 🏠', 'Mountains 🏔️', 'New York 🗽'],
+    'form.activity.examples': ['Beach & relaxation 🏖️', 'Mountain hiking 🥾', 'Family visit 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga & relaxation 🧘‍♀️'],
 
     // Style Selector
     'styles.title': 'Writing Style',
@@ -227,11 +234,17 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
   const [language, setLanguage] = useState<Language>('fr');
 
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations['fr']] || key;
+    const value = translations[language][key as keyof typeof translations['fr']];
+    return Array.isArray(value) ? key : (value || key);
+  };
+
+  const tArray = (key: string): string[] => {
+    const value = translations[language][key as keyof typeof translations['fr']];
+    return Array.isArray(value) ? value : [];
   };
 
   return (
-    <TranslationContext.Provider value={{ language, setLanguage, t }}>
+    <TranslationContext.Provider value={{ language, setLanguage, t, tArray }}>
       {children}
     </TranslationContext.Provider>
   );

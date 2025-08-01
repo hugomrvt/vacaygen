@@ -21,7 +21,7 @@ interface ModernVacationFormProps {
 }
 
 const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacationFormProps) => {
-  const { t } = useTranslation();
+  const { t, tArray } = useTranslation();
   
   const handleInputChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
@@ -61,21 +61,8 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
     }
   ];
 
-  const destinationPlaceholders = [
-    "Thaïlande 🏝️",
-    "Bretagne 🌊", 
-    "Chez mes parents 🏠",
-    "Montagne 🏔️",
-    "New York 🗽"
-  ];
-
-  const activityPlaceholders = [
-    "Plage et farniente 🏖️",
-    "Randonnée en montagne 🥾", 
-    "Visite familiale 👨‍👩‍👧‍👦",
-    "Road trip 🚗",
-    "Yoga et détente 🧘‍♀️"
-  ];
+  const destinationPlaceholders = tArray('form.destination.examples');
+  const activityPlaceholders = tArray('form.activity.examples');
 
   return (
     <div className="space-y-6">
@@ -130,7 +117,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
                 className="bg-input border-border focus:border-primary focus:ring-primary/20"
               />
               <div className="text-xs text-muted-foreground ml-1">
-                ex: <AnimatedPlaceholder placeholders={destinationPlaceholders} />
+                {t('form.example')} <AnimatedPlaceholder placeholders={destinationPlaceholders} />
               </div>
             </div>
 
@@ -147,7 +134,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
                 className="bg-input border-border focus:border-primary focus:ring-primary/20"
               />
               <div className="text-xs text-muted-foreground ml-1">
-                ex: <AnimatedPlaceholder placeholders={activityPlaceholders} />
+                {t('form.example')} <AnimatedPlaceholder placeholders={activityPlaceholders} />
               </div>
             </div>
           </div>
