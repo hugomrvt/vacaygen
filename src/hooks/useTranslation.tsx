@@ -22,7 +22,7 @@ const translations = {
     'app.badge.styles': '8 Styles',
 
     // Steps
-    'step.basic.title': 'Infos de base',
+    'step.basic.title': 'Informations de base',
     'step.recipients.title': 'Destinataires',
     'step.style.title': 'Style & Message',
 

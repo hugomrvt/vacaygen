@@ -113,7 +113,7 @@ const ModernVacationForm = ({
       {currentStep >= 1 && <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
           <div className="flex items-center gap-2 mb-6">
             <CalendarIcon className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">Basic information</h3>
+            <h3 className="text-lg font-semibold text-foreground">{t('step.basic.title')}</h3>
           </div>
           
           <div className="space-y-6">
