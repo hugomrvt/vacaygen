@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Bot, Palette, Trophy } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Bot, Palette, Trophy, Settings } from 'lucide-react';
 import { CheckCircle } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -10,18 +10,17 @@ import ModernVacationForm from '@/components/ModernVacationForm';
 import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
+import SEOHead from '@/components/SEOHead';
+import SEOImageGenerator from '@/components/SEOImageGenerator';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const Index = () => {
-  const {
-    toast
-  } = useToast();
-  const {
-    t,
-    language
-  } = useTranslation();
+  const { toast } = useToast();
+  const { t, language } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [previewMessage, setPreviewMessage] = useState('');
   const [totalGeneratedMessages, setTotalGeneratedMessages] = useState(0);
+  const [showSEOTools, setShowSEOTools] = useState(false);
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
@@ -44,62 +43,64 @@ const Index = () => {
     }
   }, [formData, currentStep]);
 
-  const steps = [{
-    title: t('step.basic.title'),
-    icon: 'calendar'
-  }, {
-    title: t('step.recipients.title'),
-    icon: 'users'
-  }, {
-    title: t('step.style.title'),
-    icon: 'sparkles'
-  }];
+  const steps = [
+    { title: t('step.basic.title'), icon: 'calendar' },
+    { title: t('step.recipients.title'), icon: 'users' },
+    { title: t('step.style.title'), icon: 'sparkles' }
+  ];
 
-  const styles = [{
-    id: 'millennial-pro',
-    name: t('style.millennial-pro.name'),
-    description: t('style.millennial-pro.desc'),
-    example: t('style.millennial-pro.example'),
-    emoji: '🚀',
-    color: 'from-blue-500 to-cyan-500',
-    popularity: 'hot' as const
-  }, {
-    id: 'gen-z',
-    name: t('style.gen-z.name'),
-    description: t('style.gen-z.desc'),
-    example: t('style.gen-z.example'),
-    emoji: '✨',
-    color: 'from-pink-500 to-purple-500',
-    popularity: 'trending' as const
-  }, {
-    id: 'professional',
-    name: t('style.professional.name'),
-    description: t('style.professional.desc'),
-    example: t('style.professional.example'),
-    emoji: '💼',
-    color: 'from-gray-600 to-gray-700'
-  }, {
-    id: 'creative',
-    name: t('style.creative.name'),
-    description: t('style.creative.desc'),
-    example: t('style.creative.example'),
-    emoji: '🌟',
-    color: 'from-orange-500 to-red-500'
-  }, {
-    id: 'friendly',
-    name: t('style.friendly.name'),
-    description: t('style.friendly.desc'),
-    example: t('style.friendly.example'),
-    emoji: '😊',
-    color: 'from-green-500 to-emerald-500'
-  }, {
-    id: 'minimalist',
-    name: t('style.minimalist.name'),
-    description: t('style.minimalist.desc'),
-    example: t('style.minimalist.example'),
-    emoji: '⚡',
-    color: 'from-slate-500 to-zinc-600'
-  }];
+  const styles = [
+    {
+      id: 'millennial-pro',
+      name: t('style.millennial-pro.name'),
+      description: t('style.millennial-pro.desc'),
+      example: t('style.millennial-pro.example'),
+      emoji: '🚀',
+      color: 'from-blue-500 to-cyan-500',
+      popularity: 'hot' as const
+    },
+    {
+      id: 'gen-z',
+      name: t('style.gen-z.name'),
+      description: t('style.gen-z.desc'),
+      example: t('style.gen-z.example'),
+      emoji: '✨',
+      color: 'from-pink-500 to-purple-500',
+      popularity: 'trending' as const
+    },
+    {
+      id: 'professional',
+      name: t('style.professional.name'),
+      description: t('style.professional.desc'),
+      example: t('style.professional.example'),
+      emoji: '💼',
+      color: 'from-gray-600 to-gray-700'
+    },
+    {
+      id: 'creative',
+      name: t('style.creative.name'),
+      description: t('style.creative.desc'),
+      example: t('style.creative.example'),
+      emoji: '🌟',
+      color: 'from-orange-500 to-red-500'
+    },
+    {
+      id: 'friendly',
+      name: t('style.friendly.name'),
+      description: t('style.friendly.desc'),
+      example: t('style.friendly.example'),
+      emoji: '😊',
+      color: 'from-green-500 to-emerald-500'
+    },
+    {
+      id: 'minimalist',
+      name: t('style.minimalist.name'),
+      description: t('style.minimalist.desc'),
+      example: t('style.minimalist.example'),
+      emoji: '⚡',
+      color: 'from-slate-500 to-zinc-600'
+    }
+  ];
 
   const formatDate = (dateString: string, language: string) => {
     if (!dateString) return '';
@@ -168,23 +169,12 @@ const Index = () => {
   };
 
   const generateVacationMessage = (data: any, style: string, lang: string) => {
-    const {
-      startDate,
-      endDate,
-      destination,
-      activity,
-      recipients,
-      backupContact
-    } = data;
+    const { startDate, endDate, destination, activity, recipients, backupContact } = data;
 
     const formattedStartDate = formatDate(startDate, lang);
     const formattedEndDate = formatDate(endDate, lang);
     
-    const styleTemplates: {
-      [key: string]: {
-        [key: string]: (data: any) => string;
-      };
-    } = {
+    const styleTemplates: { [key: string]: { [key: string]: (data: any) => string } } = {
       'professional': {
         'fr': data => `Bonjour,
 
@@ -302,12 +292,27 @@ Thanks and see you soon! 💙`
     return template(data);
   };
 
-  return <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background">
+      <SEOHead />
       <div className="max-w-4xl mx-auto p-4 sm:p-6">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 relative">
-          {/* Language Selector - Top Right */}
-          <div className="absolute top-0 right-0">
+          {/* Language Selector and SEO Tools - Top Right */}
+          <div className="absolute top-0 right-0 flex gap-2">
+            <Dialog open={showSEOTools} onOpenChange={setShowSEOTools}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Outils SEO - Génération d'Images</DialogTitle>
+                </DialogHeader>
+                <SEOImageGenerator />
+              </DialogContent>
+            </Dialog>
             <LanguageSelector />
           </div>
           
@@ -432,7 +437,8 @@ Thanks and see you soon! 💙`
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default Index;

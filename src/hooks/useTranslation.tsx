@@ -14,8 +14,13 @@ const TranslationContext = createContext<TranslationContextType | undefined>(und
 
 const translations = {
   fr: {
+    // SEO
+    'seo.title': 'VacayGen - Générateur de Messages de Vacances IA Gratuit',
+    'seo.description': 'Créez des messages d\'absence professionnels et personnalisés en quelques secondes avec VacayGen. IA gratuite, 8 styles disponibles, compatible tous supports.',
+    'seo.keywords': 'message vacances, générateur IA, absence bureau, out of office, message automatique, IA gratuit, vacances, congés, message professionnel',
+
     // Header
-    'app.title': 'VacayBot',
+    'app.title': 'VacayGen',
     'app.subtitle': 'Générez le message de vacances parfait avec l\'IA. Professionnel, personnel ou créatif - trouvez le ton qui vous ressemble !',
     'app.badge.free': 'Gratuit',
     'app.badge.instant': 'Instantané',
@@ -125,8 +130,13 @@ const translations = {
     'footer.compatible': '🌍 Compatible toutes plateformes'
   },
   en: {
+    // SEO
+    'seo.title': 'VacayGen - Free AI Vacation Message Generator',
+    'seo.description': 'Create professional and personalized out-of-office messages in seconds with VacayGen. Free AI, 8 styles available, compatible with all platforms.',
+    'seo.keywords': 'vacation message, AI generator, out of office, automatic message, free AI, vacation, leave, professional message',
+
     // Header
-    'app.title': 'VacayBot',
+    'app.title': 'VacayGen',
     'app.subtitle': 'Generate the perfect vacation message with AI. Professional, personal, or creative - find the tone that suits you!',
     'app.badge.free': 'Free',
     'app.badge.instant': 'Instant',
