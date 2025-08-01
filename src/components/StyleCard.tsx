@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Fire, TrendingUp } from '@siimple/icons';
+import { Flame, TrendingUp } from 'lucide-react';
 
 interface StyleCardProps {
   style: {
@@ -51,7 +50,7 @@ const StyleCard = ({ style, isSelected, onSelect, onPreview }: StyleCardProps) =
           >
             {style.popularity === 'hot' ? (
               <>
-                <Fire className="h-3 w-3" />
+                <Flame className="h-3 w-3" />
                 HOT
               </>
             ) : (

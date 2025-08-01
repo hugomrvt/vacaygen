@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles } from 'lucide-react';
-import { Zap, CheckCircle, Refresh, Sparkles as SimleSparkles, Beach } from '@siimple/icons';
+import { RefreshCw, Sparkles, Zap } from 'lucide-react';
+import { CheckCircle, Refresh } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import StepIndicator from '@/components/StepIndicator';
@@ -10,6 +10,7 @@ import ModernVacationForm from '@/components/ModernVacationForm';
 import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
+import { Beach } from '@siimple/icons';
 
 const Index = () => {
   const { toast } = useToast();
@@ -380,7 +381,7 @@ Emergency contact: ${backupContact || '[name]'}`
                     </>
                   ) : (
                     <>
-                      <SimleSparkles className="mr-2 h-5 w-5" />
+                      <Sparkles className="mr-2 h-5 w-5" />
                       🚀 Créer mon message parfait !
                     </>
                   )}

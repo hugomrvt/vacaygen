@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calendar, MapPin, Activity, User } from '@siimple/icons';
+import { Calendar, MapPin, Activity, User } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
 import AnimatedPlaceholder from './AnimatedPlaceholder';

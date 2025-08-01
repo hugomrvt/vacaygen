@@ -1,6 +1,5 @@
 import React from 'react';
-import { Check } from 'lucide-react';
-import { Calendar, Users, Sparkles } from '@siimple/icons';
+import { Check, Calendar, Users, Sparkles } from 'lucide-react';
 
 interface StepIndicatorProps {
   currentStep: number;
