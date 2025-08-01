@@ -76,13 +76,29 @@ const ModernVacationForm = ({
                 <Label htmlFor="start-date" className="text-sm font-medium text-muted-foreground mb-2 block">
                   {t('form.dates.from')}
                 </Label>
-                <Input id="start-date" type="date" value={formData.startDate} onChange={e => handleInputChange('startDate', e.target.value)} className="bg-input border-border focus:border-primary focus:ring-primary/20" />
+                <Input 
+                  id="start-date" 
+                  type="date" 
+                  value={formData.startDate} 
+                  onChange={e => handleInputChange('startDate', e.target.value)} 
+                  className="bg-input border-border focus:border-primary focus:ring-primary/20 h-12 text-base touch-manipulation"
+                  aria-describedby="start-date-desc"
+                  autoComplete="off"
+                />
               </div>
               <div>
                 <Label htmlFor="end-date" className="text-sm font-medium text-muted-foreground mb-2 block">
                   {t('form.dates.to')}
                 </Label>
-                <Input id="end-date" type="date" value={formData.endDate} onChange={e => handleInputChange('endDate', e.target.value)} className="bg-input border-border focus:border-primary focus:ring-primary/20" />
+                <Input 
+                  id="end-date" 
+                  type="date" 
+                  value={formData.endDate} 
+                  onChange={e => handleInputChange('endDate', e.target.value)} 
+                  className="bg-input border-border focus:border-primary focus:ring-primary/20 h-12 text-base touch-manipulation"
+                  aria-describedby="end-date-desc"
+                  autoComplete="off"
+                />
               </div>
             </div>
 
