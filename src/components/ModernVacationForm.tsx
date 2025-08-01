@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Calendar, CalendarIcon, Users, MapPin, Activity, Camera, Utensils, Car, Music, Heart } from 'lucide-react';
 import { format } from 'date-fns';
@@ -16,14 +17,18 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 interface VacationFormData {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  startDate: string;
+  endDate: string;
   destination: string;
   activity: string;
-  companions: number;
-  budget: string;
-  interests: string[];
-  additionalInfo: string;
+  recipients: string[];
+  backupContact: string;
+}
+
+interface ModernVacationFormProps {
+  formData: VacationFormData;
+  setFormData: React.Dispatch<React.SetStateAction<VacationFormData>>;
+  currentStep: number;
 }
 
 const activityIcons: { [key: string]: React.ComponentType<any> } = {
@@ -36,19 +41,8 @@ const activityIcons: { [key: string]: React.ComponentType<any> } = {
   wellness: Heart,
 };
 
-export default function ModernVacationForm() {
+export default function ModernVacationForm({ formData, setFormData, currentStep }: ModernVacationFormProps) {
   const { t, language } = useTranslation();
-  const [formData, setFormData] = useState<VacationFormData>({
-    startDate: undefined,
-    endDate: undefined,
-    destination: '',
-    activity: '',
-    companions: 1,
-    budget: '',
-    interests: [],
-    additionalInfo: ''
-  });
-
   const [dateError, setDateError] = useState<string>('');
 
   const activityOptions = [
@@ -61,26 +55,8 @@ export default function ModernVacationForm() {
     { value: 'wellness', label: t('form.activity.wellness') }
   ];
 
-  const budgetOptions = [
-    { value: 'low', label: t('form.budget.low') },
-    { value: 'medium', label: t('form.budget.medium') },
-    { value: 'high', label: t('form.budget.high') },
-    { value: 'luxury', label: t('form.budget.luxury') }
-  ];
-
-  const interestsOptions = [
-    { value: 'monuments', label: t('form.interests.monuments') },
-    { value: 'museums', label: t('form.interests.museums') },
-    { value: 'restaurants', label: t('form.interests.restaurants') },
-    { value: 'nightlife', label: t('form.interests.nightlife') },
-    { value: 'shopping', label: t('form.interests.shopping') },
-    { value: 'nature', label: t('form.interests.nature') },
-    { value: 'beaches', label: t('form.interests.beaches') },
-    { value: 'adventure', label: t('form.interests.adventure') }
-  ];
-
-  const validateDates = (start: Date | undefined, end: Date | undefined) => {
-    if (start && end && end < start) {
+  const validateDates = (start: string, end: string) => {
+    if (start && end && new Date(end) < new Date(start)) {
       const errorMessage = language === 'fr' 
         ? 'La date de fin ne peut pas être antérieure à la date de début'
         : 'End date cannot be earlier than start date';
@@ -91,48 +67,33 @@ export default function ModernVacationForm() {
   };
 
   const handleDateChange = (field: 'startDate' | 'endDate', date: Date | undefined) => {
-    const newFormData = { ...formData, [field]: date };
-    setFormData(newFormData);
-    validateDates(
-      field === 'startDate' ? date : formData.startDate,
-      field === 'endDate' ? date : formData.endDate
-    );
-  };
-
-  const toggleInterest = (interest: string) => {
-    setFormData(prev => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter(i => i !== interest)
-        : [...prev.interests, interest]
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (dateError) return;
-    console.log('Form submitted:', formData);
+    if (date) {
+      const dateString = date.toISOString().split('T')[0];
+      const newFormData = { ...formData, [field]: dateString };
+      setFormData(newFormData);
+      validateDates(
+        field === 'startDate' ? dateString : formData.startDate,
+        field === 'endDate' ? dateString : formData.endDate
+      );
+    }
   };
 
   const locale = language === 'fr' ? fr : enUS;
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-          <Calendar className="w-6 h-6" />
-          {t('form.title')}
-        </CardTitle>
-      </CardHeader>
-      
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Dates Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">{t('form.dates')}</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-6">
+      {/* Step 1: Basic Information */}
+      {currentStep >= 1 && (
+        <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-primary" />
+              {t('form.dates')}
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Start Date */}
               <div className="space-y-2">
                 <Label>{t('form.dates.from')}</Label>
@@ -147,7 +108,7 @@ export default function ModernVacationForm() {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {formData.startDate ? (
-                        format(formData.startDate, "PPP", { locale })
+                        format(new Date(formData.startDate), "PPP", { locale })
                       ) : (
                         <span>{t('form.dates.selectStart')}</span>
                       )}
@@ -156,7 +117,7 @@ export default function ModernVacationForm() {
                   <PopoverContent className="w-auto p-0" align="start">
                     <CalendarComponent
                       mode="single"
-                      selected={formData.startDate}
+                      selected={formData.startDate ? new Date(formData.startDate) : undefined}
                       onSelect={(date) => handleDateChange('startDate', date)}
                       disabled={(date) => date < new Date()}
                       initialFocus
@@ -180,7 +141,7 @@ export default function ModernVacationForm() {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {formData.endDate ? (
-                        format(formData.endDate, "PPP", { locale })
+                        format(new Date(formData.endDate), "PPP", { locale })
                       ) : (
                         <span>{t('form.dates.selectEnd')}</span>
                       )}
@@ -189,9 +150,9 @@ export default function ModernVacationForm() {
                   <PopoverContent className="w-auto p-0" align="start">
                     <CalendarComponent
                       mode="single"
-                      selected={formData.endDate}
+                      selected={formData.endDate ? new Date(formData.endDate) : undefined}
                       onSelect={(date) => handleDateChange('endDate', date)}
-                      disabled={(date) => date < new Date() || (formData.startDate && date < formData.startDate)}
+                      disabled={(date) => date < new Date() || (formData.startDate && date < new Date(formData.startDate))}
                       initialFocus
                       className="p-3 pointer-events-auto"
                     />
@@ -204,124 +165,92 @@ export default function ModernVacationForm() {
                   <p className="text-sm text-destructive">{dateError}</p>
                 </div>
               )}
-            </CardContent>
-          </Card>
-
-          {/* Destination */}
-          <div className="space-y-2">
-            <Label htmlFor="destination" className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              {t('form.destination')}
-            </Label>
-            <Input
-              id="destination"
-              type="text"
-              placeholder={t('form.destination.placeholder')}
-              value={formData.destination}
-              onChange={(e) => setFormData(prev => ({ ...prev, destination: e.target.value }))}
-              required
-            />
-          </div>
-
-          {/* Activity */}
-          <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              <Activity className="w-4 h-4" />
-              {t('form.activity')}
-            </Label>
-            <Select value={formData.activity} onValueChange={(value) => setFormData(prev => ({ ...prev, activity: value }))}>
-              <SelectTrigger>
-                <SelectValue placeholder={t('form.activity.placeholder')} />
-              </SelectTrigger>
-              <SelectContent>
-                {activityOptions.map(option => {
-                  const IconComponent = activityIcons[option.value];
-                  return (
-                    <SelectItem key={option.value} value={option.value}>
-                      <div className="flex items-center gap-2">
-                        <IconComponent className="w-4 h-4" />
-                        {option.label}
-                      </div>
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Companions */}
-          <div className="space-y-2">
-            <Label htmlFor="companions" className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              {t('form.companions')}
-            </Label>
-            <Select value={formData.companions.toString()} onValueChange={(value) => setFormData(prev => ({ ...prev, companions: parseInt(value) }))}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {[1, 2, 3, 4, 5, 6].map(num => (
-                  <SelectItem key={num} value={num.toString()}>
-                    {num} {num === 1 ? t('form.companions.person') : t('form.companions.people')}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Budget */}
-          <div className="space-y-2">
-            <Label className="text-base font-medium">{t('form.budget')}</Label>
-            <Select value={formData.budget} onValueChange={(value) => setFormData(prev => ({ ...prev, budget: value }))}>
-              <SelectTrigger>
-                <SelectValue placeholder={t('form.budget.placeholder')} />
-              </SelectTrigger>
-              <SelectContent>
-                {budgetOptions.map(option => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Interests */}
-          <div className="space-y-3">
-            <Label className="text-base font-medium">{t('form.interests')}</Label>
-            <div className="flex flex-wrap gap-2">
-              {interestsOptions.map(interest => (
-                <Badge
-                  key={interest.value}
-                  variant={formData.interests.includes(interest.value) ? "default" : "outline"}
-                  className="cursor-pointer transition-colors"
-                  onClick={() => toggleInterest(interest.value)}
-                >
-                  {interest.label}
-                </Badge>
-              ))}
             </div>
-          </div>
 
-          <Separator />
+            {/* Destination */}
+            <div className="space-y-2">
+              <Label htmlFor="destination" className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                {t('form.destination')}
+              </Label>
+              <Input
+                id="destination"
+                type="text"
+                placeholder={t('form.destination.placeholder')}
+                value={formData.destination}
+                onChange={(e) => setFormData(prev => ({ ...prev, destination: e.target.value }))}
+              />
+            </div>
 
-          {/* Additional Info */}
-          <div className="space-y-2">
-            <Label htmlFor="additionalInfo">{t('form.additionalInfo')}</Label>
-            <Textarea
-              id="additionalInfo"
-              placeholder={t('form.additionalInfo.placeholder')}
-              value={formData.additionalInfo}
-              onChange={(e) => setFormData(prev => ({ ...prev, additionalInfo: e.target.value }))}
-              rows={4}
-            />
-          </div>
+            {/* Activity */}
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2">
+                <Activity className="w-4 h-4" />
+                {t('form.activity')}
+              </Label>
+              <Select value={formData.activity} onValueChange={(value) => setFormData(prev => ({ ...prev, activity: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder={t('form.activity.placeholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {activityOptions.map(option => {
+                    const IconComponent = activityIcons[option.value];
+                    return (
+                      <SelectItem key={option.value} value={option.value}>
+                        <div className="flex items-center gap-2">
+                          <IconComponent className="w-4 h-4" />
+                          {option.label}
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
-          <Button type="submit" className="w-full" size="lg" disabled={!!dateError}>
-            {t('form.submit')}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+      {/* Step 2: Recipients */}
+      {currentStep >= 2 && (
+        <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold flex items-center gap-2">
+              <Users className="w-5 h-5 text-primary" />
+              {t('step.recipients.title')}
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="space-y-4">
+            {/* Recipients */}
+            <div className="space-y-2">
+              <Label htmlFor="recipients">{t('form.recipients')}</Label>
+              <Textarea
+                id="recipients"
+                placeholder={t('form.recipients.placeholder')}
+                value={formData.recipients.join(', ')}
+                onChange={(e) => setFormData(prev => ({ 
+                  ...prev, 
+                  recipients: e.target.value.split(',').map(r => r.trim()).filter(r => r) 
+                }))}
+                rows={3}
+              />
+            </div>
+
+            {/* Backup Contact */}
+            <div className="space-y-2">
+              <Label htmlFor="backupContact">{t('form.backupContact')}</Label>
+              <Input
+                id="backupContact"
+                type="text"
+                placeholder={t('form.backupContact.placeholder')}
+                value={formData.backupContact}
+                onChange={(e) => setFormData(prev => ({ ...prev, backupContact: e.target.value }))}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 }
