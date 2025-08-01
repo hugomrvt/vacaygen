@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Calendar, Users, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import StepIndicator from '@/components/StepIndicator';
@@ -9,6 +9,7 @@ import ModernVacationForm from '@/components/ModernVacationForm';
 import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
+import DashboardCard from '@/components/DashboardCard';
 
 const Index = () => {
   const { toast } = useToast();
@@ -271,39 +272,69 @@ Thanks and see you soon! 💙`
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
-      <div className="max-w-4xl mx-auto p-6">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <div></div>
-            <div className="flex items-center gap-3">
-              <span className="text-5xl">🏖️</span>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">
-                {t('app.title')}
-              </h1>
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                <span className="text-2xl">🏖️</span>
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold gradient-text">
+                  {t('app.title')}
+                </h1>
+                <p className="text-muted-foreground">
+                  Générateur de messages de vacances intelligent
+                </p>
+              </div>
             </div>
-            <LanguageSelector />
+            
+            <div className="flex gap-2">
+              <Badge variant="secondary" className="bg-success/10 text-success border-success/20">
+                <Zap className="w-3 h-3 mr-1" />
+                Gratuit
+              </Badge>
+              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                <RefreshCw className="w-3 h-3 mr-1" />
+                Instantané
+              </Badge>
+            </div>
           </div>
           
-          <p className="text-xl text-gray-600 mb-4">
-            ✨ Créons ton message parfait ensemble !
-          </p>
-          
-          <div className="flex justify-center gap-3">
-            <Badge variant="secondary" className="bg-green-100 text-green-700 px-3 py-1">
-              <Zap className="w-4 h-4 mr-1" />
-              Gratuit
-            </Badge>
-            <Badge variant="secondary" className="bg-blue-100 text-blue-700 px-3 py-1">
-              <RefreshCw className="w-4 h-4 mr-1" />
-              Instantané
-            </Badge>
-          </div>
+          <LanguageSelector />
+        </div>
+
+        {/* Dashboard Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <DashboardCard
+            title="Messages Générés"
+            value="1,247"
+            subtitle="vs 1,156 le mois dernier"
+            trend={{ value: "7.8%", isPositive: true }}
+            icon={<MessageSquare className="w-4 h-4" />}
+          />
+          <DashboardCard
+            title="Utilisateurs Actifs"
+            value="342"
+            subtitle="dernière semaine"
+            trend={{ value: "15.2%", isPositive: true }}
+            icon={<Users className="w-4 h-4" />}
+          />
+          <DashboardCard
+            title="Taux de Satisfaction"
+            value="96.4%"
+            subtitle="basé sur 2,456 évaluations"
+            trend={{ value: "2.1%", isPositive: true }}
+            icon={<Sparkles className="w-4 h-4" />}
+          />
         </div>
 
         {/* Step Indicator */}
-        <StepIndicator currentStep={currentStep} totalSteps={3} steps={steps} />
+        <div className="mb-8">
+          <StepIndicator currentStep={currentStep} totalSteps={3} steps={steps} />
+        </div>
 
         {/* Main Content */}
         <div className="space-y-8">
@@ -317,33 +348,42 @@ Thanks and see you soon! 💙`
           {/* Style Selection */}
           {currentStep >= 3 && (
             <div className="space-y-6">
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  🎭 Quel style te ressemble ?
-                </h2>
-                <p className="text-gray-600">
-                  Survole les styles pour un aperçu instantané
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {styles.map((style) => (
-                  <StyleCard
-                    key={style.id}
-                    style={style}
-                    isSelected={selectedStyle === style.id}
-                    onSelect={() => setSelectedStyle(style.id)}
-                    onPreview={setPreviewMessage}
-                  />
-                ))}
-              </div>
+              <DashboardCard
+                title="Style de Message"
+                value={
+                  <div className="text-center">
+                    <h2 className="text-xl font-bold text-foreground mb-2">
+                      🎭 Quel style te ressemble ?
+                    </h2>
+                    <p className="text-muted-foreground text-sm">
+                      Survole les styles pour un aperçu instantané
+                    </p>
+                  </div>
+                }
+              >
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+                  {styles.map((style) => (
+                    <StyleCard
+                      key={style.id}
+                      style={style}
+                      isSelected={selectedStyle === style.id}
+                      onSelect={() => setSelectedStyle(style.id)}
+                      onPreview={setPreviewMessage}
+                    />
+                  ))}
+                </div>
+              </DashboardCard>
 
               {/* Preview Message */}
               {previewMessage && (
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-200">
-                  <p className="text-sm font-medium text-gray-700 mb-2">👀 Aperçu :</p>
-                  <p className="text-sm text-gray-600 italic">"{previewMessage}"</p>
-                </div>
+                <DashboardCard
+                  title="Aperçu du Style"
+                  value={
+                    <div className="glass-card rounded-lg p-4 mt-4">
+                      <p className="text-sm text-muted-foreground italic">"{previewMessage.slice(0, 150)}..."</p>
+                    </div>
+                  }
+                />
               )}
 
               {/* Generate Button */}
@@ -352,7 +392,8 @@ Thanks and see you soon! 💙`
                   id="generate-button"
                   onClick={handleGenerate} 
                   disabled={isGenerating}
-                  className="px-8 py-4 text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                  size="lg"
+                  className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-chart-3 hover:opacity-90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
                 >
                   {isGenerating ? (
                     <>
@@ -379,8 +420,8 @@ Thanks and see you soon! 💙`
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12 py-6 border-t border-gray-200">
-          <p className="text-gray-500">
+        <div className="text-center mt-12 py-6 border-t border-border">
+          <p className="text-muted-foreground">
             Créé avec ❤️ pour des messages de vacances mémorables
           </p>
         </div>
