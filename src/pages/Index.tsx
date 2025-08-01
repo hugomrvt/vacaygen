@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,13 +10,16 @@ import ModernVacationForm from '@/components/ModernVacationForm';
 import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
-
 const Index = () => {
-  const { toast } = useToast();
-  const { t, language } = useTranslation();
+  const {
+    toast
+  } = useToast();
+  const {
+    t,
+    language
+  } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [previewMessage, setPreviewMessage] = useState('');
-  
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
@@ -26,7 +28,6 @@ const Index = () => {
     recipients: [] as string[],
     backupContact: ''
   });
-  
   const [selectedStyle, setSelectedStyle] = useState('millennial-pro');
   const [generatedMessage, setGeneratedMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -40,73 +41,67 @@ const Index = () => {
       setTimeout(() => setCurrentStep(3), 800);
     }
   }, [formData, currentStep]);
-
-  const steps = [
-    { title: t('step.basic.title'), icon: 'calendar' },
-    { title: t('step.recipients.title'), icon: 'users' },
-    { title: t('step.style.title'), icon: 'sparkles' }
-  ];
-
-  const styles = [
-    {
-      id: 'millennial-pro',
-      name: t('style.millennial-pro.name'),
-      description: t('style.millennial-pro.desc'),
-      example: t('style.millennial-pro.example'),
-      emoji: '🚀',
-      color: 'from-blue-500 to-cyan-500',
-      popularity: 'hot' as const
-    },
-    {
-      id: 'gen-z',
-      name: t('style.gen-z.name'),
-      description: t('style.gen-z.desc'),
-      example: t('style.gen-z.example'),
-      emoji: '✨',
-      color: 'from-pink-500 to-purple-500',
-      popularity: 'trending' as const
-    },
-    {
-      id: 'professional',
-      name: t('style.professional.name'),
-      description: t('style.professional.desc'),
-      example: t('style.professional.example'),
-      emoji: '💼',
-      color: 'from-gray-600 to-gray-700'
-    },
-    {
-      id: 'creative',
-      name: t('style.creative.name'),
-      description: t('style.creative.desc'),
-      example: t('style.creative.example'),
-      emoji: '🌟',
-      color: 'from-orange-500 to-red-500'
-    },
-    {
-      id: 'friendly',
-      name: t('style.friendly.name'),
-      description: t('style.friendly.desc'),
-      example: t('style.friendly.example'),
-      emoji: '😊',
-      color: 'from-green-500 to-emerald-500'
-    },
-    {
-      id: 'minimalist',
-      name: t('style.minimalist.name'),
-      description: t('style.minimalist.desc'),
-      example: t('style.minimalist.example'),
-      emoji: '⚡',
-      color: 'from-slate-500 to-zinc-600'
-    }
-  ];
-
+  const steps = [{
+    title: t('step.basic.title'),
+    icon: 'calendar'
+  }, {
+    title: t('step.recipients.title'),
+    icon: 'users'
+  }, {
+    title: t('step.style.title'),
+    icon: 'sparkles'
+  }];
+  const styles = [{
+    id: 'millennial-pro',
+    name: t('style.millennial-pro.name'),
+    description: t('style.millennial-pro.desc'),
+    example: t('style.millennial-pro.example'),
+    emoji: '🚀',
+    color: 'from-blue-500 to-cyan-500',
+    popularity: 'hot' as const
+  }, {
+    id: 'gen-z',
+    name: t('style.gen-z.name'),
+    description: t('style.gen-z.desc'),
+    example: t('style.gen-z.example'),
+    emoji: '✨',
+    color: 'from-pink-500 to-purple-500',
+    popularity: 'trending' as const
+  }, {
+    id: 'professional',
+    name: t('style.professional.name'),
+    description: t('style.professional.desc'),
+    example: t('style.professional.example'),
+    emoji: '💼',
+    color: 'from-gray-600 to-gray-700'
+  }, {
+    id: 'creative',
+    name: t('style.creative.name'),
+    description: t('style.creative.desc'),
+    example: t('style.creative.example'),
+    emoji: '🌟',
+    color: 'from-orange-500 to-red-500'
+  }, {
+    id: 'friendly',
+    name: t('style.friendly.name'),
+    description: t('style.friendly.desc'),
+    example: t('style.friendly.example'),
+    emoji: '😊',
+    color: 'from-green-500 to-emerald-500'
+  }, {
+    id: 'minimalist',
+    name: t('style.minimalist.name'),
+    description: t('style.minimalist.desc'),
+    example: t('style.minimalist.example'),
+    emoji: '⚡',
+    color: 'from-slate-500 to-zinc-600'
+  }];
   const handleGenerate = async () => {
     if (!formData.startDate || !formData.endDate || !formData.destination) {
       // Shake animation for missing fields
       const button = document.getElementById('generate-button');
       button?.classList.add('animate-bounce');
       setTimeout(() => button?.classList.remove('animate-bounce'), 600);
-      
       toast({
         title: t('toast.missing.title'),
         description: t('toast.missing.desc'),
@@ -114,15 +109,13 @@ const Index = () => {
       });
       return;
     }
-
     setIsGenerating(true);
     setCurrentStep(3);
-    
     setTimeout(() => {
       const message = generateVacationMessage(formData, selectedStyle, language);
       setGeneratedMessage(message);
       setIsGenerating(false);
-      
+
       // Confetti effect
       const celebrateGeneration = () => {
         for (let i = 0; i < 50; i++) {
@@ -139,9 +132,7 @@ const Index = () => {
           }, i * 100);
         }
       };
-      
       celebrateGeneration();
-      
       toast({
         title: t('toast.generated.title'),
         description: t('toast.generated.desc'),
@@ -149,13 +140,22 @@ const Index = () => {
       });
     }, 2500);
   };
-
   const generateVacationMessage = (data: any, style: string, lang: string) => {
-    const { startDate, endDate, destination, activity, recipients, backupContact } = data;
-    
-    const styleTemplates: { [key: string]: { [key: string]: (data: any) => string } } = {
+    const {
+      startDate,
+      endDate,
+      destination,
+      activity,
+      recipients,
+      backupContact
+    } = data;
+    const styleTemplates: {
+      [key: string]: {
+        [key: string]: (data: any) => string;
+      };
+    } = {
       'professional': {
-        'fr': (data) => `Bonjour,
+        'fr': data => `Bonjour,
 
 Je serai absent(e) du ${startDate} au ${endDate} pour mes congés annuels.
 
@@ -164,7 +164,7 @@ Durant cette période, je ne consulterai pas mes emails de manière régulière.
 Je reprendrai mes fonctions le [date de retour] et traiterai votre demande dans les plus brefs délais.
 
 Cordialement,`,
-        'en': (data) => `Hello,
+        'en': data => `Hello,
 
 I will be out of office from ${startDate} to ${endDate} for my annual leave.
 
@@ -174,9 +174,8 @@ I will resume work on [return date] and will address your request as soon as pos
 
 Best regards,`
       },
-
       'millennial-pro': {
-        'fr': (data) => `Salut l'équipe ! 👋
+        'fr': data => `Salut l'équipe ! 👋
 
 Je pars me ressourcer ${destination ? `en ${destination}` : ''} du ${startDate} au ${endDate} ! ${activity ? `Au programme : ${activity.toLowerCase()}` : ''} 🌴
 
@@ -187,7 +186,7 @@ Pour tout ce qui ne peut pas attendre mon retour, ${backupContact || '[nom du co
 Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
 
 À bientôt,`,
-        'en': (data) => `Hey team! 👋
+        'en': data => `Hey team! 👋
 
 I'm going to recharge ${destination ? `in ${destination}` : ''} from ${startDate} to ${endDate}! ${activity ? `Planning to: ${activity.toLowerCase()}` : ''} 🌴
 
@@ -199,9 +198,8 @@ Can't wait to come back with tons of energy to tackle what's next! 🚀
 
 See you soon,`
       },
-
       'gen-z': {
-        'fr': (data) => `no cap je pars en vacances bestie 🏖️
+        'fr': data => `no cap je pars en vacances bestie 🏖️
 
 dates : ${startDate} → ${endDate}
 localisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
@@ -210,7 +208,7 @@ je serai en mode touch grass donc rip emails 💀
 si c'est vraiment important contactez ${backupContact || '[la personne responsable]'}
 
 see you on the flip side ! ✨`,
-        'en': (data) => `no cap going on vacation bestie 🏖️
+        'en': data => `no cap going on vacation bestie 🏖️
 
 dates: ${startDate} → ${endDate}
 location: ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
@@ -220,9 +218,8 @@ if it's actually important contact ${backupContact || '[the responsible person]'
 
 see you on the flip side! ✨`
       },
-
       'creative': {
-        'fr': (data) => `🌟 BREAKING NEWS 🌟
+        'fr': data => `🌟 BREAKING NEWS 🌟
 
 Votre humble collègue s'évapore temporairement de l'écosystème digital du ${startDate} au ${endDate} !
 
@@ -233,7 +230,7 @@ Votre humble collègue s'évapore temporairement de l'écosystème digital du ${
 En cas de situation critique nécessitant mon expertise légendaire, ${backupContact || '[votre sauveur désigné]'} prendra le relais avec brio !
 
 Retour prévu avec 200% d'inspiration en plus ✨`,
-        'en': (data) => `🌟 BREAKING NEWS 🌟
+        'en': data => `🌟 BREAKING NEWS 🌟
 
 Your humble colleague is temporarily vanishing from the digital ecosystem from ${startDate} to ${endDate}!
 
@@ -245,9 +242,8 @@ In case of critical situation requiring my legendary expertise, ${backupContact 
 
 Expected return with 200% more inspiration ✨`
       },
-
       'friendly': {
-        'fr': (data) => `Coucou ! 🌞
+        'fr': data => `Coucou ! 🌞
 
 Je pars en vacances du ${startDate} au ${endDate} ${destination ? `direction ${destination}` : ''} !
 
@@ -256,7 +252,7 @@ ${activity ? `J'ai hâte de ${activity.toLowerCase()}` : 'J\'ai vraiment hâte d
 Si c'est urgent, n'hésitez pas à écrire à ${backupContact || '[mon collègue]'} qui pourra vous aider !
 
 Merci et à bientôt ! 💙`,
-        'en': (data) => `Hi there! 🌞
+        'en': data => `Hi there! 🌞
 
 I'm going on vacation from ${startDate} to ${endDate} ${destination ? `heading to ${destination}` : ''}!
 
@@ -267,21 +263,18 @@ If it's urgent, don't hesitate to write to ${backupContact || '[my colleague]'} 
 Thanks and see you soon! 💙`
       },
       'minimalist': {
-        'fr': (data) => `Vacances du ${startDate} au ${endDate}.
+        'fr': data => `Vacances du ${startDate} au ${endDate}.
 
 Contact d'urgence : ${backupContact || '[nom]'}`,
-        'en': (data) => `Vacation from ${startDate} to ${endDate}.
+        'en': data => `Vacation from ${startDate} to ${endDate}.
 
 Emergency contact: ${backupContact || '[name]'}`
       }
     };
-
     const template = styleTemplates[style]?.[lang] || styleTemplates['millennial-pro'][lang];
     return template(data);
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
@@ -317,26 +310,16 @@ Emergency contact: ${backupContact || '[name]'}`
 
         {/* Step Indicator */}
         <div className="mb-8">
-          <StepIndicator 
-            currentStep={currentStep} 
-            totalSteps={3} 
-            steps={steps} 
-            messageGenerated={!!generatedMessage}
-          />
+          <StepIndicator currentStep={currentStep} totalSteps={3} steps={steps} messageGenerated={!!generatedMessage} />
         </div>
 
         {/* Main Content */}
         <div className="space-y-8">
           {/* Form Steps */}
-          <ModernVacationForm 
-            formData={formData} 
-            setFormData={setFormData}
-            currentStep={currentStep}
-          />
+          <ModernVacationForm formData={formData} setFormData={setFormData} currentStep={currentStep} />
 
           {/* Style Selection */}
-          {currentStep >= 3 && (
-            <div className="space-y-6">
+          {currentStep >= 3 && <div className="space-y-6">
               <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-bold text-foreground mb-2">
@@ -348,49 +331,27 @@ Emergency contact: ${backupContact || '[name]'}`
                 </div>
                 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {styles.map((style) => (
-                    <StyleCard
-                      key={style.id}
-                      style={style}
-                      isSelected={selectedStyle === style.id}
-                      onSelect={() => setSelectedStyle(style.id)}
-                    />
-                  ))}
+                  {styles.map(style => <StyleCard key={style.id} style={style} isSelected={selectedStyle === style.id} onSelect={() => setSelectedStyle(style.id)} />)}
                 </div>
               </div>
 
 
               {/* Generate Button */}
               <div className="text-center">
-                <Button 
-                  id="generate-button"
-                  onClick={handleGenerate} 
-                  disabled={isGenerating}
-                  size="lg"
-                  className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 text-primary-foreground rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                >
-                  {isGenerating ? (
-                    <>
+                <Button id="generate-button" onClick={handleGenerate} disabled={isGenerating} size="lg" className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-slate-50">
+                  {isGenerating ? <>
                       <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
                       {t('generate.button.loading')}
-                    </>
-                  ) : (
-                    <>
+                    </> : <>
                       <Sparkles className="mr-2 h-5 w-5" />
                       {t('generate.button')}
-                    </>
-                  )}
+                    </>}
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
 
           {/* Generated Message */}
-          <GeneratedMessage 
-            message={generatedMessage}
-            isGenerating={isGenerating}
-            onRegenerate={handleGenerate}
-          />
+          <GeneratedMessage message={generatedMessage} isGenerating={isGenerating} onRegenerate={handleGenerate} />
         </div>
 
         {/* Footer */}
@@ -400,8 +361,6 @@ Emergency contact: ${backupContact || '[name]'}`
           </p>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
