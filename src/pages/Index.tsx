@@ -285,7 +285,7 @@ Emergency contact: ${backupContact || '[name]'}`
               </div>
               <div>
                 <h1 className="text-3xl font-bold gradient-text">
-                  {t('app.title')}
+                  VacayGen
                 </h1>
                 <p className="text-muted-foreground">
                   {t('app.subtitle')}
