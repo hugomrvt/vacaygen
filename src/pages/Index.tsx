@@ -66,7 +66,7 @@ const Index = () => {
             </div>
             
             <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-malinton font-bold gradient-text">
                 VacayGen
               </h1>
               <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
