@@ -80,7 +80,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="start-date" className="text-sm font-medium text-muted-foreground mb-2 block">
-                  Du
+                  {t('form.dates.from')}
                 </Label>
                 <Input
                   id="start-date"
@@ -92,7 +92,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
               </div>
               <div>
                 <Label htmlFor="end-date" className="text-sm font-medium text-muted-foreground mb-2 block">
-                  Au
+                  {t('form.dates.to')}
                 </Label>
                 <Input
                   id="end-date"
