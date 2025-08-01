@@ -1,23 +1,23 @@
 import { useState } from 'react';
-import { generateMessages, VacationData } from '@/lib/messageTemplates';
+import { generateRandomMessage, VacationData } from '@/lib/messageTemplates';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export interface UseMessageGeneratorReturn {
-  generatedMessages: string[];
+  generatedMessage: string;
   isGenerating: boolean;
-  generateVacationMessages: (data: VacationData, style: string) => Promise<void>;
+  generateVacationMessage: (data: VacationData, style: string) => Promise<void>;
   totalGeneratedMessages: number;
 }
 
 export function useMessageGenerator(): UseMessageGeneratorReturn {
-  const [generatedMessages, setGeneratedMessages] = useState<string[]>([]);
+  const [generatedMessage, setGeneratedMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [totalGeneratedMessages, setTotalGeneratedMessages] = useState(0);
   const { toast } = useToast();
   const { t, language } = useTranslation();
 
-  const generateVacationMessages = async (data: VacationData, style: string) => {
+  const generateVacationMessage = async (data: VacationData, style: string) => {
     if (!data.startDate || !data.endDate || !data.destination) {
       toast({
         title: t('toast.missing.title'),
@@ -31,10 +31,10 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
     
     // Simulate generation delay
     setTimeout(() => {
-      const messages = generateMessages(data, style, language);
-      setGeneratedMessages(messages);
+      const message = generateRandomMessage(data, style, language);
+      setGeneratedMessage(message);
       setIsGenerating(false);
-      setTotalGeneratedMessages(prev => prev + messages.length);
+      setTotalGeneratedMessages(prev => prev + 1);
 
       // Success feedback
       toast({
@@ -65,9 +65,9 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
   };
 
   return {
-    generatedMessages,
+    generatedMessage,
     isGenerating,
-    generateVacationMessages,
+    generateVacationMessage,
     totalGeneratedMessages
   };
 }

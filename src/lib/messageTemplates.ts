@@ -198,10 +198,11 @@ export const generateMessage = (data: VacationData, style: string, language: str
   return template(data);
 };
 
-// Generate 10 alternative messages for the selected style
-export const generateMessages = (data: VacationData, style: string, language: string): string[] => {
+// Generate a random message from available variations
+export const generateRandomMessage = (data: VacationData, style: string, language: string): string => {
   const variations = generateVariations(data, style, language);
-  return variations;
+  const randomIndex = Math.floor(Math.random() * variations.length);
+  return variations[randomIndex];
 };
 
 // Create variations for each style

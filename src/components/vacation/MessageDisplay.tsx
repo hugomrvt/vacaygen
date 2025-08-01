@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Copy, RefreshCw, Check } from 'lucide-react';
+import { Copy, RefreshCw } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useToast } from '@/hooks/use-toast';
 
 interface MessageDisplayProps {
-  messages: string[];
+  message: string;
   isGenerating: boolean;
   onRegenerate: () => void;
 }
 
-export function MessageDisplay({ messages, isGenerating, onRegenerate }: MessageDisplayProps) {
+export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageDisplayProps) {
   const { t } = useTranslation();
   const { toast } = useToast();
-  const [selectedMessage, setSelectedMessage] = useState<number>(0);
 
-  const handleCopy = async (messageText: string) => {
+  const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(messageText);
+      await navigator.clipboard.writeText(message);
       toast({
         title: t('toast.copied.title'),
         description: t('toast.copied.desc.text'),
@@ -48,7 +47,7 @@ export function MessageDisplay({ messages, isGenerating, onRegenerate }: Message
             {t('generated.generating')}
           </CardTitle>
           <CardDescription>
-            Génération de 10 alternatives personnalisées...
+            Génération d'une nouvelle version...
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -60,7 +59,7 @@ export function MessageDisplay({ messages, isGenerating, onRegenerate }: Message
     );
   }
 
-  if (!messages || messages.length === 0) {
+  if (!message) {
     return (
       <Card className="glass-card opacity-60">
         <CardHeader>
@@ -75,20 +74,16 @@ export function MessageDisplay({ messages, isGenerating, onRegenerate }: Message
     );
   }
 
-  const currentMessage = messages[selectedMessage];
-  const stats = getMessageStats(currentMessage);
+  const stats = getMessageStats(message);
 
   return (
     <Card className="glass-card">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-xl">
-            10 Alternatives Générées
+            Message Généré
           </CardTitle>
           <div className="flex gap-2">
-            <Badge variant="secondary" className="text-xs">
-              {selectedMessage + 1}/10
-            </Badge>
             <Badge variant="secondary" className="text-xs">
               {stats.words} mots
             </Badge>
@@ -98,45 +93,23 @@ export function MessageDisplay({ messages, isGenerating, onRegenerate }: Message
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6">
-        
-        {/* Message Selector */}
-        <div className="space-y-3">
-          <h4 className="font-medium text-sm text-foreground">
-            Choisissez votre version préférée :
-          </h4>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-            {messages.map((_, index) => (
-              <Button
-                key={index}
-                variant={selectedMessage === index ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedMessage(index)}
-                className="text-xs"
-              >
-                {selectedMessage === index && <Check className="mr-1 h-3 w-3" />}
-                Version {index + 1}
-              </Button>
-            ))}
-          </div>
-        </div>
-
+      <CardContent className="space-y-4">
         {/* Message Content */}
         <div className="bg-muted/30 rounded-lg p-4 border">
           <pre className="whitespace-pre-wrap text-sm text-foreground font-mono">
-            {currentMessage}
+            {message}
           </pre>
         </div>
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
           <Button 
-            onClick={() => handleCopy(currentMessage)}
+            onClick={handleCopy}
             variant="default"
             className="flex-1"
           >
             <Copy className="mr-2 h-4 w-4" />
-            Copier cette version
+            Copier le message
           </Button>
           <Button 
             onClick={onRegenerate}
@@ -144,7 +117,7 @@ export function MessageDisplay({ messages, isGenerating, onRegenerate }: Message
             className="flex-1"
           >
             <RefreshCw className="mr-2 h-4 w-4" />
-            Générer 10 nouvelles
+            Générer une nouvelle version
           </Button>
         </div>
 
@@ -154,7 +127,7 @@ export function MessageDisplay({ messages, isGenerating, onRegenerate }: Message
             💡 Conseil d'utilisation
           </h4>
           <div className="space-y-1 text-xs text-muted-foreground">
-            <p>• Testez plusieurs versions pour voir laquelle convient le mieux</p>
+            <p>• Cliquez sur "Générer une nouvelle version" pour obtenir une variante</p>
             <p>• Personnalisez le message selon votre contexte professionnel</p>
             <p>• N'oubliez pas d'ajouter votre signature !</p>
           </div>
