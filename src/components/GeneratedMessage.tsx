@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,11 +5,13 @@ import { Badge } from '@/components/ui/badge';
 import { Copy, RefreshCw, Sparkles, Check, Share, Download, Edit } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
+
 interface GeneratedMessageProps {
   message: string;
   isGenerating: boolean;
   onRegenerate: () => void;
 }
+
 const GeneratedMessage = ({
   message,
   isGenerating,
@@ -24,6 +25,7 @@ const GeneratedMessage = ({
   } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [copyFormat, setCopyFormat] = useState<'text' | 'html' | 'markdown'>('text');
+
   const handleCopy = async (format: 'text' | 'html' | 'markdown' = 'text') => {
     if (!message) return;
     let textToCopy = message;
@@ -52,8 +54,10 @@ const GeneratedMessage = ({
       });
     }
   };
+
   const wordCount = message ? message.split(/\s+/).length : 0;
   const charCount = message ? message.length : 0;
+
   return <Card className="w-full shadow-lg border-0 glass-card">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center justify-between text-foreground">
@@ -152,4 +156,5 @@ const GeneratedMessage = ({
       </CardContent>
     </Card>;
 };
+
 export default GeneratedMessage;
