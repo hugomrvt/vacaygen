@@ -261,7 +261,41 @@ const generateVariations = (data: VacationData, style: string, language: string)
     ];
   }
 
-  // For other styles, create basic variations
+  if (style === 'gen-z' && language === 'fr') {
+    return [
+      `no cap je pars en vacances bestie 🏖️\n\ndates : ${startDate} → ${endDate}\nlocalisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}\n\nje serai en mode touch grass donc rip emails 💀\n${backup ? `si c'est vraiment important contactez ${backup}` : ''}\n\nsee you on the flip side ! ✨`,
+      
+      `yo c'est parti pour mes main character holidays ✨\n\n${startDate} jusqu'au ${endDate} je vais être off the grid\n${destination ? `direction ${destination}` : 'destination mystère'} ${activity ? `pour du ${activity.toLowerCase()} premium` : ''}\n\nmode airplane activé, zero stress 🛩️\n${backup ? `${backup} prend le lead si jamais` : ''}\n\nback soon avec la main character energy ! 💅`,
+      
+      `besties je décroche officiellement ! 🌴\n\nvacances du ${startDate} au ${endDate}\n${destination ? `${destination} here I come` : 'somewhere aesthetic'} ${activity ? `mission ${activity.toLowerCase()}` : ''}\n\nphone en mode ne pas déranger, je vis ma meilleure vie 📱✋\n${backup ? `pour les trucs urgents → ${backup}` : ''}\n\nreviens rechargée à 200% ! ⚡`,
+      
+      `aight imma head out pour mes holidays 🚁\n\n${startDate} - ${endDate} = mode déconnexion totale\nlocation : ${destination || 'paradise vibes'} ${activity ? `(${activity.toLowerCase()} szn)` : ''}\n\nzero chance que je check mes mails sorry not sorry 💅\n${backup ? `${backup} has got your back` : ''}\n\ncatch me when I catch me ! 🎭`,
+      
+      `breaking news : je pars recharger mes batteries ⚡\n\noff du ${startDate} au ${endDate}\n${destination ? `cap sur ${destination}` : 'destination secrète'} ${activity ? `pour vivre mon ${activity.toLowerCase()} moment` : ''}\n\nmode détox digital activé, mes mails vont pleurer 😭\n${backup ? `emergency only → ${backup}` : ''}\n\nback with that glow up energy ! ✨`,
+      
+      `plot twist je m'évapore pour mes vacances ! 👻\n\ndisparition prévue : ${startDate} → ${endDate}\n${destination ? `téléportation vers ${destination}` : 'coordonnées classifiées'} ${activity ? `mission ${activity.toLowerCase()}` : ''}\n\nemail game weak pendant cette période 📧❌\n${backup ? `pour les vrais urgences ${backup} est dispo` : ''}\n\nreviens en mode boss babe ! 👑`,
+      
+      `bestie je vais touch some grass pendant mes vacances 🌱\n\n${startDate} until ${endDate} je suis MIA\n${destination ? `vibes check à ${destination}` : 'secret location'} ${activity ? `${activity.toLowerCase()} core activated` : ''}\n\nsorry mes emails vont être left on read 📱\n${backup ? `real emergencies only → ${backup}` : ''}\n\nback avec cette summer glow ! ☀️`,
+      
+      `period pooh je pars en vacances ! 🍯\n\nvacay dates : ${startDate} to ${endDate}\n${destination ? `main character moment à ${destination}` : 'living my best life somewhere'} ${activity ? `(${activity.toLowerCase()} princess era)` : ''}\n\ndigital detox in progress, emails can wait bestie 💋\n${backup ? `urgent stuff ? hit up ${backup}` : ''}\n\ncoming back as my higher self ! 🦋`,
+      
+      `no thoughts head empty just vacances ! 🧠✨\n\n${startDate} → ${endDate} je suis en mode ghost\n${destination ? `spawning à ${destination}` : 'coordinates unknown'} ${activity ? `${activity.toLowerCase()} main quest` : ''}\n\nmails = ignored, grass = touched 🌿\n${backup ? `${backup} prend la suite pour les trucs sérieux` : ''}\n\nrevient avec cette healing girl energy ! 🌸`,
+      
+      `slay bestie je file pour mes well deserved holidays ! 💫\n\nabsente du ${startDate} au ${endDate}\n${destination ? `off to ${destination}` : 'mystery destination unlocked'} ${activity ? `pour du ${activity.toLowerCase()} premium content` : ''}\n\nsorry not sorry mes emails vont être ghosted 👻\n${backup ? `emergency contact : ${backup} (use wisely)` : ''}\n\nback stronger than a bad bitch ! 💪✨`
+    ];
+  }
+  // For other styles, generate real variations instead of numbered versions
+  if (style === 'creative' && language === 'fr') {
+    return [
+      `🌟 BREAKING NEWS 🌟\n\nVotre humble collègue s'évapore temporairement de l'écosystème digital du ${startDate} au ${endDate} !\n\n📍 Localisation : ${destination || 'Quelque part où le wifi est optionnel'}\n🎯 Mission : ${activity || 'Recharger les batteries créatives'}\n📧 Statut emails : Mode hibernation activé\n\n${backup ? `En cas de situation critique nécessitant mon expertise légendaire, ${backup} prendra le relais avec brio !` : ''}\n\nRetour prévu le ${endDate} avec 200% d'inspiration en plus ✨`,
+      
+      `🚀 ALERTE SPATIALE 🚀\n\nMission d'exploration personnelle du ${startDate} au ${endDate}\n\n🌍 Coordonnées : ${destination || 'Planète Détente'}\n⚡ Objectif : ${activity || 'Rechargement des super-pouvoirs'}\n📬 Communication : Fréquence radio coupée\n\n${backup ? `Agent ${backup} assure la mission de sauvegarde !` : ''}\n\nRejoins la base avec des idées révolutionnaires ! 💡`,
+      
+      `🎭 ACTE I : L'ÉVASION 🎭\n\nLe héros disparaît du ${startDate} au ${endDate}\n\n🗺️ Décor : ${destination || 'Un lieu mystérieux'}\n🎬 Action : ${activity || 'Quête de régénération'}\n📱 Technologie : Temporairement désactivée\n\n${backup ? `${backup} endosse le rôle principal en cas d'urgence !` : ''}\n\nFin de l'acte prévue avec un plot twist énergisant ! 🌟`
+    ];
+  }
+
+  // For remaining styles, create basic variations without version numbers
   const baseMessage = messageTemplates[style]?.[language]?.(data) || messageTemplates['millennial-pro'][language](data);
-  return Array(10).fill(null).map((_, index) => `${baseMessage} (Version ${index + 1})`);
+  return Array(10).fill(null).map(() => baseMessage);
 };
