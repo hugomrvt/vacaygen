@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CalendarIcon, MapPinIcon, ActivityIcon, UserIcon } from '@siimple/icons';
+import { Calendar, MapPin, Activity, User } from '@siimple/icons';
 import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
 import AnimatedPlaceholder from './AnimatedPlaceholder';
@@ -85,7 +84,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
           currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''
         }`}>
           <div className="flex items-center gap-2 mb-6">
-            <CalendarIcon className="h-5 w-5 text-primary" />
+            <Calendar className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">Informations de Base</h3>
           </div>
           
@@ -119,7 +118,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
 
             <div className="space-y-2">
               <Label htmlFor="destination" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <MapPinIcon className="h-4 w-4 text-primary" />
+                <MapPin className="h-4 w-4 text-primary" />
                 Destination
               </Label>
               <Input
@@ -136,7 +135,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
 
             <div className="space-y-2">
               <Label htmlFor="activity" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <ActivityIcon className="h-4 w-4 text-green-500" />
+                <Activity className="h-4 w-4 text-green-500" />
                 Activité principale (optionnel)
               </Label>
               <Input
@@ -160,7 +159,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
           currentStep === 2 ? 'ring-2 ring-primary shadow-2xl' : ''
         }`}>
           <div className="flex items-center gap-2 mb-6">
-            <UserIcon className="h-5 w-5 text-primary" />
+            <User className="h-5 w-5 text-primary" />
             <h3 className="text-lg font-semibold text-foreground">Destinataires et Contact</h3>
           </div>
           
@@ -176,7 +175,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
 
             <div className="space-y-2">
               <Label htmlFor="backup" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <UserIcon className="h-4 w-4 text-orange-500" />
+                <User className="h-4 w-4 text-orange-500" />
                 Contact de substitution (optionnel)
               </Label>
               <Input

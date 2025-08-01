@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Check } from 'lucide-react';
-import { CalendarIcon, UsersIcon, SparklesIcon } from '@siimple/icons';
+import { Calendar, Users, Sparkles } from '@siimple/icons';
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -11,8 +10,8 @@ interface StepIndicatorProps {
 
 const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorProps) => {
   const getStepIcon = (index: number) => {
-    const icons = [CalendarIcon, UsersIcon, SparklesIcon];
-    const IconComponent = icons[index] || CalendarIcon;
+    const icons = [Calendar, Users, Sparkles];
+    const IconComponent = icons[index] || Calendar;
     return <IconComponent className="h-5 w-5" />;
   };
 
