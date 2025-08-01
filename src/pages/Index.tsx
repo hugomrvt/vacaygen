@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CalendarDays, MapPin, Users, Copy, RefreshCw, Sparkles } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
-import VacationForm from '@/components/VacationForm';
-import StyleSelector from '@/components/StyleSelector';
+import StepIndicator from '@/components/StepIndicator';
+import ModernVacationForm from '@/components/ModernVacationForm';
+import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
 
 const Index = () => {
   const { toast } = useToast();
   const { t, language } = useTranslation();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [previewMessage, setPreviewMessage] = useState('');
+  
   const [formData, setFormData] = useState({
     startDate: '',
     endDate: '',
@@ -21,12 +24,87 @@ const Index = () => {
     recipients: [] as string[],
     backupContact: ''
   });
+  
   const [selectedStyle, setSelectedStyle] = useState('millennial-pro');
   const [generatedMessage, setGeneratedMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Auto-progress to next step based on form completion
+  useEffect(() => {
+    if (formData.startDate && formData.endDate && formData.destination && currentStep === 1) {
+      setTimeout(() => setCurrentStep(2), 800);
+    }
+    if (formData.recipients.length > 0 && currentStep === 2) {
+      setTimeout(() => setCurrentStep(3), 800);
+    }
+  }, [formData, currentStep]);
+
+  const steps = [
+    { title: 'Infos de base', icon: '📅' },
+    { title: 'Destinataires', icon: '👥' },
+    { title: 'Style & Message', icon: '✨' }
+  ];
+
+  const styles = [
+    {
+      id: 'millennial-pro',
+      name: t('style.millennial-pro.name'),
+      description: t('style.millennial-pro.desc'),
+      example: t('style.millennial-pro.example'),
+      emoji: '🚀',
+      color: 'from-blue-500 to-cyan-500',
+      popularity: 'hot' as const
+    },
+    {
+      id: 'gen-z',
+      name: t('style.gen-z.name'),
+      description: t('style.gen-z.desc'),
+      example: t('style.gen-z.example'),
+      emoji: '✨',
+      color: 'from-pink-500 to-purple-500',
+      popularity: 'trending' as const
+    },
+    {
+      id: 'professional',
+      name: t('style.professional.name'),
+      description: t('style.professional.desc'),
+      example: t('style.professional.example'),
+      emoji: '💼',
+      color: 'from-gray-600 to-gray-700'
+    },
+    {
+      id: 'creative',
+      name: t('style.creative.name'),
+      description: t('style.creative.desc'),
+      example: t('style.creative.example'),
+      emoji: '🌟',
+      color: 'from-orange-500 to-red-500'
+    },
+    {
+      id: 'friendly',
+      name: t('style.friendly.name'),
+      description: t('style.friendly.desc'),
+      example: t('style.friendly.example'),
+      emoji: '😊',
+      color: 'from-green-500 to-emerald-500'
+    },
+    {
+      id: 'minimalist',
+      name: t('style.minimalist.name'),
+      description: t('style.minimalist.desc'),
+      example: t('style.minimalist.example'),
+      emoji: '⚡',
+      color: 'from-slate-500 to-zinc-600'
+    }
+  ];
+
   const handleGenerate = async () => {
     if (!formData.startDate || !formData.endDate || !formData.destination) {
+      // Shake animation for missing fields
+      const button = document.getElementById('generate-button');
+      button?.classList.add('animate-bounce');
+      setTimeout(() => button?.classList.remove('animate-bounce'), 600);
+      
       toast({
         title: t('toast.missing.title'),
         description: t('toast.missing.desc'),
@@ -36,18 +114,38 @@ const Index = () => {
     }
 
     setIsGenerating(true);
+    setCurrentStep(3);
     
-    // Simulate AI generation with realistic delay
     setTimeout(() => {
       const message = generateVacationMessage(formData, selectedStyle, language);
       setGeneratedMessage(message);
       setIsGenerating(false);
+      
+      // Confetti effect
+      const celebrateGeneration = () => {
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.innerHTML = ['🎉', '✨', '🎊', '⭐'][Math.floor(Math.random() * 4)];
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+            confetti.style.zIndex = '1000';
+            confetti.className = 'animate-bounce';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+          }, i * 100);
+        }
+      };
+      
+      celebrateGeneration();
+      
       toast({
         title: t('toast.generated.title'),
         description: t('toast.generated.desc'),
         variant: "default"
       });
-    }, 2000);
+    }, 2500);
   };
 
   const generateVacationMessage = (data: any, style: string, lang: string) => {
@@ -100,25 +198,25 @@ Can't wait to come back with tons of energy to tackle what's next! 🚀
 See you soon,`
       },
 
-      'personal': {
-        'fr': (data) => `Hey ! 😊
+      'gen-z': {
+        'fr': (data) => `no cap je pars en vacances bestie 🏖️
 
-Je m'absente quelques jours du ${startDate} au ${endDate} pour ${destination ? `profiter de ${destination}` : 'des vacances bien méritées'} !
+dates : ${startDate} → ${endDate}
+localisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
-Je ne serai pas disponible pendant cette période, mais promis je reviens avec plein d'histoires à raconter ${activity ? `et peut-être quelques photos de ${activity.toLowerCase()}` : ''} ! 📸
+je serai en mode touch grass donc rip emails 💀
+si c'est vraiment important contactez ${backupContact || '[la personne responsable]'}
 
-En cas d'urgence, vous pouvez contacter ${backupContact || '[personne de contact]'}.
+see you on the flip side ! ✨`,
+        'en': (data) => `no cap going on vacation bestie 🏖️
 
-À très vite !`,
-        'en': (data) => `Hey! 😊
+dates: ${startDate} → ${endDate}
+location: ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
-I'm taking a few days off from ${startDate} to ${endDate} to ${destination ? `enjoy ${destination}` : 'have some well-deserved vacation'}!
+I'll be touching grass so rip emails 💀
+if it's actually important contact ${backupContact || '[the responsible person]'}
 
-I won't be available during this time, but I promise I'll come back with lots of stories to tell ${activity ? `and maybe some photos of ${activity.toLowerCase()}` : ''}! 📸
-
-In case of emergency, you can contact ${backupContact || '[contact person]'}.
-
-See you very soon!`
+see you on the flip side! ✨`
       },
 
       'creative': {
@@ -144,61 +242,6 @@ Your humble colleague is temporarily vanishing from the digital ecosystem from $
 In case of critical situation requiring my legendary expertise, ${backupContact || '[your designated savior]'} will take over brilliantly!
 
 Expected return with 200% more inspiration ✨`
-      },
-
-      'minimalist': {
-        'fr': (data) => `Absent(e) : ${startDate} - ${endDate}
-Lieu : ${destination || 'En congés'}
-Contact urgent : ${backupContact || '[contact]'}
-
-De retour bientôt.`,
-        'en': (data) => `Away: ${startDate} - ${endDate}
-Location: ${destination || 'On vacation'}
-Urgent contact: ${backupContact || '[contact]'}
-
-Back soon.`
-      },
-
-      'gen-z': {
-        'fr': (data) => `no cap je pars en vacances bestie 🏖️
-
-dates : ${startDate} → ${endDate}
-localisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
-
-je serai en mode touch grass donc rip emails 💀
-si c'est vraiment important contactez ${backupContact || '[la personne responsable]'}
-
-see you on the flip side ! ✨`,
-        'en': (data) => `no cap going on vacation bestie 🏖️
-
-dates: ${startDate} → ${endDate}
-location: ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
-
-I'll be touching grass so rip emails 💀
-if it's actually important contact ${backupContact || '[the responsible person]'}
-
-see you on the flip side! ✨`
-      },
-
-      'formal': {
-        'fr': (data) => `Madame, Monsieur,
-
-J'ai l'honneur de vous informer que je serai en congés du ${startDate} au ${endDate} inclus.
-
-Durant cette période d'absence, je ne serai pas en mesure de consulter ma messagerie électronique ni de répondre aux sollicitations professionnelles.
-
-En cas de nécessité absolue, je vous prie de bien vouloir vous adresser à ${backupContact || 'mon suppléant désigné'} qui se fera un plaisir de vous assister.
-
-Je vous remercie de votre compréhension et vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.`,
-        'en': (data) => `Dear Sir/Madam,
-
-I have the honor to inform you that I will be on leave from ${startDate} to ${endDate} inclusive.
-
-During this period of absence, I will not be able to check my email or respond to professional requests.
-
-In case of absolute necessity, please contact ${backupContact || 'my designated substitute'} who will be pleased to assist you.
-
-Thank you for your understanding and please accept, Sir/Madam, the expression of my distinguished salutations.`
       },
 
       'friendly': {
@@ -228,91 +271,118 @@ Thanks and see you soon! 💙`
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 p-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
+      <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="flex justify-between items-start mb-4">
+          <div className="flex justify-between items-center mb-6">
             <div></div>
-            <div className="inline-flex items-center gap-2">
-              <span className="text-4xl">🏖️</span>
+            <div className="flex items-center gap-3">
+              <span className="text-5xl">🏖️</span>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-orange-500 bg-clip-text text-transparent">
                 {t('app.title')}
               </h1>
             </div>
             <LanguageSelector />
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {t('app.subtitle')}
+          
+          <p className="text-xl text-gray-600 mb-4">
+            ✨ Créons ton message parfait ensemble !
           </p>
-          <div className="flex items-center justify-center gap-4 mt-4">
-            <Badge variant="secondary" className="bg-green-100 text-green-700">
-              {t('app.badge.free')}
+          
+          <div className="flex justify-center gap-3">
+            <Badge variant="secondary" className="bg-green-100 text-green-700 px-3 py-1">
+              <Zap className="w-4 h-4 mr-1" />
+              Gratuit
             </Badge>
-            <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-              {t('app.badge.instant')}
-            </Badge>
-            <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-              {t('app.badge.styles')}
+            <Badge variant="secondary" className="bg-blue-100 text-blue-700 px-3 py-1">
+              <RefreshCw className="w-4 h-4 mr-1" />
+              Instantané
             </Badge>
           </div>
         </div>
 
+        {/* Step Indicator */}
+        <StepIndicator currentStep={currentStep} totalSteps={3} steps={steps} />
+
         {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Left Column - Form */}
-          <div className="lg:col-span-1">
-            <VacationForm formData={formData} setFormData={setFormData} />
-            
-            <div className="mt-6">
-              <Button 
-                onClick={handleGenerate} 
-                disabled={isGenerating}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-semibold"
-              >
-                {isGenerating ? (
-                  <>
-                    <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                    {t('generate.button.loading')}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="mr-2 h-5 w-5" />
-                    {t('generate.button')}
-                  </>
-                )}
-              </Button>
+        <div className="space-y-8">
+          {/* Form Steps */}
+          <ModernVacationForm 
+            formData={formData} 
+            setFormData={setFormData}
+            currentStep={currentStep}
+          />
+
+          {/* Style Selection */}
+          {currentStep >= 3 && (
+            <div className="space-y-6">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  🎭 Quel style te ressemble ?
+                </h2>
+                <p className="text-gray-600">
+                  Survole les styles pour un aperçu instantané
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {styles.map((style) => (
+                  <StyleCard
+                    key={style.id}
+                    style={style}
+                    isSelected={selectedStyle === style.id}
+                    onSelect={() => setSelectedStyle(style.id)}
+                    onPreview={setPreviewMessage}
+                  />
+                ))}
+              </div>
+
+              {/* Preview Message */}
+              {previewMessage && (
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-200">
+                  <p className="text-sm font-medium text-gray-700 mb-2">👀 Aperçu :</p>
+                  <p className="text-sm text-gray-600 italic">"{previewMessage}"</p>
+                </div>
+              )}
+
+              {/* Generate Button */}
+              <div className="text-center">
+                <Button 
+                  id="generate-button"
+                  onClick={handleGenerate} 
+                  disabled={isGenerating}
+                  className="px-8 py-4 text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  {isGenerating ? (
+                    <>
+                      <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                      ✨ Création magique en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2 h-5 w-5" />
+                      🚀 Créer mon message parfait !
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Middle Column - Styles */}
-          <div className="lg:col-span-1">
-            <StyleSelector 
-              selectedStyle={selectedStyle} 
-              onStyleSelect={setSelectedStyle} 
-            />
-          </div>
-
-          {/* Right Column - Generated Message */}
-          <div className="lg:col-span-1">
-            <GeneratedMessage 
-              message={generatedMessage}
-              isGenerating={isGenerating}
-              onRegenerate={handleGenerate}
-            />
-          </div>
+          {/* Generated Message */}
+          <GeneratedMessage 
+            message={generatedMessage}
+            isGenerating={isGenerating}
+            onRegenerate={handleGenerate}
+          />
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12 py-8 border-t border-gray-200">
-          <p className="text-gray-500 mb-2">
-            {t('footer.created')}
+        <div className="text-center mt-12 py-6 border-t border-gray-200">
+          <p className="text-gray-500">
+            Créé avec ❤️ pour des messages de vacances mémorables
           </p>
-          <div className="flex justify-center gap-6 text-sm text-gray-400">
-            <span>{t('footer.secure')}</span>
-            <span>{t('footer.instant')}</span>
-            <span>{t('footer.compatible')}</span>
-          </div>
         </div>
       </div>
     </div>
