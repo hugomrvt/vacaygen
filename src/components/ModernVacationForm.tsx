@@ -1,251 +1,252 @@
-import React, { useState } from 'react';
-import { Calendar, CalendarIcon, Users, MapPin, Activity, Camera, Utensils, Car, Music, Heart } from 'lucide-react';
-import { format } from 'date-fns';
-import { fr, enUS } from 'date-fns/locale';
-import { useTranslation } from '../hooks/useTranslation';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Calendar as CalendarIcon, MapPin, Activity, User, Users, Handshake, Briefcase, Globe, AlertCircle } from 'lucide-react';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
-
-interface VacationFormData {
-  startDate: string;
-  endDate: string;
-  destination: string;
-  activity: string;
-  recipients: string[];
-  backupContact: string;
-}
+import AnimatedPlaceholder from './AnimatedPlaceholder';
 
 interface ModernVacationFormProps {
-  formData: VacationFormData;
-  setFormData: React.Dispatch<React.SetStateAction<VacationFormData>>;
+  formData: {
+    startDate: string;
+    endDate: string;
+    destination: string;
+    activity: string;
+    recipients: string[];
+    backupContact: string;
+  };
+  setFormData: (data: any) => void;
   currentStep: number;
 }
 
-const activityIcons: {
-  [key: string]: React.ComponentType<any>;
-} = {
-  beach: Camera,
-  city: MapPin,
-  nature: Activity,
-  food: Utensils,
-  road: Car,
-  culture: Music,
-  wellness: Heart
-};
-
-export default function ModernVacationForm({
+const ModernVacationForm = ({
   formData,
   setFormData,
   currentStep
-}: ModernVacationFormProps) {
-  const { t, language } = useTranslation();
-  const [dateError, setDateError] = useState<string>('');
+}: ModernVacationFormProps) => {
+  const {
+    t,
+    tArray,
+    language
+  } = useTranslation();
 
-  const activityOptions = [
-    {
-      id: 'beach',
-      label: t('form.activity.beach'),
-      icon: Camera,
-      color: 'from-blue-400 to-cyan-500'
-    },
-    {
-      id: 'city',
-      label: t('form.activity.city'),
-      icon: MapPin,
-      color: 'from-gray-400 to-gray-600'
-    },
-    {
-      id: 'nature',
-      label: t('form.activity.nature'),
-      icon: Activity,
-      color: 'from-green-400 to-emerald-500'
-    },
-    {
-      id: 'food',
-      label: t('form.activity.food'),
-      icon: Utensils,
-      color: 'from-orange-400 to-red-500'
-    },
-    {
-      id: 'road',
-      label: t('form.activity.road'),
-      icon: Car,
-      color: 'from-yellow-400 to-orange-500'
-    },
-    {
-      id: 'culture',
-      label: t('form.activity.culture'),
-      icon: Music,
-      color: 'from-purple-400 to-pink-500'
-    },
-    {
-      id: 'wellness',
-      label: t('form.activity.wellness'),
-      icon: Heart,
-      color: 'from-pink-400 to-rose-500'
-    }
-  ];
-
-  const validateDates = (start: string, end: string) => {
-    if (start && end && new Date(end) < new Date(start)) {
-      const errorMessage = language === 'fr' ? 'La date de fin ne peut pas être antérieure à la date de début' : 'End date cannot be earlier than start date';
-      setDateError(errorMessage);
-    } else {
-      setDateError('');
-    }
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({
+      ...formData,
+      [field]: value
+    });
   };
 
   const handleDateChange = (field: 'startDate' | 'endDate', date: Date | undefined) => {
     if (date) {
-      const dateString = date.toISOString().split('T')[0];
-      const newFormData = {
+      const formattedDate = format(date, 'yyyy-MM-dd');
+      setFormData({
         ...formData,
-        [field]: dateString
-      };
-      setFormData(newFormData);
-      validateDates(field === 'startDate' ? dateString : formData.startDate, field === 'endDate' ? dateString : formData.endDate);
+        [field]: formattedDate
+      });
     }
   };
 
-  const handleActivityToggle = (activityId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      activity: activityId
-    }));
+  const handleRecipientsToggle = (recipient: string) => {
+    const updatedRecipients = formData.recipients.includes(recipient) ? formData.recipients.filter(r => r !== recipient) : [...formData.recipients, recipient];
+    setFormData({
+      ...formData,
+      recipients: updatedRecipients
+    });
   };
 
-  const locale = language === 'fr' ? fr : enUS;
+  // Validation des dates
+  const isDateRangeValid = () => {
+    if (!formData.startDate || !formData.endDate) return true;
+    return new Date(formData.endDate) >= new Date(formData.startDate);
+  };
 
-  return (
-    <div className="space-y-6">
-      {/* Step 1: Basic Information */}
-      {currentStep >= 1 && (
-        <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-primary" />
-              {t('form.dates')}
-            </CardTitle>
-          </CardHeader>
+  const getDateErrorMessage = () => {
+    if (language === 'fr') {
+      return "La date de fin ne peut pas être antérieure à la date de début";
+    } else {
+      return "End date cannot be earlier than start date";
+    }
+  };
+
+  const formatDateForDisplay = (dateString: string) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    return format(date, 'PPP', { 
+      locale: language === 'fr' ? fr : undefined 
+    });
+  };
+
+  const recipientOptions = [{
+    id: 'team',
+    label: t('form.recipients.team'),
+    icon: Users,
+    color: 'from-blue-500 to-blue-600'
+  }, {
+    id: 'clients',
+    label: t('form.recipients.clients'),
+    icon: Handshake,
+    color: 'from-purple-500 to-purple-600'
+  }, {
+    id: 'management',
+    label: t('form.recipients.management'),
+    icon: Briefcase,
+    color: 'from-green-500 to-green-600'
+  }, {
+    id: 'partners',
+    label: t('form.recipients.partners'),
+    icon: Globe,
+    color: 'from-orange-500 to-orange-600'
+  }];
+
+  const destinationPlaceholders = tArray('form.destination.examples');
+  const activityPlaceholders = tArray('form.activity.examples');
+
+  return <div className="space-y-6">
+      {/* Étape 1: Dates et Destination */}
+      {currentStep >= 1 && <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
+          <div className="flex items-center gap-2 mb-6">
+            <CalendarIcon className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">Basic information</h3>
+          </div>
           
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Start Date */}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>{t('form.dates.from')}</Label>
+                <Label className="text-sm font-medium text-muted-foreground">
+                  {t('form.dates.from')}
+                </Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !formData.startDate && "text-muted-foreground")}>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-12",
+                        !formData.startDate && "text-muted-foreground"
+                      )}
+                    >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.startDate ? format(new Date(formData.startDate), "PPP", {
-                    locale
-                  }) : <span>{t('form.dates.selectStart')}</span>}
+                      {formData.startDate ? formatDateForDisplay(formData.startDate) : 
+                        <span>{t('form.dates.selectStart') || 'Sélectionner une date'}</span>
+                      }
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <CalendarComponent mode="single" selected={formData.startDate ? new Date(formData.startDate) : undefined} onSelect={date => handleDateChange('startDate', date)} disabled={date => date < new Date()} initialFocus className="p-3 pointer-events-auto" />
+                    <Calendar
+                      mode="single"
+                      selected={formData.startDate ? new Date(formData.startDate) : undefined}
+                      onSelect={(date) => handleDateChange('startDate', date)}
+                      initialFocus
+                      className="pointer-events-auto"
+                      locale={language === 'fr' ? fr : undefined}
+                    />
                   </PopoverContent>
                 </Popover>
               </div>
-
-              {/* End Date */}
+              
               <div className="space-y-2">
-                <Label>{t('form.dates.to')}</Label>
+                <Label className="text-sm font-medium text-muted-foreground">
+                  {t('form.dates.to')}
+                </Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !formData.endDate && "text-muted-foreground")}>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal h-12",
+                        !formData.endDate && "text-muted-foreground"
+                      )}
+                    >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.endDate ? format(new Date(formData.endDate), "PPP", {
-                    locale
-                  }) : <span>{t('form.dates.selectEnd')}</span>}
+                      {formData.endDate ? formatDateForDisplay(formData.endDate) : 
+                        <span>{t('form.dates.selectEnd') || 'Sélectionner une date'}</span>
+                      }
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <CalendarComponent mode="single" selected={formData.endDate ? new Date(formData.endDate) : undefined} onSelect={date => handleDateChange('endDate', date)} disabled={date => date < new Date() || formData.startDate && date < new Date(formData.startDate)} initialFocus className="p-3 pointer-events-auto" />
+                    <Calendar
+                      mode="single"
+                      selected={formData.endDate ? new Date(formData.endDate) : undefined}
+                      onSelect={(date) => handleDateChange('endDate', date)}
+                      initialFocus
+                      className="pointer-events-auto"
+                      locale={language === 'fr' ? fr : undefined}
+                      disabled={(date) => {
+                        // Désactiver les dates antérieures à la date de début si elle est sélectionnée
+                        if (formData.startDate) {
+                          return date < new Date(formData.startDate);
+                        }
+                        return false;
+                      }}
+                    />
                   </PopoverContent>
                 </Popover>
               </div>
-
-              {dateError && <div className="col-span-full">
-                  <p className="text-sm text-destructive">{dateError}</p>
-                </div>}
             </div>
 
-            {/* Destination */}
+            {/* Message d'erreur pour les dates */}
+            {formData.startDate && formData.endDate && !isDateRangeValid() && (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                <AlertCircle className="h-4 w-4 text-destructive flex-shrink-0" />
+                <span className="text-sm text-destructive font-medium">
+                  {getDateErrorMessage()}
+                </span>
+              </div>
+            )}
+
             <div className="space-y-2">
-              <Label htmlFor="destination" className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
+              <Label htmlFor="destination" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                <MapPin className="h-4 w-4 text-primary" />
                 {t('form.destination')}
               </Label>
-              <Input 
-                id="destination" 
-                type="text" 
-                placeholder={t('form.destination.placeholder')} 
-                value={formData.destination} 
-                onChange={e => setFormData(prev => ({
-                  ...prev,
-                  destination: e.target.value
-                }))} 
-              />
+              <Input id="destination" placeholder="" value={formData.destination} onChange={e => handleInputChange('destination', e.target.value)} className="bg-input border-border focus:border-primary focus:ring-primary/20" />
+              <div className="text-xs text-muted-foreground ml-1">
+                {t('form.example')} <AnimatedPlaceholder placeholders={destinationPlaceholders} />
+              </div>
             </div>
 
-            {/* Activity Selection */}
             <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Activity className="w-4 h-4" />
+              <Label htmlFor="activity" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                <Activity className="h-4 w-4 text-green-500" />
                 {t('form.activity')}
               </Label>
-              <TogglePills
-                options={activityOptions}
-                selectedOptions={formData.activity ? [formData.activity] : []}
-                onToggle={handleActivityToggle}
-                multiSelect={false}
-              />
+              <Input id="activity" placeholder="" value={formData.activity} onChange={e => handleInputChange('activity', e.target.value)} className="bg-input border-border focus:border-primary focus:ring-primary/20" />
+              <div className="text-xs text-muted-foreground ml-1">
+                {t('form.example')} <AnimatedPlaceholder placeholders={activityPlaceholders} />
+              </div>
             </div>
-            
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </div>}
 
-      {/* Step 2: Recipients */}
-      {currentStep >= 2 && <Card className="glass-card border border-border/20 bg-card/50 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary" />
-              {t('step.recipients.title')}
-            </CardTitle>
-          </CardHeader>
+      {/* Étape 2: Destinataires et Contact */}
+      {currentStep >= 2 && <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 2 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
+          <div className="flex items-center gap-2 mb-6">
+            <User className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">{t('form.recipients.section')}</h3>
+          </div>
           
-          <CardContent className="space-y-4">
-            {/* Recipients */}
-            <div className="space-y-2">
-              <Label htmlFor="recipients">{t('form.recipients')}</Label>
-              <Textarea id="recipients" placeholder={t('form.recipients.placeholder')} value={formData.recipients.join(', ')} onChange={e => setFormData(prev => ({
-            ...prev,
-            recipients: e.target.value.split(',').map(r => r.trim()).filter(r => r)
-          }))} rows={3} />
+          <div className="space-y-6">
+            <div>
+              <h4 className="text-sm font-medium text-muted-foreground mb-4">{t('form.recipients.question')}</h4>
+              <TogglePills options={recipientOptions} selectedOptions={formData.recipients} onToggle={handleRecipientsToggle} />
             </div>
 
-            {/* Backup Contact */}
             <div className="space-y-2">
-              <Label htmlFor="backupContact">{t('form.backupContact')}</Label>
-              <Input id="backupContact" type="text" placeholder={t('form.backupContact.placeholder')} value={formData.backupContact} onChange={e => setFormData(prev => ({
-            ...prev,
-            backupContact: e.target.value
-          }))} />
+              <Label htmlFor="backup" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                <User className="h-4 w-4 text-orange-500" />
+                {t('form.backup')}
+              </Label>
+              <Input id="backup" placeholder={t('form.backup.placeholder')} value={formData.backupContact} onChange={e => handleInputChange('backupContact', e.target.value)} className="bg-input border-border focus:border-primary focus:ring-primary/20" />
             </div>
-          </CardContent>
-        </Card>}
-    </div>
-  );
-}
+          </div>
+        </div>}
+    </div>;
+};
+
+export default ModernVacationForm;
