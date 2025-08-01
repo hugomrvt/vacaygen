@@ -57,7 +57,7 @@ const GeneratedMessage = ({
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center justify-between text-foreground">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">✨</span>
+            <Sparkles className="h-6 w-6 text-primary" />
             {t('generated.title')}
           </div>
           {message && <div className="flex gap-2 text-xs">
