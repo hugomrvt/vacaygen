@@ -21,7 +21,7 @@ const iconMap = {
 
 export function StepIndicator({ currentStep, totalSteps, steps, messageGenerated }: StepIndicatorProps) {
   return (
-    <div className="flex items-center justify-between mb-8">
+    <div className="flex items-center justify-center gap-4 mb-8">
       {steps.map((step, index) => {
         const stepNumber = index + 1;
         const isCompleted = stepNumber < currentStep || (stepNumber === totalSteps && messageGenerated);
