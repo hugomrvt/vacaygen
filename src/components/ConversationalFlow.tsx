@@ -6,6 +6,8 @@ import ChatBubble from './ChatBubble';
 import QuestionStep from './QuestionStep';
 import StyleCard from './StyleCard';
 import GeneratedMessage from './GeneratedMessage';
+import FreeChatInput from './FreeChatInput';
+import BotResponseHandler from './BotResponseHandler';
 
 interface ConversationalFlowProps {
   onMessageGenerated?: (message: string) => void;
@@ -14,7 +16,7 @@ interface ConversationalFlowProps {
 const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => {
   const { t, language } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
-  const [conversation, setConversation] = useState<Array<{ type: 'bot' | 'user'; message: string }>>([]);
+  const [conversation, setConversation] = useState<Array<{ type: 'bot' | 'user'; message: string; isFreeChat?: boolean }>>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [formData, setFormData] = useState({
     startDate: '',
@@ -27,6 +29,7 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
   });
   const [generatedMessage, setGeneratedMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [waitingForStructuredResponse, setWaitingForStructuredResponse] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const steps = [
@@ -137,16 +140,39 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
     }
   }, []);
 
-  const addBotMessage = (message: string, delay = 1200) => {
+  const addBotMessage = (message: string, delay = 1200, isFreeChat = false) => {
     setIsTyping(true);
     setTimeout(() => {
-      setConversation(prev => [...prev, { type: 'bot', message }]);
+      setConversation(prev => [...prev, { type: 'bot', message, isFreeChat }]);
       setIsTyping(false);
+      if (!isFreeChat) {
+        setWaitingForStructuredResponse(true);
+      }
     }, delay);
   };
 
-  const addUserMessage = (message: string) => {
-    setConversation(prev => [...prev, { type: 'user', message }]);
+  const addUserMessage = (message: string, isFreeChat = false) => {
+    setConversation(prev => [...prev, { type: 'user', message, isFreeChat }]);
+    if (!isFreeChat) {
+      setWaitingForStructuredResponse(false);
+    }
+  };
+
+  const handleFreeMessage = (message: string) => {
+    // Ajouter le message de l'utilisateur
+    addUserMessage(message, true);
+    
+    // Générer une réponse du bot
+    const botResponse = BotResponseHandler({
+      userMessage: message,
+      currentStep,
+      formData
+    });
+    
+    // Ajouter la réponse du bot après un délai
+    setTimeout(() => {
+      addBotMessage(botResponse, 1200, true);
+    }, 600);
   };
 
   const handleAnswer = (field: string, value: any, displayValue?: string) => {
@@ -249,6 +275,21 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
         {isTyping && <ChatBubble type="bot" message="" isTyping />}
       </div>
 
+      {/* Free Chat Input - Always visible except when generating/complete */}
+      {!generatedMessage && (
+        <div className="mb-6">
+          <FreeChatInput 
+            onSendMessage={handleFreeMessage}
+            isDisabled={isTyping || isGenerating}
+            placeholder={
+              waitingForStructuredResponse 
+                ? "Réponds à la question ci-dessus ou pose-moi une question..." 
+                : "Pose-moi une question ou discute librement..."
+            }
+          />
+        </div>
+      )}
+
       {/* Current Question */}
       {currentStepData && currentStep > 1 && currentStep <= steps.length && !isGenerating && !generatedMessage && !isTyping && (
         <div className="mb-6 animate-fade-in">
@@ -312,6 +353,7 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
               });
               setGeneratedMessage('');
               setIsGenerating(false);
+              setWaitingForStructuredResponse(false);
             }}
             className="gap-2"
           >
