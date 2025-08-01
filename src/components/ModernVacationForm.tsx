@@ -1,10 +1,12 @@
+
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calendar, MapPin, Activity, User, Users, Handshake, Briefcase, Globe } from 'lucide-react';
+import { Calendar, MapPin, Activity, User, Users, Handshake, Briefcase, Globe, AlertCircle } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
 import AnimatedPlaceholder from './AnimatedPlaceholder';
+
 interface ModernVacationFormProps {
   formData: {
     startDate: string;
@@ -17,6 +19,7 @@ interface ModernVacationFormProps {
   setFormData: (data: any) => void;
   currentStep: number;
 }
+
 const ModernVacationForm = ({
   formData,
   setFormData,
@@ -24,14 +27,17 @@ const ModernVacationForm = ({
 }: ModernVacationFormProps) => {
   const {
     t,
-    tArray
+    tArray,
+    language
   } = useTranslation();
+
   const handleInputChange = (field: string, value: string) => {
     setFormData({
       ...formData,
       [field]: value
     });
   };
+
   const handleRecipientsToggle = (recipient: string) => {
     const updatedRecipients = formData.recipients.includes(recipient) ? formData.recipients.filter(r => r !== recipient) : [...formData.recipients, recipient];
     setFormData({
@@ -39,6 +45,21 @@ const ModernVacationForm = ({
       recipients: updatedRecipients
     });
   };
+
+  // Validation des dates
+  const isDateRangeValid = () => {
+    if (!formData.startDate || !formData.endDate) return true;
+    return new Date(formData.endDate) >= new Date(formData.startDate);
+  };
+
+  const getDateErrorMessage = () => {
+    if (language === 'fr') {
+      return "La date de fin ne peut pas être antérieure à la date de début";
+    } else {
+      return "End date cannot be earlier than start date";
+    }
+  };
+
   const recipientOptions = [{
     id: 'team',
     label: t('form.recipients.team'),
@@ -60,8 +81,10 @@ const ModernVacationForm = ({
     icon: Globe,
     color: 'from-orange-500 to-orange-600'
   }];
+
   const destinationPlaceholders = tArray('form.destination.examples');
   const activityPlaceholders = tArray('form.activity.examples');
+
   return <div className="space-y-6">
       {/* Étape 1: Dates et Destination */}
       {currentStep >= 1 && <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
@@ -101,6 +124,16 @@ const ModernVacationForm = ({
                 />
               </div>
             </div>
+
+            {/* Message d'erreur pour les dates */}
+            {formData.startDate && formData.endDate && !isDateRangeValid() && (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                <AlertCircle className="h-4 w-4 text-destructive flex-shrink-0" />
+                <span className="text-sm text-destructive font-medium">
+                  {getDateErrorMessage()}
+                </span>
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="destination" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -150,4 +183,5 @@ const ModernVacationForm = ({
         </div>}
     </div>;
 };
+
 export default ModernVacationForm;
