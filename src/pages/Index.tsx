@@ -23,15 +23,7 @@ const Index = () => {
   const vacationForm = useVacationForm();
   const messageGenerator = useMessageGenerator();
 
-  // Auto-progress to next step based on form completion
-  useEffect(() => {
-    if (vacationForm.isBasicInfoComplete && currentStep === 1) {
-      setTimeout(() => setCurrentStep(2), 800);
-    }
-    if (vacationForm.isRecipientsComplete && currentStep === 2) {
-      setTimeout(() => setCurrentStep(3), 800);
-    }
-  }, [vacationForm.isBasicInfoComplete, vacationForm.isRecipientsComplete, currentStep]);
+  // Remove auto-progress - users will control navigation with buttons
 
   const steps = [
     { title: t('step.basic.title'), icon: 'calendar' },
@@ -103,7 +95,11 @@ const Index = () => {
         {/* Main Content */}
         <div className="space-y-6 sm:space-y-8">
           {/* Form Steps */}
-          <VacationForm form={vacationForm} currentStep={currentStep} />
+          <VacationForm 
+            form={vacationForm} 
+            currentStep={currentStep} 
+            onNextStep={() => setCurrentStep(prev => Math.min(prev + 1, 3))}
+          />
 
           {/* Style Selection */}
           {currentStep >= 3 && (

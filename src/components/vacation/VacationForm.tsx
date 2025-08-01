@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
@@ -12,9 +13,10 @@ import AnimatedPlaceholder from '../AnimatedPlaceholder';
 interface VacationFormProps {
   form: UseVacationFormReturn;
   currentStep: number;
+  onNextStep?: () => void;
 }
 
-export function VacationForm({ form, currentStep }: VacationFormProps) {
+export function VacationForm({ form, currentStep, onNextStep }: VacationFormProps) {
   const { t, language, tArray } = useTranslation();
   const { formData, updateField, toggleRecipient } = form;
 
@@ -104,6 +106,18 @@ export function VacationForm({ form, currentStep }: VacationFormProps) {
               />
             </div>
           </div>
+
+          {/* Continue Button */}
+          {form.isBasicInfoComplete && onNextStep && (
+            <div className="flex justify-end pt-4">
+              <Button 
+                onClick={onNextStep}
+                className="px-6 py-2"
+              >
+                {t('button.continue')} →
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
     );
@@ -142,6 +156,18 @@ export function VacationForm({ form, currentStep }: VacationFormProps) {
               className="w-full"
             />
           </div>
+
+          {/* Continue Button */}
+          {form.isRecipientsComplete && onNextStep && (
+            <div className="flex justify-end pt-4">
+              <Button 
+                onClick={onNextStep}
+                className="px-6 py-2"
+              >
+                {t('button.continue')} →
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
     );
