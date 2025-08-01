@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Check, Calendar, Users, Sparkles } from 'lucide-react';
 interface StepIndicatorProps {
@@ -58,7 +59,7 @@ const StepIndicator = ({
       
       {/* Progress bar */}
       <div className="w-full bg-muted rounded-full h-3 overflow-hidden shadow-inner">
-        <div className="h-full bg-gradient-to-r from-green-500 via-primary to-chart-3 transition-all duration-700 ease-out shadow-sm" style={{
+        <div className="h-full bg-gradient-to-r from-muted-foreground to-primary transition-all duration-700 ease-out shadow-sm" style={{
         width: `${messageGenerated ? 100 : currentStep / totalSteps * 100}%`
       }} />
       </div>
