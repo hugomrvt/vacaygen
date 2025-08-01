@@ -156,7 +156,7 @@ const Index = () => {
                   <Zap className="h-5 w-5 text-purple-500" />
                   <div className="text-center">
                     <div className="text-sm font-semibold text-purple-700">Ultra Rapide</div>
-                    <div className="text-xs text-muted-foreground">< 30 secondes</div>
+                    <div className="text-xs text-muted-foreground">&lt; 30 secondes</div>
                   </div>
                 </CardContent>
               </Card>
