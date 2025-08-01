@@ -164,7 +164,7 @@ const Index = () => {
 
 Je serai absent(e) du ${startDate} au ${endDate} pour mes congés annuels.
 
-Durant cette période, je ne consulterai pas mes emails de manière régulière. Pour toute urgence, veuillez contacter ${backupContact || '[contact de secours]'}.
+Durant cette période, je ne consulterai pas mes emails de manière régulière.${backupContact ? ` Pour toute urgence, veuillez contacter ${backupContact}.` : ''}
 
 Je reprendrai mes fonctions le [date de retour] et traiterai votre demande dans les plus brefs délais.
 
@@ -173,7 +173,7 @@ Cordialement,`,
 
 I will be out of office from ${startDate} to ${endDate} for my annual leave.
 
-During this period, I will not be checking emails regularly. For any urgent matters, please contact ${backupContact || '[backup contact]'}.
+During this period, I will not be checking emails regularly.${backupContact ? ` For any urgent matters, please contact ${backupContact}.` : ''}
 
 I will resume work on [return date] and will address your request as soon as possible.
 
@@ -186,7 +186,7 @@ Je pars me ressourcer ${destination ? `en ${destination}` : ''} du ${startDate} 
 
 Je serai complètement déconnecté(e) pendant cette période (promis, je ne regarderai pas Slack à 2h du matin 😅). 
 
-Pour tout ce qui ne peut pas attendre mon retour, ${backupContact || '[nom du contact]'} pourra vous aider.
+${backupContact ? `Pour tout ce qui ne peut pas attendre mon retour, ${backupContact} pourra vous aider.` : ''}
 
 Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
 
@@ -197,7 +197,7 @@ I'm going to recharge ${destination ? `in ${destination}` : ''} from ${startDate
 
 I'll be completely disconnected during this time (promise I won't check Slack at 2am 😅).
 
-For anything that can't wait until I'm back, ${backupContact || '[contact name]'} can help you out.
+${backupContact ? `For anything that can't wait until I'm back, ${backupContact} can help you out.` : ''}
 
 Can't wait to come back with tons of energy to tackle what's next! 🚀
 
@@ -210,7 +210,7 @@ dates : ${startDate} → ${endDate}
 localisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
 je serai en mode touch grass donc rip emails 💀
-si c'est vraiment important contactez ${backupContact || '[la personne responsable]'}
+${backupContact ? `si c'est vraiment important contactez ${backupContact}` : ''}
 
 see you on the flip side ! ✨`,
         'en': data => `no cap going on vacation bestie 🏖️
@@ -219,7 +219,7 @@ dates: ${startDate} → ${endDate}
 location: ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
 I'll be touching grass so rip emails 💀
-if it's actually important contact ${backupContact || '[the responsible person]'}
+${backupContact ? `if it's actually important contact ${backupContact}` : ''}
 
 see you on the flip side! ✨`
       },
@@ -232,7 +232,7 @@ Votre humble collègue s'évapore temporairement de l'écosystème digital du ${
 🎯 Mission : ${activity || 'Recharger les batteries créatives'}
 📧 Statut emails : Mode hibernation activé
 
-En cas de situation critique nécessitant mon expertise légendaire, ${backupContact || '[votre sauveur désigné]'} prendra le relais avec brio !
+${backupContact ? `En cas de situation critique nécessitant mon expertise légendaire, ${backupContact} prendra le relais avec brio !` : ''}
 
 Retour prévu avec 200% d'inspiration en plus ✨`,
         'en': data => `🌟 BREAKING NEWS 🌟
@@ -243,7 +243,7 @@ Your humble colleague is temporarily vanishing from the digital ecosystem from $
 🎯 Mission: ${activity || 'Recharge creative batteries'}
 📧 Email status: Hibernation mode activated
 
-In case of critical situation requiring my legendary expertise, ${backupContact || '[your designated savior]'} will take over brilliantly!
+${backupContact ? `In case of critical situation requiring my legendary expertise, ${backupContact} will take over brilliantly!` : ''}
 
 Expected return with 200% more inspiration ✨`
       },
@@ -254,7 +254,7 @@ Je pars en vacances du ${startDate} au ${endDate} ${destination ? `direction ${d
 
 ${activity ? `J'ai hâte de ${activity.toLowerCase()}` : 'J\'ai vraiment hâte de déconnecter'} et de prendre du temps pour moi. Je ne consulterai pas mes mails pendant cette période.
 
-Si c'est urgent, n'hésitez pas à écrire à ${backupContact || '[mon collègue]'} qui pourra vous aider !
+${backupContact ? `Si c'est urgent, n'hésitez pas à écrire à ${backupContact} qui pourra vous aider !` : ''}
 
 Merci et à bientôt ! 💙`,
         'en': data => `Hi there! 🌞
@@ -263,17 +263,15 @@ I'm going on vacation from ${startDate} to ${endDate} ${destination ? `heading t
 
 ${activity ? `I can't wait to ${activity.toLowerCase()}` : 'I really can\'t wait to disconnect'} and take some time for myself. I won't be checking emails during this period.
 
-If it's urgent, don't hesitate to write to ${backupContact || '[my colleague]'} who can help you!
+${backupContact ? `If it's urgent, don't hesitate to write to ${backupContact} who can help you!` : ''}
 
 Thanks and see you soon! 💙`
       },
       'minimalist': {
         'fr': data => `Vacances du ${startDate} au ${endDate}.
-
-Contact d'urgence : ${backupContact || '[nom]'}`,
+${backupContact ? `\nContact d'urgence : ${backupContact}` : ''}`,
         'en': data => `Vacation from ${startDate} to ${endDate}.
-
-Emergency contact: ${backupContact || '[name]'}`
+${backupContact ? `\nEmergency contact: ${backupContact}` : ''}`
       }
     };
     const template = styleTemplates[style]?.[lang] || styleTemplates['millennial-pro'][lang];
