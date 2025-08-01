@@ -6,6 +6,7 @@ import { CalendarDays, MapPin, Activity, UserCheck } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import TogglePills from './TogglePills';
 import AnimatedPlaceholder from './AnimatedPlaceholder';
+import DashboardCard from './DashboardCard';
 
 interface ModernVacationFormProps {
   formData: {
@@ -38,25 +39,25 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
     { 
       id: 'team', 
       label: t('form.recipients.team'), 
-      icon: 'Users', 
+      icon: '👥', 
       color: 'from-blue-500 to-blue-600' 
     },
     { 
       id: 'clients', 
       label: t('form.recipients.clients'), 
-      icon: 'Handshake', 
+      icon: '🤝', 
       color: 'from-purple-500 to-purple-600' 
     },
     { 
       id: 'management', 
       label: t('form.recipients.management'), 
-      icon: 'Briefcase', 
+      icon: '👔', 
       color: 'from-green-500 to-green-600' 
     },
     { 
       id: 'partners', 
       label: t('form.recipients.partners'), 
-      icon: 'Globe', 
+      icon: '🌐', 
       color: 'from-orange-500 to-orange-600' 
     }
   ];
@@ -81,15 +82,13 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
     <div className="space-y-6">
       {/* Étape 1: Dates et Destination */}
       {currentStep >= 1 && (
-        <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-              <CalendarDays className="h-4 w-4" />
-            </div>
-            <h3 className="text-sm font-medium text-muted-foreground">Informations de Base</h3>
-          </div>
-          
-          <div className="space-y-6">
+        <DashboardCard
+          title="Informations de Base"
+          value=""
+          icon={<CalendarDays className="h-4 w-4" />}
+          className={currentStep === 1 ? 'ring-2 ring-primary shadow-2xl' : ''}
+        >
+          <div className="space-y-6 mt-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="start-date" className="text-sm font-medium text-muted-foreground mb-2 block">
@@ -151,20 +150,18 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
               </div>
             </div>
           </div>
-        </div>
+        </DashboardCard>
       )}
 
       {/* Étape 2: Destinataires et Contact */}
       {currentStep >= 2 && (
-        <div className={`glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 ${currentStep === 2 ? 'ring-2 ring-primary shadow-2xl' : ''}`}>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-              <UserCheck className="h-4 w-4" />
-            </div>
-            <h3 className="text-sm font-medium text-muted-foreground">Destinataires et Contact</h3>
-          </div>
-          
-          <div className="space-y-6">
+        <DashboardCard
+          title="Destinataires et Contact"
+          value=""
+          icon={<UserCheck className="h-4 w-4" />}
+          className={currentStep === 2 ? 'ring-2 ring-primary shadow-2xl' : ''}
+        >
+          <div className="space-y-6 mt-4">
             <div>
               <h4 className="text-sm font-medium text-muted-foreground mb-4">Pour qui ?</h4>
               <TogglePills
@@ -188,7 +185,7 @@ const ModernVacationForm = ({ formData, setFormData, currentStep }: ModernVacati
               />
             </div>
           </div>
-        </div>
+        </DashboardCard>
       )}
     </div>
   );

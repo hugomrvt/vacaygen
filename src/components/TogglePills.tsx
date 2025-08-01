@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Users, Handshake, Briefcase, Globe } from 'lucide-react';
 
 interface TogglePillsProps {
   options: { id: string; label: string; icon: string; color: string }[];
@@ -10,21 +9,10 @@ interface TogglePillsProps {
 }
 
 const TogglePills = ({ options, selectedOptions, onToggle, multiSelect = true }: TogglePillsProps) => {
-  const getIconComponent = (iconKey: string) => {
-    const iconMap = {
-      '👥': Users,
-      '🤝': Handshake,
-      '👔': Briefcase,
-      '🌐': Globe
-    };
-    return iconMap[iconKey as keyof typeof iconMap] || Users;
-  };
-
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((option) => {
         const isSelected = selectedOptions.includes(option.id);
-        const IconComponent = getIconComponent(option.icon);
         
         return (
           <button
@@ -39,7 +27,7 @@ const TogglePills = ({ options, selectedOptions, onToggle, multiSelect = true }:
               }
             `}
           >
-            <IconComponent className="w-4 h-4" />
+            <span className="text-lg">{option.icon}</span>
             <span>{option.label}</span>
             
             {isSelected && (

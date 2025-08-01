@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Rocket, Sparkles, Briefcase, Star, Smile, Zap } from 'lucide-react';
 
 interface StyleCardProps {
   style: {
@@ -20,20 +19,6 @@ interface StyleCardProps {
 
 const StyleCard = ({ style, isSelected, onSelect, onPreview }: StyleCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-
-  const getIconComponent = (emojiKey: string) => {
-    const iconMap = {
-      '🚀': Rocket,
-      '✨': Sparkles,
-      '💼': Briefcase,
-      '🌟': Star,
-      '😊': Smile,
-      '⚡': Zap
-    };
-    return iconMap[emojiKey as keyof typeof iconMap] || Star;
-  };
-
-  const IconComponent = getIconComponent(style.emoji);
 
   return (
     <div
@@ -77,10 +62,10 @@ const StyleCard = ({ style, isSelected, onSelect, onPreview }: StyleCardProps) =
 
       {/* Content */}
       <div className="text-center">
-        <div className={`mb-3 transition-transform duration-200 flex justify-center ${
-          isHovered ? 'scale-110' : ''
+        <div className={`text-3xl mb-3 transition-transform duration-200 ${
+          isHovered ? 'scale-110 animate-bounce' : ''
         }`}>
-          <IconComponent className={`w-8 h-8 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
+          {style.emoji}
         </div>
         
         <h3 className={`font-bold text-base mb-2 ${
