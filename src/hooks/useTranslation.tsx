@@ -15,7 +15,7 @@ const TranslationContext = createContext<TranslationContextType | undefined>(und
 const translations = {
   fr: {
     // Header
-    'app.title': 'Messages Vacances',
+    'app.title': 'VacayBot',
     'app.subtitle': 'Générez le message de vacances parfait avec l\'IA. Professionnel, personnel ou créatif - trouvez le ton qui vous ressemble !',
     'app.badge.free': 'Gratuit',
     'app.badge.instant': 'Instantané',
@@ -122,7 +122,7 @@ const translations = {
   },
   en: {
     // Header
-    'app.title': 'Vacation Messages',
+    'app.title': 'VacayBot',
     'app.subtitle': 'Generate the perfect vacation message with AI. Professional, personal, or creative - find the tone that suits you!',
     'app.badge.free': 'Free',
     'app.badge.instant': 'Instant',
