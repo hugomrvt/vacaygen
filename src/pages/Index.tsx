@@ -100,6 +100,26 @@ const Index = () => {
     color: 'from-slate-500 to-zinc-600'
   }];
 
+  const formatDate = (dateString: string, language: string) => {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    
+    if (language === 'fr') {
+      const months = [
+        'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+        'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+      ];
+      return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    } else {
+      const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+    }
+  };
+
   const handleGenerate = async () => {
     if (!formData.startDate || !formData.endDate || !formData.destination) {
       // Shake animation for missing fields
@@ -154,6 +174,10 @@ const Index = () => {
       recipients,
       backupContact
     } = data;
+
+    const formattedStartDate = formatDate(startDate, lang);
+    const formattedEndDate = formatDate(endDate, lang);
+    
     const styleTemplates: {
       [key: string]: {
         [key: string]: (data: any) => string;
@@ -162,27 +186,27 @@ const Index = () => {
       'professional': {
         'fr': data => `Bonjour,
 
-Je serai absent(e) du ${startDate} au ${endDate} pour mes congés annuels.
+Je serai absent(e) du ${formattedStartDate} au ${formattedEndDate} pour mes congés annuels.
 
 Durant cette période, je ne consulterai pas mes emails de manière régulière.${backupContact ? ` Pour toute urgence, veuillez contacter ${backupContact}.` : ''}
 
-Je reprendrai mes fonctions le [date de retour] et traiterai votre demande dans les plus brefs délais.
+Je reprendrai mes fonctions le ${formattedEndDate} et traiterai votre demande dans les plus brefs délais.
 
 Cordialement,`,
         'en': data => `Hello,
 
-I will be out of office from ${startDate} to ${endDate} for my annual leave.
+I will be out of office from ${formattedStartDate} to ${formattedEndDate} for my annual leave.
 
 During this period, I will not be checking emails regularly.${backupContact ? ` For any urgent matters, please contact ${backupContact}.` : ''}
 
-I will resume work on [return date] and will address your request as soon as possible.
+I will resume work on ${formattedEndDate} and will address your request as soon as possible.
 
 Best regards,`
       },
       'millennial-pro': {
         'fr': data => `Salut l'équipe ! 👋
 
-Je pars me ressourcer ${destination ? `en ${destination}` : ''} du ${startDate} au ${endDate} ! ${activity ? `Au programme : ${activity.toLowerCase()}` : ''} 🌴
+Je pars me ressourcer ${destination ? `en ${destination}` : ''} du ${formattedStartDate} au ${formattedEndDate} ! ${activity ? `Au programme : ${activity.toLowerCase()}` : ''} 🌴
 
 Je serai complètement déconnecté(e) pendant cette période (promis, je ne regarderai pas Slack à 2h du matin 😅). 
 
@@ -193,7 +217,7 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
 À bientôt,`,
         'en': data => `Hey team! 👋
 
-I'm going to recharge ${destination ? `in ${destination}` : ''} from ${startDate} to ${endDate}! ${activity ? `Planning to: ${activity.toLowerCase()}` : ''} 🌴
+I'm going to recharge ${destination ? `in ${destination}` : ''} from ${formattedStartDate} to ${formattedEndDate}! ${activity ? `Planning to: ${activity.toLowerCase()}` : ''} 🌴
 
 I'll be completely disconnected during this time (promise I won't check Slack at 2am 😅).
 
@@ -206,7 +230,7 @@ See you soon,`
       'gen-z': {
         'fr': data => `no cap je pars en vacances bestie 🏖️
 
-dates : ${startDate} → ${endDate}
+dates : ${formattedStartDate} → ${formattedEndDate}
 localisation : ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
 je serai en mode touch grass donc rip emails 💀
@@ -215,7 +239,7 @@ ${backupContact ? `si c'est vraiment important contactez ${backupContact}` : ''}
 see you on the flip side ! ✨`,
         'en': data => `no cap going on vacation bestie 🏖️
 
-dates: ${startDate} → ${endDate}
+dates: ${formattedStartDate} → ${formattedEndDate}
 location: ${destination || 'somewhere iconic'} ${activity ? `(${activity.toLowerCase()} era)` : ''}
 
 I'll be touching grass so rip emails 💀
@@ -226,7 +250,7 @@ see you on the flip side! ✨`
       'creative': {
         'fr': data => `🌟 BREAKING NEWS 🌟
 
-Votre humble collègue s'évapore temporairement de l'écosystème digital du ${startDate} au ${endDate} !
+Votre humble collègue s'évapore temporairement de l'écosystème digital du ${formattedStartDate} au ${formattedEndDate} !
 
 📍 Localisation : ${destination || 'Quelque part où le wifi est optionnel'}
 🎯 Mission : ${activity || 'Recharger les batteries créatives'}
@@ -234,10 +258,10 @@ Votre humble collègue s'évapore temporairement de l'écosystème digital du ${
 
 ${backupContact ? `En cas de situation critique nécessitant mon expertise légendaire, ${backupContact} prendra le relais avec brio !` : ''}
 
-Retour prévu avec 200% d'inspiration en plus ✨`,
+Retour prévu le ${formattedEndDate} avec 200% d'inspiration en plus ✨`,
         'en': data => `🌟 BREAKING NEWS 🌟
 
-Your humble colleague is temporarily vanishing from the digital ecosystem from ${startDate} to ${endDate}!
+Your humble colleague is temporarily vanishing from the digital ecosystem from ${formattedStartDate} to ${formattedEndDate}!
 
 📍 Location: ${destination || 'Somewhere where wifi is optional'}
 🎯 Mission: ${activity || 'Recharge creative batteries'}
@@ -245,12 +269,12 @@ Your humble colleague is temporarily vanishing from the digital ecosystem from $
 
 ${backupContact ? `In case of critical situation requiring my legendary expertise, ${backupContact} will take over brilliantly!` : ''}
 
-Expected return with 200% more inspiration ✨`
+Expected return on ${formattedEndDate} with 200% more inspiration ✨`
       },
       'friendly': {
         'fr': data => `Coucou ! 🌞
 
-Je pars en vacances du ${startDate} au ${endDate} ${destination ? `direction ${destination}` : ''} !
+Je pars en vacances du ${formattedStartDate} au ${formattedEndDate} ${destination ? `direction ${destination}` : ''} !
 
 ${activity ? `J'ai hâte de ${activity.toLowerCase()}` : 'J\'ai vraiment hâte de déconnecter'} et de prendre du temps pour moi. Je ne consulterai pas mes mails pendant cette période.
 
@@ -259,7 +283,7 @@ ${backupContact ? `Si c'est urgent, n'hésitez pas à écrire à ${backupContact
 Merci et à bientôt ! 💙`,
         'en': data => `Hi there! 🌞
 
-I'm going on vacation from ${startDate} to ${endDate} ${destination ? `heading to ${destination}` : ''}!
+I'm going on vacation from ${formattedStartDate} to ${formattedEndDate} ${destination ? `heading to ${destination}` : ''}!
 
 ${activity ? `I can't wait to ${activity.toLowerCase()}` : 'I really can\'t wait to disconnect'} and take some time for myself. I won't be checking emails during this period.
 
@@ -268,10 +292,8 @@ ${backupContact ? `If it's urgent, don't hesitate to write to ${backupContact} w
 Thanks and see you soon! 💙`
       },
       'minimalist': {
-        'fr': data => `Vacances du ${startDate} au ${endDate}.
-${backupContact ? `\nContact d'urgence : ${backupContact}` : ''}`,
-        'en': data => `Vacation from ${startDate} to ${endDate}.
-${backupContact ? `\nEmergency contact: ${backupContact}` : ''}`
+        'fr': data => `Vacances du ${formattedStartDate} au ${formattedEndDate}.${backupContact ? `\nContact d'urgence : ${backupContact}` : ''}`,
+        'en': data => `Vacation from ${formattedStartDate} to ${formattedEndDate}.${backupContact ? `\nEmergency contact: ${backupContact}` : ''}`
       }
     };
     const template = styleTemplates[style]?.[lang] || styleTemplates['millennial-pro'][lang];
