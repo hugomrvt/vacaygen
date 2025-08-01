@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Check, Calendar, Users, Sparkles } from 'lucide-react';
 
@@ -17,51 +18,68 @@ const StepIndicator = ({ currentStep, totalSteps, steps, messageGenerated }: Ste
 
   return (
     <div className="w-full mb-8">
-      <div className="flex items-center justify-between mb-4">
+      <div className="relative flex items-center justify-between mb-4 px-4">
+        {/* Background line with gradient overlay */}
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full h-0.5 bg-border rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-green-500 via-primary to-primary/60 transition-all duration-700 ease-out"
+              style={{ 
+                width: `${messageGenerated ? 100 : ((currentStep - 1) / (totalSteps - 1)) * 100}%` 
+              }}
+            />
+          </div>
+        </div>
+
         {steps.map((step, index) => {
           const stepNumber = index + 1;
           const isCompleted = currentStep > stepNumber || (stepNumber === 3 && messageGenerated);
           const isCurrent = currentStep === stepNumber && !messageGenerated;
           
           return (
-            <div key={stepNumber} className="flex items-center">
+            <div key={stepNumber} className="relative flex flex-col items-center z-10">
+              {/* Step circle */}
               <div className={`
-                relative flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-200
-                ${isCompleted ? 'bg-green-500 border-green-500 text-white' : 
-                  isCurrent ? 'bg-primary border-primary text-primary-foreground' : 
-                  'bg-muted border-border text-muted-foreground'}
+                relative flex items-center justify-center w-12 h-12 rounded-full border-3 transition-all duration-300 shadow-lg
+                ${isCompleted ? 'bg-green-500 border-green-400 text-white shadow-green-500/30' : 
+                  isCurrent ? 'bg-primary border-primary text-primary-foreground shadow-primary/30 scale-110' : 
+                  'bg-card border-border text-muted-foreground shadow-card/50'}
               `}>
                 {isCompleted ? (
-                  <Check className="h-5 w-5" />
+                  <Check className="h-6 w-6" />
                 ) : (
                   getStepIcon(index)
                 )}
+                
+                {/* Glow effect for current step */}
+                {isCurrent && (
+                  <div className="absolute inset-0 rounded-full bg-primary opacity-20 animate-pulse" />
+                )}
               </div>
               
-              <div className={`ml-3 ${index < steps.length - 1 ? 'mr-8' : ''}`}>
-                <div className={`text-sm font-medium transition-colors duration-200 ${
+              {/* Step info */}
+              <div className="mt-3 text-center min-w-[120px]">
+                <div className={`text-sm font-semibold transition-all duration-300 ${
                   isCompleted || isCurrent ? 'text-foreground' : 'text-muted-foreground'
                 }`}>
                   {step.title}
                 </div>
-                <div className="text-xs text-muted-foreground">
-                  Step {stepNumber}/{totalSteps}
+                <div className={`text-xs mt-1 transition-all duration-300 ${
+                  isCompleted ? 'text-green-600' : 
+                  isCurrent ? 'text-primary' : 'text-muted-foreground'
+                }`}>
+                  Étape {stepNumber}/{totalSteps}
                 </div>
               </div>
-              
-              {index < steps.length - 1 && (
-                <div className={`h-0.5 flex-1 mx-4 transition-colors duration-200 ${
-                  isCompleted ? 'bg-green-500' : 'bg-border'
-                }`} />
-              )}
             </div>
           );
         })}
       </div>
       
-      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+      {/* Progress bar */}
+      <div className="w-full bg-muted rounded-full h-3 overflow-hidden shadow-inner">
         <div 
-          className="bg-gradient-primary h-full transition-all duration-300 ease-out"
+          className="h-full bg-gradient-to-r from-green-500 via-primary to-chart-3 transition-all duration-700 ease-out shadow-sm"
           style={{ 
             width: `${messageGenerated ? 100 : (currentStep / totalSteps) * 100}%` 
           }}
