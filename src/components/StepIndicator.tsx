@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Check } from 'lucide-react';
+import { CalendarIcon, UsersIcon, SparklesIcon } from '@siimple/icons';
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -9,6 +10,12 @@ interface StepIndicatorProps {
 }
 
 const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorProps) => {
+  const getStepIcon = (index: number) => {
+    const icons = [CalendarIcon, UsersIcon, SparklesIcon];
+    const IconComponent = icons[index] || CalendarIcon;
+    return <IconComponent className="h-5 w-5" />;
+  };
+
   return (
     <div className="w-full mb-8">
       <div className="flex items-center justify-between mb-4">
@@ -28,7 +35,7 @@ const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorProps) =
                 {isCompleted ? (
                   <Check className="h-5 w-5" />
                 ) : (
-                  <span className="text-xl">{step.icon}</span>
+                  getStepIcon(index)
                 )}
               </div>
               

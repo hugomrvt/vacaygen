@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap } from 'lucide-react';
+import { RefreshCw, Sparkles } from 'lucide-react';
+import { ZapIcon, CheckCircleIcon, RefreshIcon, SparklesIcon, BeachIcon } from '@siimple/icons';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
 import StepIndicator from '@/components/StepIndicator';
@@ -40,9 +41,9 @@ const Index = () => {
   }, [formData, currentStep]);
 
   const steps = [
-    { title: 'Infos de base', icon: '📅' },
-    { title: 'Destinataires', icon: '👥' },
-    { title: 'Style & Message', icon: '✨' }
+    { title: 'Infos de base', icon: 'calendar' },
+    { title: 'Destinataires', icon: 'users' },
+    { title: 'Style & Message', icon: 'sparkles' }
   ];
 
   const styles = [
@@ -286,7 +287,7 @@ Emergency contact: ${backupContact || '[name]'}`
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <span className="text-2xl">🏖️</span>
+                <BeachIcon className="h-8 w-8 text-primary" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold gradient-text">
@@ -300,11 +301,11 @@ Emergency contact: ${backupContact || '[name]'}`
             
             <div className="flex gap-2">
               <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20">
-                <Zap className="w-3 h-3 mr-1" />
+                <ZapIcon className="w-3 h-3 mr-1" />
                 Gratuit
               </Badge>
               <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                <RefreshCw className="w-3 h-3 mr-1" />
+                <RefreshIcon className="w-3 h-3 mr-1" />
                 Instantané
               </Badge>
             </div>
@@ -374,12 +375,12 @@ Emergency contact: ${backupContact || '[name]'}`
                 >
                   {isGenerating ? (
                     <>
-                      <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                      <RefreshIcon className="mr-2 h-5 w-5 animate-spin" />
                       ✨ Création magique en cours...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="mr-2 h-5 w-5" />
+                      <SparklesIcon className="mr-2 h-5 w-5" />
                       🚀 Créer mon message parfait !
                     </>
                   )}

@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { FireIcon, TrendingUpIcon } from '@siimple/icons';
 
 interface StyleCardProps {
   style: {
@@ -42,13 +43,23 @@ const StyleCard = ({ style, isSelected, onSelect, onPreview }: StyleCardProps) =
         <div className="absolute -top-2 -right-2 z-10">
           <Badge 
             variant="secondary" 
-            className={`text-xs px-2 py-1 font-bold animate-pulse border ${
+            className={`text-xs px-2 py-1 font-bold animate-pulse border flex items-center gap-1 ${
               style.popularity === 'hot' 
                 ? 'bg-destructive/10 text-destructive border-destructive/20' 
                 : 'bg-warning/10 text-warning border-warning/20'
             }`}
           >
-            {style.popularity === 'hot' ? '🔥 HOT' : '📈 TREND'}
+            {style.popularity === 'hot' ? (
+              <>
+                <FireIcon className="h-3 w-3" />
+                HOT
+              </>
+            ) : (
+              <>
+                <TrendingUpIcon className="h-3 w-3" />
+                TREND
+              </>
+            )}
           </Badge>
         </div>
       )}
