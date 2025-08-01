@@ -10,6 +10,7 @@ import ModernVacationForm from '@/components/ModernVacationForm';
 import StyleCard from '@/components/StyleCard';
 import GeneratedMessage from '@/components/GeneratedMessage';
 import LanguageSelector from '@/components/LanguageSelector';
+
 const Index = () => {
   const {
     toast
@@ -275,55 +276,60 @@ Emergency contact: ${backupContact || '[name]'}`
     return template(data);
   };
   return <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6">
         {/* Header */}
-        <div className="flex justify-between items-start mb-8">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Bot className="h-8 w-8 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold gradient-text">
-                  VacayGen
-                </h1>
-                <p className="text-muted-foreground">
-                  {t('app.subtitle')}
-                </p>
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 mb-6 sm:mb-8">
+          <div className="w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-2xl sm:text-3xl font-bold gradient-text">
+                    VacayGen
+                  </h1>
+                  <p className="text-sm sm:text-base text-muted-foreground">
+                    {t('app.subtitle')}
+                  </p>
+                </div>
               </div>
             </div>
             
-            <div className="flex gap-2">
-              <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20 text-xs sm:text-sm">
                 <Zap className="w-3 h-3 mr-1" />
                 {t('app.badge.free')}
               </Badge>
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm">
                 <RefreshCw className="w-3 h-3 mr-1" />
                 {t('app.badge.instant')}
               </Badge>
             </div>
           </div>
           
-          <LanguageSelector />
+          <div className="w-full sm:w-auto flex justify-end">
+            <LanguageSelector />
+          </div>
         </div>
 
         {/* Step Indicator */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <StepIndicator currentStep={currentStep} totalSteps={3} steps={steps} messageGenerated={!!generatedMessage} />
         </div>
 
         {/* Main Content */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {/* Form Steps */}
           <ModernVacationForm formData={formData} setFormData={setFormData} currentStep={currentStep} />
 
           {/* Style Selection */}
-          {currentStep >= 3 && <div className="space-y-6">
-              <div className="glass-card rounded-xl p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
-                <div className="text-left mb-6">
-                  <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-                    <Palette className="h-5 w-5 text-primary" />
+          {currentStep >= 3 && (
+            <div className="space-y-6">
+              <div className="glass-card rounded-xl p-4 sm:p-6 border border-border/20 bg-card/50 backdrop-blur-sm">
+                <div className="text-left mb-4 sm:mb-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                    <Palette className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     {t('styles.title')}
                   </h2>
                   <p className="text-muted-foreground text-sm">
@@ -331,37 +337,55 @@ Emergency contact: ${backupContact || '[name]'}`
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {styles.map(style => <StyleCard key={style.id} style={style} isSelected={selectedStyle === style.id} onSelect={() => setSelectedStyle(style.id)} />)}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {styles.map(style => (
+                    <StyleCard 
+                      key={style.id} 
+                      style={style} 
+                      isSelected={selectedStyle === style.id} 
+                      onSelect={() => setSelectedStyle(style.id)} 
+                    />
+                  ))}
                 </div>
               </div>
 
-
               {/* Generate Button */}
-              <div className="text-center">
-                <Button id="generate-button" onClick={handleGenerate} disabled={isGenerating} size="lg" className="px-12 py-4 text-lg font-bold bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-slate-50">
-                  {isGenerating ? <>
-                      <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+              <div className="text-center px-4">
+                <Button 
+                  id="generate-button" 
+                  onClick={handleGenerate} 
+                  disabled={isGenerating} 
+                  size="lg" 
+                  className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-bold bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-slate-50"
+                >
+                  {isGenerating ? (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                       {t('generate.button.loading')}
-                    </> : <>
-                      <Sparkles className="mr-2 h-5 w-5" />
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                       {t('generate.button')}
-                    </>}
+                    </>
+                  )}
                 </Button>
               </div>
-            </div>}
+            </div>
+          )}
 
           {/* Generated Message */}
           <GeneratedMessage message={generatedMessage} isGenerating={isGenerating} onRegenerate={handleGenerate} />
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12 py-6 border-t border-border">
-          <p className="text-muted-foreground">
+        <div className="text-center mt-8 sm:mt-12 py-6 border-t border-border">
+          <p className="text-sm text-muted-foreground">
             {t('footer.created')}
           </p>
         </div>
       </div>
     </div>;
 };
+
 export default Index;
