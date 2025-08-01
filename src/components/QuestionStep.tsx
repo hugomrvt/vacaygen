@@ -10,7 +10,7 @@ interface QuestionStepProps {
   question: string;
   placeholder?: string;
   type?: 'text' | 'date' | 'multiselect' | 'select';
-  options?: Array<{ id: string; label: string; icon: string; color: string }>;
+  options?: Array<{ id: string; label: string; icon?: string; color?: string }>;
   value: any;
   onAnswer: (value: any) => void;
   onSkip?: () => void;

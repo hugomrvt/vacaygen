@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
@@ -6,9 +7,6 @@ import ChatBubble from './ChatBubble';
 import QuestionStep from './QuestionStep';
 import StyleCard from './StyleCard';
 import GeneratedMessage from './GeneratedMessage';
-import FreeChatInput from './FreeChatInput';
-import BotResponseHandler from './BotResponseHandler';
-import ContextualSuggestions from './ContextualSuggestions';
 
 interface ConversationalFlowProps {
   onMessageGenerated?: (message: string) => void;
@@ -17,7 +15,7 @@ interface ConversationalFlowProps {
 const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => {
   const { t, language } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
-  const [conversation, setConversation] = useState<Array<{ type: 'bot' | 'user'; message: string; isFreeChat?: boolean }>>([]);
+  const [conversation, setConversation] = useState<Array<{ type: 'bot' | 'user'; message: string }>>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [formData, setFormData] = useState({
     startDate: '',
@@ -30,7 +28,6 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
   });
   const [generatedMessage, setGeneratedMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [waitingForStructuredResponse, setWaitingForStructuredResponse] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const steps = [
@@ -127,88 +124,51 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
   ];
 
   useEffect(() => {
+    // Auto-scroll to bottom
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [conversation, isTyping, currentStep]);
 
   useEffect(() => {
+    // Start with welcome message
     if (conversation.length === 0) {
-      addBotMessage(steps[0].question, 800);
-      setTimeout(() => setCurrentStep(1), 2000);
+      addBotMessage(steps[0].question);
+      setTimeout(() => setCurrentStep(1), 1500);
     }
   }, []);
 
-  const addBotMessage = (message: string, delay = 1200, isFreeChat = false) => {
+  const addBotMessage = (message: string, delay = 1000) => {
     setIsTyping(true);
     setTimeout(() => {
-      setConversation(prev => [...prev, { type: 'bot', message, isFreeChat }]);
+      setConversation(prev => [...prev, { type: 'bot', message }]);
       setIsTyping(false);
-      if (!isFreeChat) {
-        setWaitingForStructuredResponse(true);
-      }
     }, delay);
   };
 
-  const addUserMessage = (message: string, isFreeChat = false) => {
-    setConversation(prev => [...prev, { type: 'user', message, isFreeChat }]);
-    if (!isFreeChat) {
-      setWaitingForStructuredResponse(false);
-    }
-  };
-
-  const handleSuggestionClick = (suggestion: string) => {
-    const currentStepData = steps[currentStep - 1];
-    
-    if (currentStepData && currentStep > 1 && currentStep <= steps.length) {
-      if (shouldTreatAsSuggestionAnswer(suggestion, currentStepData.id)) {
-        handleAnswer(currentStepData.id, suggestion, suggestion);
-        return;
-      }
-    }
-    
-    handleFreeMessage(suggestion);
-  };
-
-  const shouldTreatAsSuggestionAnswer = (suggestion: string, stepId: string): boolean => {
-    const directAnswerSteps = ['destination', 'activity', 'backup'];
-    if (directAnswerSteps.includes(stepId)) {
-      return !suggestion.includes('?') && !suggestion.toLowerCase().includes('comment') && 
-             !suggestion.toLowerCase().includes('aide') && !suggestion.toLowerCase().includes('peux-tu');
-    }
-    return false;
-  };
-
-  const handleFreeMessage = (message: string) => {
-    addUserMessage(message, true);
-    
-    const botResponse = BotResponseHandler({
-      userMessage: message,
-      currentStep,
-      formData
-    });
-    
-    setTimeout(() => {
-      addBotMessage(botResponse, 1200, true);
-    }, 600);
+  const addUserMessage = (message: string) => {
+    setConversation(prev => [...prev, { type: 'user', message }]);
   };
 
   const handleAnswer = (field: string, value: any, displayValue?: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
+    // Add user message
     addUserMessage(displayValue || value);
     
+    // Move to next step
     const nextStepIndex = currentStep + 1;
     if (nextStepIndex < steps.length) {
       setTimeout(() => {
-        addBotMessage(steps[nextStepIndex].question, 1500);
+        addBotMessage(steps[nextStepIndex].question);
         setCurrentStep(nextStepIndex + 1);
-      }, 800);
+      }, 1000);
     } else {
+      // All steps completed, generate message
       setTimeout(() => {
-        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨", 1000);
-        setTimeout(() => generateMessage(), 1500);
-      }, 800);
+        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨");
+        generateMessage();
+      }, 1000);
     }
   };
 
@@ -218,14 +178,14 @@ const ConversationalFlow = ({ onMessageGenerated }: ConversationalFlowProps) => 
     const nextStepIndex = currentStep + 1;
     if (nextStepIndex < steps.length) {
       setTimeout(() => {
-        addBotMessage(steps[nextStepIndex].question, 1200);
+        addBotMessage(steps[nextStepIndex].question);
         setCurrentStep(nextStepIndex + 1);
-      }, 800);
+      }, 1000);
     } else {
       setTimeout(() => {
-        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨", 1000);
-        setTimeout(() => generateMessage(), 1500);
-      }, 800);
+        addBotMessage("Parfait ! Je génère ton message personnalisé... ✨");
+        generateMessage();
+      }, 1000);
     }
   };
 
@@ -290,33 +250,9 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
         {isTyping && <ChatBubble type="bot" message="" isTyping />}
       </div>
 
-      {/* Contextual Suggestions */}
-      {!generatedMessage && !isGenerating && (
-        <ContextualSuggestions
-          currentStep={currentStepData?.id || 'general'}
-          onSuggestionClick={handleSuggestionClick}
-          formData={formData}
-        />
-      )}
-
-      {/* Free Chat Input */}
-      {!generatedMessage && (
-        <div className="mb-6">
-          <FreeChatInput 
-            onSendMessage={handleFreeMessage}
-            isDisabled={isTyping || isGenerating}
-            placeholder={
-              waitingForStructuredResponse 
-                ? "Réponds à la question ci-dessus ou pose-moi une question..." 
-                : "Pose-moi une question ou discute librement..."
-            }
-          />
-        </div>
-      )}
-
       {/* Current Question */}
-      {currentStepData && currentStep > 1 && currentStep <= steps.length && !isGenerating && !generatedMessage && !isTyping && (
-        <div className="mb-6 animate-fade-in">
+      {currentStepData && currentStep > 1 && currentStep <= steps.length && !isGenerating && !generatedMessage && (
+        <div className="mb-6">
           {currentStepData.type === 'style' ? (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -377,7 +313,6 @@ Hâte de revenir avec plein d'énergie pour attaquer la suite ! 🚀
               });
               setGeneratedMessage('');
               setIsGenerating(false);
-              setWaitingForStructuredResponse(false);
             }}
             className="gap-2"
           >

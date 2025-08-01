@@ -13,44 +13,29 @@ const ChatBubble = ({ type, message, isTyping = false }: ChatBubbleProps) => {
     <div className={`flex gap-3 mb-4 ${type === 'user' ? 'justify-end' : 'justify-start'}`}>
       {type === 'bot' && (
         <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-          <Bot className={`w-4 h-4 text-primary ${isTyping ? 'animate-pulse' : ''}`} />
+          <Bot className="w-4 h-4 text-primary" />
         </div>
       )}
       
       <div className={`max-w-[80%] ${type === 'user' ? 'order-first' : ''}`}>
         <div className={`
-          px-4 py-3 rounded-2xl text-sm transition-all duration-300
+          px-4 py-3 rounded-2xl text-sm
           ${type === 'bot' 
             ? 'bg-card border border-border text-foreground' 
             : 'bg-primary text-primary-foreground'
           }
-          ${isTyping ? 'animate-pulse bg-muted/50' : ''}
+          ${isTyping ? 'animate-pulse' : ''}
         `}>
           {isTyping ? (
-            <div className="flex items-center space-x-2">
-              <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-              </div>
-              <span className="text-xs text-muted-foreground animate-pulse ml-2">
-                En train d'écrire...
-              </span>
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           ) : (
             <p className="whitespace-pre-wrap">{message}</p>
           )}
         </div>
-        
-        {/* Timestamp - optional enhancement */}
-        {!isTyping && (
-          <div className="text-xs text-muted-foreground mt-1 px-2">
-            {new Date().toLocaleTimeString('fr-FR', { 
-              hour: '2-digit', 
-              minute: '2-digit' 
-            })}
-          </div>
-        )}
       </div>
 
       {type === 'user' && (
