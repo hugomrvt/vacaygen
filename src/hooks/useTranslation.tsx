@@ -16,9 +16,9 @@ const translations = {
     // Header
     'app.title': 'Messages Vacances',
     'app.subtitle': 'Générez le message de vacances parfait avec l\'IA. Professionnel, personnel ou créatif - trouvez le ton qui vous ressemble !',
-    'app.badge.free': '✨ Gratuit',
-    'app.badge.instant': '🚀 Instantané',
-    'app.badge.styles': '🎨 8 Styles',
+    'app.badge.free': 'Gratuit',
+    'app.badge.instant': 'Instantané',
+    'app.badge.styles': '8 Styles',
 
     // Steps
     'step.basic.title': 'Infos de base',
@@ -120,9 +120,9 @@ const translations = {
     // Header
     'app.title': 'Vacation Messages',
     'app.subtitle': 'Generate the perfect vacation message with AI. Professional, personal, or creative - find the tone that suits you!',
-    'app.badge.free': '✨ Free',
-    'app.badge.instant': '🚀 Instant',
-    'app.badge.styles': '🎨 8 Styles',
+    'app.badge.free': 'Free',
+    'app.badge.instant': 'Instant',
+    'app.badge.styles': '8 Styles',
 
     // Steps
     'step.basic.title': 'Basic Info',
