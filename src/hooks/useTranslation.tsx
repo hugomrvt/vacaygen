@@ -489,7 +489,7 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   const t = (key: string, params?: { [key: string]: any }): string => {
     const keys = key.split('.');
-    let value = translations[language];
+    let value: any = translations[language];
     
     for (const k of keys) {
       value = value?.[k];
@@ -501,7 +501,7 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
         if (paramKey === 'count') {
-          // Handle plural forms
+          // Handle plural forms for the specific pattern
           const pluralMatch = result.match(/\{count, plural, =1 \{([^}]*)\} other \{([^}]*)\}\}/);
           if (pluralMatch) {
             const singular = pluralMatch[1];
@@ -509,6 +509,7 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
             result = result.replace(pluralMatch[0], paramValue === 1 ? singular : plural);
           }
         }
+        // Replace simple placeholders
         result = result.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), String(paramValue));
       });
     }
