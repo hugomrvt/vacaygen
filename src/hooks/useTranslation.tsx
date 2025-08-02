@@ -21,7 +21,7 @@ const translations = {
 
     // Header
     'app.title': 'VacayGen',
-    'app.subtitle': 'Comme plus de 70 personnes, générez le message de vacances parfait. Professionnel, personnel ou créatif - trouvez le ton qui vous ressemble !',
+    'app.subtitle': 'Comme plus de {visitors} personnes, générez le message de vacances parfait. Professionnel, personnel ou créatif - trouvez le ton qui vous ressemble !',
     'app.badge.free': 'Gratuit',
     'app.badge.instant': 'Instantané',
     'app.badge.styles': '8 Styles',
@@ -258,7 +258,7 @@ const translations = {
 
     // Header
     'app.title': 'VacayGen',
-    'app.subtitle': 'Like more than 70 people, generate the perfect vacation message. Professional, personal, or creative - find the tone that suits you!',
+    'app.subtitle': 'Like more than {visitors} people, generate the perfect vacation message. Professional, personal, or creative - find the tone that suits you!',
     'app.badge.free': 'Free',
     'app.badge.instant': 'Instant',
     'app.badge.styles': '8 Styles',

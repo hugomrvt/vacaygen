@@ -7,6 +7,7 @@ import { RefreshCw, Sparkles, Zap, Bot, Trophy, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useVacationForm } from '@/hooks/useVacationForm';
 import { useMessageGenerator } from '@/hooks/useMessageGenerator';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 // Import refactored components
 import { VacationForm } from '@/components/vacation/VacationForm';
@@ -29,6 +30,7 @@ const Index = () => {
   // Use custom hooks for cleaner state management
   const vacationForm = useVacationForm();
   const messageGenerator = useMessageGenerator();
+  const { analytics } = useAnalytics();
 
   // Remove auto-progress - users will control navigation with buttons
 
@@ -74,7 +76,7 @@ const Index = () => {
               </h1>
               <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 <p>
-                  {t('app.subtitle')}
+                  {t('app.subtitle', { visitors: analytics.totalVisitors })}
                 </p>
               </div>
             </div>
@@ -159,7 +161,7 @@ const Index = () => {
             <div className="flex items-center justify-center gap-2 mb-4">
               <Trophy className="w-4 h-4 text-primary" />
               <span className="text-sm text-primary font-medium">
-                Déjà ~51 messages de vacances générés
+                Déjà ~{analytics.estimatedMessages} messages de vacances générés
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
