@@ -125,7 +125,6 @@ For support, please open an issue on GitHub
 
 ## 🙏 Acknowledgments
 
-- Built with [Lovable](https://lovable.dev) - AI-powered web development
 - UI components from [shadcn/ui](https://ui.shadcn.com/)
 - Icons from [Lucide React](https://lucide.dev/)
 
