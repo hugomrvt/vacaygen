@@ -83,10 +83,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Security Notice */}
-        <div className="mb-6">
-          <SecurityNotice />
-        </div>
 
         {/* Step Indicator */}
         <div className="mb-6 sm:mb-8">
@@ -149,6 +145,10 @@ const Index = () => {
 
         {/* Footer */}
         <div className="text-center mt-8 sm:mt-12 py-6 border-t border-border">
+          {/* Security Notice */}
+          <div className="mb-6">
+            <SecurityNotice />
+          </div>
           <div className="space-y-2">
             {messageGenerator.totalGeneratedMessages > 0 && (
               <div className="flex items-center justify-center gap-2 mb-4">
