@@ -13,6 +13,7 @@ import { MessageDisplay } from '@/components/vacation/MessageDisplay';
 import { StepIndicator } from '@/components/vacation/StepIndicator';
 import LanguageSelector from '@/components/LanguageSelector';
 import SEOHead from '@/components/SEOHead';
+import { SecurityNotice } from '@/components/SecurityNotice';
 
 const Index = () => {
   const { t } = useTranslation();
@@ -80,6 +81,11 @@ const Index = () => {
               {t('app.badge.instant')}
             </Badge>
           </div>
+        </div>
+
+        {/* Security Notice */}
+        <div className="mb-6">
+          <SecurityNotice />
         </div>
 
         {/* Step Indicator */}

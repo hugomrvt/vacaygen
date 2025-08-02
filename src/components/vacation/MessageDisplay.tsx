@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Copy, RefreshCw } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useToast } from '@/hooks/use-toast';
+import { sanitizeInput, validateMessageContent } from '@/lib/securityUtils';
 
 interface MessageDisplayProps {
   message: string;
@@ -24,6 +25,16 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
   }, [message]);
 
   const handleCopy = async () => {
+    // Validate content before copying
+    if (!validateMessageContent(editableMessage)) {
+      toast({
+        title: 'Contenu invalide',
+        description: 'Le message contient du contenu non autorisé.',
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(editableMessage);
       toast({
@@ -38,6 +49,12 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
         variant: "destructive"
       });
     }
+  };
+
+  const handleMessageChange = (value: string) => {
+    // Sanitize input while maintaining user experience
+    const sanitized = sanitizeInput(value);
+    setEditableMessage(sanitized);
   };
 
   const getMessageStats = (text: string) => {
@@ -108,11 +125,12 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
         <div className="space-y-2">
           <Textarea
             value={editableMessage}
-            onChange={(e) => setEditableMessage(e.target.value)}
+            onChange={(e) => handleMessageChange(e.target.value)}
             className="resize-none font-mono text-sm"
             style={{ height: 'auto', minHeight: '80px' }}
             rows={editableMessage.split('\n').length + 2}
             placeholder="Votre message apparaîtra ici..."
+            maxLength={5000}
           />
         </div>
 

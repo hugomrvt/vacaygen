@@ -9,6 +9,7 @@ import { formatDateToISO, isValidDateRange } from '@/lib/dateUtils';
 import { useTranslation } from '@/hooks/useTranslation';
 import { UseVacationFormReturn } from '@/hooks/useVacationForm';
 import AnimatedPlaceholder from '../AnimatedPlaceholder';
+import { isValidDestination, isValidActivity, isValidName } from '@/lib/securityUtils';
 
 interface VacationFormProps {
   form: UseVacationFormReturn;
@@ -87,6 +88,11 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
                 prefix={t('form.example')}
               />
             </div>
+            {formData.destination && !isValidDestination(formData.destination) && (
+              <p className="text-destructive text-sm">
+                Destination invalide. Utilisez uniquement des lettres, espaces et tirets.
+              </p>
+            )}
           </div>
 
           {/* Activity */}
@@ -105,6 +111,11 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
                 prefix={t('form.example')}
               />
             </div>
+            {formData.activity && !isValidActivity(formData.activity) && (
+              <p className="text-destructive text-sm">
+                Activité invalide. Utilisez uniquement des lettres, espaces et ponctuation de base.
+              </p>
+            )}
           </div>
 
           {/* Continue Button */}
@@ -155,6 +166,11 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
               placeholder={t('form.backup.placeholder')}
               className="w-full"
             />
+            {formData.backupContact && !isValidName(formData.backupContact) && (
+              <p className="text-destructive text-sm">
+                Contact invalide. Utilisez uniquement des lettres, espaces, tirets et apostrophes.
+              </p>
+            )}
           </div>
 
           {/* Continue Button */}

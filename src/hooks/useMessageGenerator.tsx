@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { generateRandomMessage, VacationData } from '@/lib/messageTemplates';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from '@/hooks/useTranslation';
+import { validateMessageContent, messageGenerationLimiter } from '@/lib/securityUtils';
 
 export interface UseMessageGeneratorReturn {
   generatedMessage: string;
@@ -18,6 +19,18 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
   const { t, language } = useTranslation();
 
   const generateVacationMessage = async (data: VacationData, style: string) => {
+    // Check rate limiting
+    const clientId = 'client'; // In a real app, this would be a user identifier
+    if (!messageGenerationLimiter.isAllowed(clientId)) {
+      const remaining = messageGenerationLimiter.getRemainingRequests(clientId);
+      toast({
+        title: 'Limite atteinte',
+        description: `Trop de demandes. ${remaining} générations restantes.`,
+        variant: 'destructive'
+      });
+      return;
+    }
+
     if (!data.startDate || !data.endDate || !data.destination) {
       toast({
         title: t('toast.missing.title'),
@@ -31,20 +44,36 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
     
     // Simulate generation delay
     setTimeout(() => {
-      const message = generateRandomMessage(data, style, language);
-      setGeneratedMessage(message);
-      setIsGenerating(false);
-      setTotalGeneratedMessages(prev => prev + 1);
+      try {
+        const message = generateRandomMessage(data, style, language);
+        
+        // Validate generated content
+        if (!validateMessageContent(message)) {
+          throw new Error('Generated content failed validation');
+        }
+        
+        setGeneratedMessage(message);
+        setTotalGeneratedMessages(prev => prev + 1);
 
-      // Success feedback
-      toast({
-        title: t('toast.generated.title'),
-        description: t('toast.generated.desc'),
-        variant: "default"
-      });
+        // Success feedback
+        toast({
+          title: t('toast.generated.title'),
+          description: t('toast.generated.desc'),
+          variant: "default"
+        });
 
-      // Confetti effect
-      createConfettiEffect();
+        // Confetti effect
+        createConfettiEffect();
+      } catch (error) {
+        console.error('Error generating message:', error);
+        toast({
+          title: 'Erreur de génération',
+          description: 'Une erreur est survenue lors de la génération du message.',
+          variant: 'destructive'
+        });
+      } finally {
+        setIsGenerating(false);
+      }
     }, 2500);
   };
 
