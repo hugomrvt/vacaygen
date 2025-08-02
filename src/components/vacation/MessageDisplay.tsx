@@ -52,9 +52,8 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
   };
 
   const handleMessageChange = (value: string) => {
-    // Sanitize input while maintaining user experience
-    const sanitized = sanitizeInput(value);
-    setEditableMessage(sanitized);
+    // Keep original formatting, only basic sanitization
+    setEditableMessage(value);
   };
 
   const getMessageStats = (text: string) => {
