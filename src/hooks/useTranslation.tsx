@@ -492,7 +492,13 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
     let value: any = translations[language];
     
     for (const k of keys) {
-      value = value?.[k];
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        // Key not found, return the key itself for debugging
+        console.warn(`Translation key not found: ${key} for language: ${language}`);
+        return key;
+      }
     }
     
     let result = typeof value === 'string' ? value : key;
