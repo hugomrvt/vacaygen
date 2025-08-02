@@ -109,7 +109,9 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
           <Textarea
             value={editableMessage}
             onChange={(e) => setEditableMessage(e.target.value)}
-            className="min-h-[120px] resize-y font-mono text-sm"
+            className="resize-none font-mono text-sm"
+            style={{ height: 'auto', minHeight: '80px' }}
+            rows={editableMessage.split('\n').length + 2}
             placeholder="Votre message apparaîtra ici..."
           />
         </div>
