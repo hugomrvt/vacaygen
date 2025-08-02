@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Bot, Sparkles, Clock, Users, Zap } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface LoadingScreenProps {
   onComplete: () => void;
 }
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
+  const { t } = useTranslation();
   const [progress, setProgress] = useState(0);
   const [currentFeature, setCurrentFeature] = useState(0);
 
   const features = [
     {
       icon: <Sparkles className="w-6 h-6" />,
-      title: "Génération automatique",
-      description: "Messages de vacances ou d'abscences personnalisés en quelques secondes"
+      title: t('loading.features.generation.title'),
+      description: t('loading.features.generation.desc')
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: "Styles adaptés",
-      description: "Différents tons selon vos destinataires (famille, collègues, clients)"
+      title: t('loading.features.styles.title'),
+      description: t('loading.features.styles.desc')
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "Gain de temps",
-      description: "Plus besoin de réfléchir, VacayGen s'occupe de tout"
+      title: t('loading.features.time.title'),
+      description: t('loading.features.time.desc')
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "100% gratuit",
-      description: "Aucune inscription requise, utilisez-le immédiatement"
+      title: t('loading.features.free.title'),
+      description: t('loading.features.free.desc')
     }
   ];
 
@@ -67,10 +69,10 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           
           <div className="space-y-2">
             <h1 className="text-4xl font-display font-bold gradient-text">
-              VacayGen
+              {t('loading.title')}
             </h1>
             <p className="text-lg text-muted-foreground">
-              Votre assistant pour créer des messages de vacances parfaits
+              {t('loading.subtitle')}
             </p>
           </div>
         </div>
@@ -96,14 +98,14 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Chargement</span>
+              <span className="text-sm text-muted-foreground">{t('loading.progress')}</span>
               <span className="text-sm font-medium text-primary">{progress}%</span>
             </div>
             <Progress value={progress} className="h-2" />
           </div>
           
           <p className="text-xs text-muted-foreground">
-            Préparation de votre expérience VacayGen...
+            {t('loading.preparing')}
           </p>
         </div>
       </div>

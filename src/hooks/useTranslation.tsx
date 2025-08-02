@@ -132,6 +132,20 @@ const translations = {
     'footer.instant': '⚡ Génération instantanée',
     'footer.compatible': '🌍 Compatible toutes plateformes',
 
+    // Loading Screen
+    'loading.title': 'VacayGen',
+    'loading.subtitle': 'Votre assistant pour créer des messages de vacances parfaits',
+    'loading.features.generation.title': 'Génération automatique',
+    'loading.features.generation.desc': 'Messages de vacances ou d\'absences personnalisés en quelques secondes',
+    'loading.features.styles.title': 'Styles adaptés',
+    'loading.features.styles.desc': 'Différents tons selon vos destinataires (famille, collègues, clients)',
+    'loading.features.time.title': 'Gain de temps',
+    'loading.features.time.desc': 'Plus besoin de réfléchir, VacayGen s\'occupe de tout',
+    'loading.features.free.title': '100% gratuit',
+    'loading.features.free.desc': 'Aucune inscription requise, utilisez-le immédiatement',
+    'loading.progress': 'Chargement',
+    'loading.preparing': 'Préparation de votre expérience VacayGen...',
+
     // Legal
     'legal.notice': 'Mentions légales',
     'legal.terms': 'Conditions d\'utilisation',
@@ -349,6 +363,20 @@ const translations = {
     'footer.instant': '⚡ Instant generation',
     'footer.compatible': '🌍 Compatible with all platforms',
 
+    // Loading Screen
+    'loading.title': 'VacayGen',
+    'loading.subtitle': 'Your assistant for creating perfect vacation messages',
+    'loading.features.generation.title': 'Automatic generation',
+    'loading.features.generation.desc': 'Personalized vacation or absence messages in seconds',
+    'loading.features.styles.title': 'Adapted styles',
+    'loading.features.styles.desc': 'Different tones for your recipients (family, colleagues, clients)',
+    'loading.features.time.title': 'Time saving',
+    'loading.features.time.desc': 'No need to think, VacayGen takes care of everything',
+    'loading.features.free.title': '100% free',
+    'loading.features.free.desc': 'No registration required, use it immediately',
+    'loading.progress': 'Loading',
+    'loading.preparing': 'Preparing your VacayGen experience...',
+
     // Legal
     'legal.notice': 'Legal Notice',
     'legal.terms': 'Terms of Service',
@@ -449,7 +477,13 @@ const translations = {
 };
 
 export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('fr');
+  // Detect browser language automatically
+  const detectBrowserLanguage = (): Language => {
+    const browserLang = navigator.language || navigator.languages?.[0] || 'fr';
+    return browserLang.startsWith('en') ? 'en' : 'fr';
+  };
+
+  const [language, setLanguage] = useState<Language>(detectBrowserLanguage());
 
   const t = (key: string): string => {
     const value = translations[language][key as keyof typeof translations['fr']];
