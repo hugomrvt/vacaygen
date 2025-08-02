@@ -6,7 +6,7 @@ type Language = 'fr' | 'en';
 interface TranslationContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, params?: { [key: string]: any }) => string;
   tArray: (key: string) => string[];
 }
 
@@ -128,6 +128,7 @@ const translations = {
 
     // Footer
     'footer.created': 'Vibe Coded par',
+    'footer.messages.count': '{count} message{count, plural, =1 {} other {s}} généré{count, plural, =1 {} other {s}}',
     'footer.secure': '🔒 Données sécurisées',
     'footer.instant': '⚡ Génération instantanée',
     'footer.compatible': '🌍 Compatible toutes plateformes',
@@ -359,6 +360,7 @@ const translations = {
 
     // Footer
     'footer.created': 'Vibe Coded by',
+    'footer.messages.count': '{count} message{count, plural, =1 {} other {s}} generated',
     'footer.secure': '🔒 Secure data',
     'footer.instant': '⚡ Instant generation',
     'footer.compatible': '🌍 Compatible with all platforms',
@@ -485,9 +487,33 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   const [language, setLanguage] = useState<Language>(detectBrowserLanguage());
 
-  const t = (key: string): string => {
-    const value = translations[language][key as keyof typeof translations['fr']];
-    return Array.isArray(value) ? key : (value || key);
+  const t = (key: string, params?: { [key: string]: any }): string => {
+    const keys = key.split('.');
+    let value = translations[language];
+    
+    for (const k of keys) {
+      value = value?.[k];
+    }
+    
+    let result = typeof value === 'string' ? value : key;
+    
+    // Simple interpolation for parameters
+    if (params) {
+      Object.entries(params).forEach(([paramKey, paramValue]) => {
+        if (paramKey === 'count') {
+          // Handle plural forms
+          const pluralMatch = result.match(/\{count, plural, =1 \{([^}]*)\} other \{([^}]*)\}\}/);
+          if (pluralMatch) {
+            const singular = pluralMatch[1];
+            const plural = pluralMatch[2];
+            result = result.replace(pluralMatch[0], paramValue === 1 ? singular : plural);
+          }
+        }
+        result = result.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), String(paramValue));
+      });
+    }
+    
+    return result;
   };
 
   const tArray = (key: string): string[] => {

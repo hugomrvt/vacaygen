@@ -82,7 +82,7 @@ const Index = () => {
           
           {/* Badges */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-            <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-green-500/20 text-sm px-4 py-2 rounded-full">
+            <Badge variant="secondary" className="bg-success/10 text-success border-success/20 text-sm px-4 py-2 rounded-full">
               <Zap className="w-4 h-4 mr-2" />
               {t('app.badge.free')}
             </Badge>
@@ -164,7 +164,7 @@ const Index = () => {
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Trophy className="w-4 h-4 text-primary" />
                 <span className="text-sm text-primary font-medium">
-                  {messageGenerator.totalGeneratedMessages} message{messageGenerator.totalGeneratedMessages > 1 ? 's' : ''} généré{messageGenerator.totalGeneratedMessages > 1 ? 's' : ''}
+                  {t('footer.messages.count', { count: messageGenerator.totalGeneratedMessages })}
                 </span>
               </div>
             )}
@@ -252,7 +252,7 @@ const Index = () => {
                         variant="ghost" 
                         size="sm" 
                         onClick={() => setOpenSheet(null)}
-                        className="h-12 w-12 p-0"
+                        className="h-6 w-6 p-0"
                       >
                         <X className="h-4 w-4" />
                       </Button>
