@@ -17,9 +17,11 @@ import LanguageSelector from '@/components/LanguageSelector';
 import SEOHead from '@/components/SEOHead';
 import { SecurityNotice } from '@/components/SecurityNotice';
 import { LegalNoticeContent, TermsOfServiceContent, PrivacyPolicyContent } from '@/components/LegalContent';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const Index = () => {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedStyle, setSelectedStyle] = useState('millennial-pro');
   const [openSheet, setOpenSheet] = useState<string | null>(null);
@@ -44,6 +46,10 @@ const Index = () => {
   const handleRegenerate = () => {
     handleGenerate();
   };
+
+  if (isLoading) {
+    return <LoadingScreen onComplete={() => setIsLoading(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
