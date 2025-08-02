@@ -1,4 +1,4 @@
-# 🏖️ VacayGen
+# VacayGen
 
 > **Smart vacation message generator for professionals**
 
