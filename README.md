@@ -17,7 +17,6 @@ VacayGen is a privacy-first web application that helps professionals create pers
 - **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile
 - **♿ Accessible**: WCAG compliant with full keyboard navigation and screen reader support
 - **⚡ Rate Limiting**: Built-in protection against abuse
-- **🎉 Interactive Feedback**: Confetti animations and toast notifications
 
 ## 🚀 Quick Start
 
@@ -122,7 +121,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Support
 
-For support, please open an issue on GitHub or contact [your-email@domain.com].
+For support, please open an issue on GitHub
 
 ## 🙏 Acknowledgments
 
