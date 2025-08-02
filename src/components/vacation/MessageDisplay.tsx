@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
 import { Copy, RefreshCw } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useToast } from '@/hooks/use-toast';
@@ -15,10 +16,16 @@ interface MessageDisplayProps {
 export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageDisplayProps) {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const [editableMessage, setEditableMessage] = useState(message);
+
+  // Mettre à jour le message éditable quand le message original change
+  useEffect(() => {
+    setEditableMessage(message);
+  }, [message]);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(message);
+      await navigator.clipboard.writeText(editableMessage);
       toast({
         title: t('toast.copied.title'),
         description: t('toast.copied.desc.text'),
@@ -74,7 +81,7 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
     );
   }
 
-  const stats = getMessageStats(message);
+  const stats = getMessageStats(editableMessage);
 
   return (
     <Card className="glass-card">
@@ -92,13 +99,19 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
             </Badge>
           </div>
         </div>
+        <CardDescription>
+          Modifiez le message avant de le copier
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Message Content */}
-        <div className="bg-muted/30 rounded-lg p-4 border">
-          <pre className="whitespace-pre-wrap text-sm text-foreground font-mono">
-            {message}
-          </pre>
+        {/* Message Content - Editable */}
+        <div className="space-y-2">
+          <Textarea
+            value={editableMessage}
+            onChange={(e) => setEditableMessage(e.target.value)}
+            className="min-h-[120px] resize-y font-mono text-sm"
+            placeholder="Votre message apparaîtra ici..."
+          />
         </div>
 
         {/* Action Buttons */}
