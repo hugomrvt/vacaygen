@@ -1,73 +1,135 @@
-# Welcome to your Lovable project
+# 🏖️ VacayGen
 
-## Project info
+> **Smart vacation message generator for professionals**
 
-**URL**: https://lovable.dev/projects/25103db3-c93a-4c53-97ac-3c429c2bc155
+VacayGen is a privacy-first web application that helps professionals create personalized, professional vacation messages in seconds. Generate contextual out-of-office messages with multiple styles and languages - all processed locally in your browser.
 
-## How can I edit this code?
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- **🎯 Smart Message Generation**: Context-aware vacation messages tailored to your situation
+- **🎨 Multiple Styles**: Professional, casual, creative, and humorous message variants
+- **🌍 Multilingual Support**: Generate messages in French and English
+- **🔒 Privacy-First**: All processing happens locally - no data leaves your browser
+- **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **♿ Accessible**: WCAG compliant with full keyboard navigation and screen reader support
+- **⚡ Rate Limiting**: Built-in protection against abuse
+- **🎉 Interactive Feedback**: Confetti animations and toast notifications
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/25103db3-c93a-4c53-97ac-3c429c2bc155) and start prompting.
+## 🚀 Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 16+ (recommended: use [nvm](https://github.com/nvm-sh/nvm))
+- npm or yarn
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/vacaygen.git
+   cd vacaygen
+   ```
 
-Follow these steps:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. **Open your browser**
+   Navigate to `http://localhost:8080`
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Build for Production
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm run build
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🏗️ Tech Stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Frontend Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Build Tool**: Vite
+- **Routing**: React Router DOM
+- **State Management**: React Hooks
+- **Internationalization**: Custom translation system
+- **Animations**: CSS animations + confetti effects
+- **Form Handling**: Custom validation hooks
 
-**Use GitHub Codespaces**
+## 📁 Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+src/
+├── components/           # Reusable UI components
+│   ├── ui/              # shadcn/ui components
+│   ├── vacation/        # Vacation-specific components
+│   └── ...              # Other components
+├── hooks/               # Custom React hooks
+├── lib/                 # Utility functions
+├── pages/               # Page components
+└── types/               # TypeScript type definitions
+```
 
-## What technologies are used for this project?
+## 🔧 Configuration
 
-This project is built with:
+### Environment Variables
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This application runs entirely client-side and doesn't require environment variables.
 
-## How can I deploy this project?
+### Customization
 
-Simply open [Lovable](https://lovable.dev/projects/25103db3-c93a-4c53-97ac-3c429c2bc155) and click on Share -> Publish.
+- **Themes**: Edit `src/index.css` and `tailwind.config.ts`
+- **Languages**: Add translations in `src/hooks/useTranslation.tsx`
+- **Message Templates**: Modify `src/lib/messageTemplates.ts`
 
-## Can I connect a custom domain to my Lovable project?
+## 🤝 Contributing
 
-Yes, you can!
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Development Guidelines
+
+- Follow TypeScript best practices
+- Use semantic commit messages
+- Ensure accessibility compliance
+- Add translations for new text content
+- Test on multiple devices and browsers
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🛡️ Privacy & Security
+
+- **No Data Collection**: VacayGen doesn't collect, store, or transmit personal data
+- **Local Processing**: All message generation happens in your browser
+- **GDPR Compliant**: Fully compliant with privacy regulations
+- **Security Features**: Rate limiting, input validation, and XSS protection
+
+## 📧 Support
+
+For support, please open an issue on GitHub or contact [your-email@domain.com].
+
+## 🙏 Acknowledgments
+
+- Built with [Lovable](https://lovable.dev) - AI-powered web development
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
+- Icons from [Lucide React](https://lucide.dev/)
+
+---
+
+**Made with ❤️ for busy professionals who need perfect vacation messages**
