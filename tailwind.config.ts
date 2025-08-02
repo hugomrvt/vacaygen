@@ -20,7 +20,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'malinton': ['Malinton', 'serif'],
+				'display': ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
