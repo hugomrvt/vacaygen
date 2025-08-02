@@ -8,7 +8,7 @@ import { TogglePills } from '@/components/ui/toggle-pills';
 import { formatDateToISO, isValidDateRange } from '@/lib/dateUtils';
 import { useTranslation } from '@/hooks/useTranslation';
 import { UseVacationFormReturn } from '@/hooks/useVacationForm';
-import AnimatedPlaceholder from '../AnimatedPlaceholder';
+
 import { isValidDestination, isValidActivity, isValidName } from '@/lib/securityUtils';
 
 interface VacationFormProps {
@@ -83,10 +83,6 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
                 placeholder={t('form.destination.placeholder')}
                 className="w-full"
               />
-              <AnimatedPlaceholder
-                examples={tArray('form.destination.examples')}
-                prefix={t('form.example')}
-              />
             </div>
             {formData.destination && !isValidDestination(formData.destination) && (
               <p className="text-destructive text-sm">
@@ -105,10 +101,6 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
                 onChange={(e) => updateField('activity', e.target.value)}
                 placeholder={t('form.activity.placeholder')}
                 className="w-full"
-              />
-              <AnimatedPlaceholder
-                examples={tArray('form.activity.examples')}
-                prefix={t('form.example')}
               />
             </div>
             {formData.activity && !isValidActivity(formData.activity) && (
