@@ -107,6 +107,9 @@ const translations = {
     'generated.tips.slack': '• Slack/Teams : Utilisez le format Markdown pour plus de style',
     'generated.preview': 'Aperçu du Style',
 
+    // Buttons
+    'button.continue': 'Continuer',
+    
     // Generate Button
     'generate.button': 'Générer mon message',
     'generate.button.loading': 'Génération en cours...',
@@ -224,6 +227,9 @@ const translations = {
     'generated.tips.linkedin': '• LinkedIn: Adapt as a post if you want to share publicly',
     'generated.preview': 'Style Preview',
 
+    // Buttons
+    'button.continue': 'Continue',
+    
     // Generate Button
     'generate.button': 'Generate my message',
     'generate.button.loading': 'Generating...',
