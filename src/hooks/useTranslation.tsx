@@ -488,20 +488,17 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({ childre
   const [language, setLanguage] = useState<Language>(detectBrowserLanguage());
 
   const t = (key: string, params?: { [key: string]: any }): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
+    // Get translation directly by key (since keys use dot notation as strings)
+    const translationSet = translations[language];
+    let value = translationSet[key as keyof typeof translationSet];
     
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        // Key not found, return the key itself for debugging
-        console.warn(`Translation key not found: ${key} for language: ${language}`);
-        return key;
-      }
+    // If not found, return the key itself for debugging
+    if (typeof value !== 'string') {
+      console.warn(`Translation key not found: ${key} for language: ${language}`);
+      return key;
     }
     
-    let result = typeof value === 'string' ? value : key;
+    let result = value;
     
     // Simple interpolation for parameters
     if (params) {
