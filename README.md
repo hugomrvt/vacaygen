@@ -8,6 +8,8 @@ VacayGen is a privacy-first web application that helps professionals create pers
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
+![Image](https://i.imgur.com/OHT2Py3.jpeg)
+
 ## ✨ Features
 
 - **🎯 Smart Message Generation**: Context-aware vacation messages tailored to your situation
