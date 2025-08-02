@@ -14,7 +14,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     {
       icon: <Sparkles className="w-6 h-6" />,
       title: "Génération automatique",
-      description: "Messages de vacances personnalisés en quelques secondes"
+      description: "Messages de vacances ou d'abscences personnalisés en quelques secondes"
     },
     {
       icon: <Users className="w-6 h-6" />,
