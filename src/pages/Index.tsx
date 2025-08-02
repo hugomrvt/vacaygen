@@ -15,7 +15,7 @@ import { MessageDisplay } from '@/components/vacation/MessageDisplay';
 import { StepIndicator } from '@/components/vacation/StepIndicator';
 import LanguageSelector from '@/components/LanguageSelector';
 import SEOHead from '@/components/SEOHead';
-import { SecurityNotice } from '@/components/SecurityNotice';
+
 import { LegalNoticeContent, TermsOfServiceContent, PrivacyPolicyContent } from '@/components/LegalContent';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -155,10 +155,6 @@ const Index = () => {
 
         {/* Footer */}
         <div className="text-center mt-8 sm:mt-12 py-6 border-t border-border">
-          {/* Security Notice */}
-          <div className="mb-6">
-            <SecurityNotice />
-          </div>
           <div className="space-y-2">
             {messageGenerator.totalGeneratedMessages > 0 && (
               <div className="flex items-center justify-center gap-2 mb-4">
