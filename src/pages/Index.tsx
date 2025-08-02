@@ -169,6 +169,21 @@ const Index = () => {
                 Hugo Mourlevat
               </a>
             </p>
+            
+            {/* Legal Links */}
+            <div className="flex flex-wrap justify-center gap-4 mt-4 text-xs text-muted-foreground">
+              <a href="/mentions-legales" className="hover:text-primary transition-colors">
+                Mentions légales
+              </a>
+              <span>•</span>
+              <a href="/conditions-utilisation" className="hover:text-primary transition-colors">
+                Conditions d'utilisation
+              </a>
+              <span>•</span>
+              <a href="/politique-confidentialite" className="hover:text-primary transition-colors">
+                Politique de confidentialité
+              </a>
+            </div>
           </div>
         </div>
       </div>
