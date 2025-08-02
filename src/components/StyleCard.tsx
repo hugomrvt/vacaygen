@@ -36,7 +36,7 @@ function StyleCard({ style, isSelected, onSelect }: StyleCardProps) {
         <div className="absolute top-2 right-2 z-10">
           <Badge 
             variant={style.popularity === 'hot' ? 'default' : 'secondary'}
-            className="text-xs px-2 py-1"
+            className="text-xs px-2 py-1 text-white"
           >
             {style.popularity === 'hot' ? t('styles.hot') : t('styles.trending')}
           </Badge>
