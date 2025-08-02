@@ -69,9 +69,9 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
           <CardTitle className="text-xl">
             {t('generated.generating')}
           </CardTitle>
-          <CardDescription>
-            Génération d'une nouvelle version...
-          </CardDescription>
+        <CardDescription>
+          {t('generated.generating.subtitle')}
+        </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-center py-12">
@@ -104,19 +104,19 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-xl">
-            Message Généré
+            {t('generated.message.title')}
           </CardTitle>
           <div className="flex gap-2">
             <Badge variant="secondary" className="text-xs">
-              {stats.words} mots
+              {stats.words} {t('generated.stats.words')}
             </Badge>
             <Badge variant="secondary" className="text-xs">
-              {stats.characters} caractères
+              {stats.characters} {t('generated.stats.characters')}
             </Badge>
           </div>
         </div>
         <CardDescription>
-          Modifiez le message avant de le copier
+          {t('generated.message.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -128,7 +128,7 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
             className="resize-none text-sm whitespace-pre-wrap leading-relaxed"
             style={{ height: 'auto', minHeight: '120px', whiteSpace: 'pre-wrap' }}
             rows={Math.max(6, editableMessage.split('\n').length + 2)}
-            placeholder="Votre message apparaîtra ici..."
+            placeholder={t('generated.message.placeholder')}
             maxLength={5000}
           />
         </div>
@@ -141,7 +141,7 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
             className="flex-1"
           >
             <Copy className="mr-2 h-4 w-4" />
-            Copier le message
+            {t('generated.actions.copy')}
           </Button>
           <Button 
             onClick={onRegenerate}
@@ -149,19 +149,19 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
             className="flex-1"
           >
             <RefreshCw className="mr-2 h-4 w-4" />
-            Générer une nouvelle version
+            {t('generated.actions.regenerate')}
           </Button>
         </div>
 
         {/* Usage Tips */}
         <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
           <h4 className="font-medium text-sm mb-2 text-primary">
-            💡 Conseil d'utilisation
+            💡 {t('generated.tips.title')}
           </h4>
           <div className="space-y-1 text-xs text-muted-foreground">
-            <p>• Cliquez sur "Générer une nouvelle version" pour obtenir une variante</p>
-            <p>• Personnalisez le message selon votre contexte professionnel</p>
-            <p>• N'oubliez pas d'ajouter votre signature !</p>
+            <p>• {t('generated.tips.regenerate')}</p>
+            <p>• {t('generated.tips.customize')}</p>
+            <p>• {t('generated.tips.signature')}</p>
           </div>
         </div>
       </CardContent>
