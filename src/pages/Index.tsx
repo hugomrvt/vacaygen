@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { RefreshCw, Sparkles, Zap, Bot, Trophy } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { RefreshCw, Sparkles, Zap, Bot, Trophy, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useVacationForm } from '@/hooks/useVacationForm';
 import { useMessageGenerator } from '@/hooks/useMessageGenerator';
@@ -14,11 +16,13 @@ import { StepIndicator } from '@/components/vacation/StepIndicator';
 import LanguageSelector from '@/components/LanguageSelector';
 import SEOHead from '@/components/SEOHead';
 import { SecurityNotice } from '@/components/SecurityNotice';
+import { LegalNoticeContent, TermsOfServiceContent, PrivacyPolicyContent } from '@/components/LegalContent';
 
 const Index = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedStyle, setSelectedStyle] = useState('millennial-pro');
+  const [openSheet, setOpenSheet] = useState<string | null>(null);
   
   // Use custom hooks for cleaner state management
   const vacationForm = useVacationForm();
@@ -172,17 +176,87 @@ const Index = () => {
             
             {/* Legal Links */}
             <div className="flex flex-wrap justify-center gap-4 mt-4 text-xs text-muted-foreground">
-              <a href="/mentions-legales" className="hover:text-primary transition-colors">
-                Mentions légales
-              </a>
+              <Sheet open={openSheet === 'legal'} onOpenChange={(open) => setOpenSheet(open ? 'legal' : null)}>
+                <SheetTrigger asChild>
+                  <button className="hover:text-primary transition-colors">
+                    {t('legal.notice')}
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-[80vh]">
+                  <SheetHeader>
+                    <SheetTitle className="flex items-center justify-between">
+                      {t('legal.notice.title')}
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setOpenSheet(null)}
+                        className="h-6 w-6 p-0"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <ScrollArea className="h-full pr-4">
+                    <LegalNoticeContent />
+                  </ScrollArea>
+                </SheetContent>
+              </Sheet>
+              
               <span>•</span>
-              <a href="/conditions-utilisation" className="hover:text-primary transition-colors">
-                Conditions d'utilisation
-              </a>
+              
+              <Sheet open={openSheet === 'terms'} onOpenChange={(open) => setOpenSheet(open ? 'terms' : null)}>
+                <SheetTrigger asChild>
+                  <button className="hover:text-primary transition-colors">
+                    {t('legal.terms')}
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-[80vh]">
+                  <SheetHeader>
+                    <SheetTitle className="flex items-center justify-between">
+                      {t('legal.terms.title')}
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setOpenSheet(null)}
+                        className="h-6 w-6 p-0"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <ScrollArea className="h-full pr-4">
+                    <TermsOfServiceContent />
+                  </ScrollArea>
+                </SheetContent>
+              </Sheet>
+              
               <span>•</span>
-              <a href="/politique-confidentialite" className="hover:text-primary transition-colors">
-                Politique de confidentialité
-              </a>
+              
+              <Sheet open={openSheet === 'privacy'} onOpenChange={(open) => setOpenSheet(open ? 'privacy' : null)}>
+                <SheetTrigger asChild>
+                  <button className="hover:text-primary transition-colors">
+                    {t('legal.privacy')}
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-[80vh]">
+                  <SheetHeader>
+                    <SheetTitle className="flex items-center justify-between">
+                      {t('legal.privacy.title')}
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setOpenSheet(null)}
+                        className="h-6 w-6 p-0"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <ScrollArea className="h-full pr-4">
+                    <PrivacyPolicyContent />
+                  </ScrollArea>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
