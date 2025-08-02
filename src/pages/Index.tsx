@@ -76,7 +76,7 @@ const Index = () => {
               </h1>
               <div className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 <p>
-                  {t('app.subtitle', { visitors: analytics.totalVisitors })}
+                  {t('app.subtitle')}
                 </p>
               </div>
             </div>
