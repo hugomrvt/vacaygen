@@ -156,14 +156,12 @@ const Index = () => {
         {/* Footer */}
         <div className="text-center mt-8 sm:mt-12 py-6 border-t border-border">
           <div className="space-y-2">
-            {messageGenerator.totalGeneratedMessages > 0 && (
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <Trophy className="w-4 h-4 text-primary" />
-                <span className="text-sm text-primary font-medium">
-                  {t('footer.messages.count', { count: messageGenerator.totalGeneratedMessages })}
-                </span>
-              </div>
-            )}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Trophy className="w-4 h-4 text-primary" />
+              <span className="text-sm text-primary font-medium">
+                Déjà ~51 messages de vacances générés
+              </span>
+            </div>
             <p className="text-sm text-muted-foreground">
               {t('footer.created')}{' '}
               <a 
