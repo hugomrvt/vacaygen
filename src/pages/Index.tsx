@@ -246,7 +246,7 @@ const Index = () => {
                         variant="ghost" 
                         size="sm" 
                         onClick={() => setOpenSheet(null)}
-                        className="h-6 w-6 p-0"
+                        className="h-12 w-12 p-0"
                       >
                         <X className="h-4 w-4" />
                       </Button>
