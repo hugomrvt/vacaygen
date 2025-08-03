@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { RefreshCw, Sparkles, Zap, Bot, Trophy, X } from 'lucide-react';
+import { RefreshCw, Sparkles, Zap, Bot, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useVacationForm } from '@/hooks/useVacationForm';
 import { useMessageGenerator } from '@/hooks/useMessageGenerator';
