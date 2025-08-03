@@ -7,7 +7,7 @@ import { RefreshCw, Sparkles, Zap, Bot, Trophy, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useVacationForm } from '@/hooks/useVacationForm';
 import { useMessageGenerator } from '@/hooks/useMessageGenerator';
-import { useAnalytics } from '@/hooks/useAnalytics';
+
 
 // Import refactored components
 import { VacationForm } from '@/components/vacation/VacationForm';
@@ -30,7 +30,7 @@ const Index = () => {
   // Use custom hooks for cleaner state management
   const vacationForm = useVacationForm();
   const messageGenerator = useMessageGenerator();
-  const { analytics } = useAnalytics();
+  
 
   // Remove auto-progress - users will control navigation with buttons
 

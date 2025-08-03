@@ -51,15 +51,6 @@ All colors MUST be HSL.
     --sidebar-border: 220 15% 18%;
     --sidebar-ring: 217 91% 60%;
 
-    /* Custom dashboard colors */
-    --success: 142 76% 36%;
-    --success-foreground: 220 10% 95%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 220 10% 10%;
-    --chart-1: 142 76% 36%;
-    --chart-2: 217 91% 60%;
-    --chart-3: 262 83% 58%;
-    --chart-4: 346 77% 49%;
   }
 }
 
@@ -85,14 +76,7 @@ All colors MUST be HSL.
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-primary to-chart-3 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent;
   }
   
-  .success-indicator {
-    @apply text-success bg-success/10 rounded-full px-2 py-1 text-xs font-medium;
-  }
-  
-  .warning-indicator {
-    @apply text-warning bg-warning/10 rounded-full px-2 py-1 text-xs font-medium;
-  }
 }

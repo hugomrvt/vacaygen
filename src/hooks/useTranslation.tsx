@@ -134,7 +134,7 @@ const translations = {
 
     // Footer
     'footer.created': 'Vibe Coded par',
-    'footer.messages.count': '{count} message{count, plural, =1 {} other {s}} généré{count, plural, =1 {} other {s}}',
+    
     'footer.secure': '🔒 Données sécurisées',
     'footer.instant': '⚡ Génération instantanée',
     'footer.compatible': '🌍 Compatible toutes plateformes',

@@ -8,13 +8,13 @@ export interface UseMessageGeneratorReturn {
   generatedMessage: string;
   isGenerating: boolean;
   generateVacationMessage: (data: VacationData, style: string) => Promise<void>;
-  totalGeneratedMessages: number;
+  
 }
 
 export function useMessageGenerator(): UseMessageGeneratorReturn {
   const [generatedMessage, setGeneratedMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [totalGeneratedMessages, setTotalGeneratedMessages] = useState(0);
+  
   const { toast } = useToast();
   const { t, language } = useTranslation();
 
@@ -53,7 +53,7 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
         }
         
         setGeneratedMessage(message);
-        setTotalGeneratedMessages(prev => prev + 1);
+        
 
         // Success feedback
         toast({
@@ -97,6 +97,6 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
     generatedMessage,
     isGenerating,
     generateVacationMessage,
-    totalGeneratedMessages
+    
   };
 }
