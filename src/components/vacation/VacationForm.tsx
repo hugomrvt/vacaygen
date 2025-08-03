@@ -15,9 +15,10 @@ interface VacationFormProps {
   form: UseVacationFormReturn;
   currentStep: number;
   onNextStep?: () => void;
+  onPrevStep?: () => void;
 }
 
-export function VacationForm({ form, currentStep, onNextStep }: VacationFormProps) {
+export function VacationForm({ form, currentStep, onNextStep, onPrevStep }: VacationFormProps) {
   const { t, language, tArray } = useTranslation();
   const { formData, updateField, toggleRecipient } = form;
 
@@ -66,7 +67,7 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
               />
               {formData.startDate && formData.endDate && !isValidDateRange(formData.startDate, formData.endDate) && (
                 <p className="text-destructive text-sm">
-                  La date de fin doit être après la date de début
+                  {t('form.validation.date')}
                 </p>
               )}
             </div>
@@ -86,7 +87,7 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
             </div>
             {formData.destination && !isValidDestination(formData.destination) && (
               <p className="text-destructive text-sm">
-                Destination invalide. Utilisez uniquement des lettres, espaces et tirets.
+                {t('form.validation.destination')}
               </p>
             )}
           </div>
@@ -105,7 +106,7 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
             </div>
             {formData.activity && !isValidActivity(formData.activity) && (
               <p className="text-destructive text-sm">
-                Activité invalide. Utilisez uniquement des lettres, espaces et ponctuation de base.
+                {t('form.validation.activity')}
               </p>
             )}
           </div>
@@ -160,22 +161,31 @@ export function VacationForm({ form, currentStep, onNextStep }: VacationFormProp
             />
             {formData.backupContact && !isValidName(formData.backupContact) && (
               <p className="text-destructive text-sm">
-                Contact invalide. Utilisez uniquement des lettres, espaces, tirets et apostrophes.
+                {t('form.validation.backup')}
               </p>
             )}
           </div>
 
-          {/* Continue Button */}
-          {form.isRecipientsComplete && onNextStep && (
-            <div className="flex justify-end pt-4">
+          {/* Navigation Buttons */}
+          <div className="flex justify-between pt-4">
+            {onPrevStep && (
+              <Button 
+                onClick={onPrevStep}
+                variant="outline"
+                className="px-6 py-2"
+              >
+                ← {t('button.back')}
+              </Button>
+            )}
+            {form.isRecipientsComplete && onNextStep && (
               <Button 
                 onClick={onNextStep}
                 className="px-6 py-2"
               >
                 {t('button.continue')} →
               </Button>
-            </div>
-          )}
+            )}
+          </div>
         </CardContent>
       </Card>
     );

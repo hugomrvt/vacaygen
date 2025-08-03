@@ -113,6 +113,7 @@ const Index = () => {
             form={vacationForm} 
             currentStep={currentStep} 
             onNextStep={() => setCurrentStep(prev => Math.min(prev + 1, 3))}
+            onPrevStep={() => setCurrentStep(prev => Math.max(prev - 1, 1))}
           />
 
           {/* Style Selection */}
@@ -123,8 +124,15 @@ const Index = () => {
                 onStyleSelect={setSelectedStyle}
               />
 
-              {/* Generate Button */}
-              <div className="text-center px-4">
+              {/* Navigation and Generate Buttons */}
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 px-4">
+                <Button 
+                  onClick={() => setCurrentStep(2)}
+                  variant="outline"
+                  className="px-6 py-2 w-full sm:w-auto"
+                >
+                  ← {t('button.back')}
+                </Button>
                 <Button 
                   onClick={handleGenerate} 
                   disabled={messageGenerator.isGenerating || !vacationForm.isValid} 

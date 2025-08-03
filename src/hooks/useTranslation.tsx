@@ -54,6 +54,12 @@ const translations = {
     'form.activity.examples': ['Plage et farniente 🏖️', 'Randonnée en montagne 🥾', 'Visite familiale 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga et détente 🧘‍♀️'],
     'form.recipients.section': 'Destinataires et Contact',
     'form.recipients.question': 'Pour qui ?',
+    
+    // Form validation
+    'form.validation.date': 'La date de fin doit être après la date de début',
+    'form.validation.destination': 'Destination invalide. Utilisez uniquement des lettres, espaces et tirets.',
+    'form.validation.activity': 'Activité invalide. Utilisez uniquement des lettres, espaces et ponctuation de base.',
+    'form.validation.backup': 'Contact invalide. Utilisez uniquement des lettres, espaces, tirets et apostrophes.',
 
     // Style Selector
     'styles.title': 'Style d\'Écriture',
@@ -115,6 +121,7 @@ const translations = {
 
     // Buttons
     'button.continue': 'Continuer',
+    'button.back': 'Retour',
     
     // Generate Button
     'generate.button': 'Générer mon message',
@@ -291,6 +298,12 @@ const translations = {
     'form.activity.examples': ['Beach & relaxation 🏖️', 'Mountain hiking 🥾', 'Family visit 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga & relaxation 🧘‍♀️'],
     'form.recipients.section': 'Recipients and Contact',
     'form.recipients.question': 'For whom?',
+    
+    // Form validation
+    'form.validation.date': 'End date must be after start date',
+    'form.validation.destination': 'Invalid destination. Use only letters, spaces and hyphens.',
+    'form.validation.activity': 'Invalid activity. Use only letters, spaces and basic punctuation.',
+    'form.validation.backup': 'Invalid contact. Use only letters, spaces, hyphens and apostrophes.',
 
     // Style Selector
     'styles.title': 'Writing Style',
@@ -352,6 +365,7 @@ const translations = {
 
     // Buttons
     'button.continue': 'Continue',
+    'button.back': 'Back',
     
     // Generate Button
     'generate.button': 'Generate my message',
