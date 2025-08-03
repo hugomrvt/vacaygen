@@ -23,7 +23,7 @@ export function StepIndicator({ currentStep, totalSteps, steps, messageGenerated
   return (
     <div className="w-full mb-8">
       {/* Desktop Layout - Horizontal */}
-      <div className="hidden md:flex items-center justify-between px-8">
+      <div className="hidden md:flex items-center justify-center max-w-4xl mx-auto px-8">
         {steps.map((step, index) => {
           const stepNumber = index + 1;
           const isCompleted = stepNumber < currentStep || (stepNumber === totalSteps && messageGenerated);
