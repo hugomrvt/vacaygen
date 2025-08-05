@@ -24,6 +24,12 @@ export function isValidName(name: string): boolean {
   return nameRegex.test(name.trim());
 }
 
+export function isValidBackupContacts(contacts: string): boolean {
+  // Allow letters, spaces, hyphens, apostrophes, commas (for multiple contacts)
+  const contactsRegex = /^[a-zA-ZÀ-ÿ\s\-',]{1,300}$/;
+  return contactsRegex.test(contacts.trim());
+}
+
 export function isValidDestination(destination: string): boolean {
   // Allow letters, spaces, hyphens, commas, periods (common in place names)
   const destinationRegex = /^[a-zA-ZÀ-ÿ\s\-,.]{1,150}$/;

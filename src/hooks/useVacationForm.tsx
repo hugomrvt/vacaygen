@@ -5,7 +5,7 @@ import {
   sanitizeDestination, 
   sanitizeActivity,
   isValidDateRange as securityIsValidDateRange,
-  isValidName,
+  isValidBackupContacts,
   isValidDestination,
   isValidActivity
 } from '@/lib/securityUtils';
@@ -76,7 +76,7 @@ export function useVacationForm(): UseVacationFormReturn {
   
   const isRecipientsComplete = formData.recipients.length > 0;
   
-  const isBackupContactValid = !formData.backupContact || isValidName(formData.backupContact);
+  const isBackupContactValid = !formData.backupContact || isValidBackupContacts(formData.backupContact);
   
   const isValid = isBasicInfoComplete && isRecipientsComplete && isBackupContactValid;
 

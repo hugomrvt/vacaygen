@@ -9,7 +9,7 @@ import { formatDateToISO, isValidDateRange } from '@/lib/dateUtils';
 import { useTranslation } from '@/hooks/useTranslation';
 import { UseVacationFormReturn } from '@/hooks/useVacationForm';
 
-import { isValidDestination, isValidActivity, isValidName } from '@/lib/securityUtils';
+import { isValidDestination, isValidActivity, isValidBackupContacts } from '@/lib/securityUtils';
 
 interface VacationFormProps {
   form: UseVacationFormReturn;
@@ -162,7 +162,7 @@ export function VacationForm({ form, currentStep, onNextStep, onPrevStep }: Vaca
             <p className="text-muted-foreground text-sm">
               {t('form.backup.hint')}
             </p>
-            {formData.backupContact && !isValidName(formData.backupContact) && (
+            {formData.backupContact && !isValidBackupContacts(formData.backupContact) && (
               <p className="text-destructive text-sm">
                 {t('form.validation.backup')}
               </p>
