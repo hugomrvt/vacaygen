@@ -159,6 +159,9 @@ export function VacationForm({ form, currentStep, onNextStep, onPrevStep }: Vaca
               placeholder={t('form.backup.placeholder')}
               className="w-full"
             />
+            <p className="text-muted-foreground text-sm">
+              {t('form.backup.hint')}
+            </p>
             {formData.backupContact && !isValidName(formData.backupContact) && (
               <p className="text-destructive text-sm">
                 {t('form.validation.backup')}

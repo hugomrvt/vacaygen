@@ -47,8 +47,9 @@ const translations = {
     'form.recipients.clients': 'Mes clients',
     'form.recipients.management': 'Ma hiérarchie',
     'form.recipients.partners': 'Partenaires externes',
-    'form.backup': 'Contact de substitution (optionnel)',
-    'form.backup.placeholder': 'ex: Marie Dupont, Service Client...',
+     'form.backup': 'Contacts de substitution (optionnel)',
+     'form.backup.placeholder': 'ex: Marie Dupont, Service Client, Jean Martin',
+     'form.backup.hint': 'Séparez plusieurs contacts par des virgules',
     'form.example': 'ex:',
     'form.destination.examples': ['Thaïlande 🏝️', 'Bretagne 🌊', 'Chez mes parents 🏠', 'Montagne 🏔️', 'New York 🗽'],
     'form.activity.examples': ['Plage et farniente 🏖️', 'Randonnée en montagne 🥾', 'Visite familiale 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga et détente 🧘‍♀️'],
@@ -59,7 +60,7 @@ const translations = {
     'form.validation.date': 'La date de fin doit être après la date de début',
     'form.validation.destination': 'Destination invalide. Utilisez uniquement des lettres, espaces et tirets.',
     'form.validation.activity': 'Activité invalide. Utilisez uniquement des lettres, espaces et ponctuation de base.',
-    'form.validation.backup': 'Contact invalide. Utilisez uniquement des lettres, espaces, tirets et apostrophes.',
+    'form.validation.backup': 'Contacts invalides. Utilisez uniquement des lettres, espaces, tirets, apostrophes et virgules.',
 
     // Style Selector
     'styles.title': 'Style d\'Écriture',
@@ -291,8 +292,9 @@ const translations = {
     'form.recipients.clients': 'My clients',
     'form.recipients.management': 'Management',
     'form.recipients.partners': 'External partners',
-    'form.backup': 'Backup contact (optional)',
-    'form.backup.placeholder': 'e.g.: Marie Dupont, Customer Service...',
+     'form.backup': 'Backup contacts (optional)',
+     'form.backup.placeholder': 'e.g.: Marie Dupont, Customer Service, John Martin',
+     'form.backup.hint': 'Separate multiple contacts with commas',
     'form.example': 'e.g.:',
     'form.destination.examples': ['Thailand 🏝️', 'Brittany 🌊', 'Visiting family 🏠', 'Mountains 🏔️', 'New York 🗽'],
     'form.activity.examples': ['Beach & relaxation 🏖️', 'Mountain hiking 🥾', 'Family visit 👨‍👩‍👧‍👦', 'Road trip 🚗', 'Yoga & relaxation 🧘‍♀️'],
@@ -303,7 +305,7 @@ const translations = {
     'form.validation.date': 'End date must be after start date',
     'form.validation.destination': 'Invalid destination. Use only letters, spaces and hyphens.',
     'form.validation.activity': 'Invalid activity. Use only letters, spaces and basic punctuation.',
-    'form.validation.backup': 'Invalid contact. Use only letters, spaces, hyphens and apostrophes.',
+    'form.validation.backup': 'Invalid contacts. Use only letters, spaces, hyphens, apostrophes and commas.',
 
     // Style Selector
     'styles.title': 'Writing Style',
