@@ -77,11 +77,6 @@ export function isValidDateRange(startDate: string, endDate: string): boolean {
   
   const start = new Date(startDate);
   const end = new Date(endDate);
-  const now = new Date();
-  
-  // Start date should not be in the past (allow today)
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  if (start < today) return false;
   
   // End date should be after start date
   if (end <= start) return false;
