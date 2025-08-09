@@ -1,7 +1,6 @@
 /**
  * Security utilities for input validation and sanitization
  */
-
 // XSS Protection - Escape HTML characters
 export function escapeHtml(unsafe: string): string {
   return unsafe
@@ -42,39 +41,8 @@ export function isValidActivity(activity: string): boolean {
   return activityRegex.test(activity.trim());
 }
 
-// Input sanitization
-export function sanitizeInput(input: string): string {
-  return input
-    .trim()
-    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-    .slice(0, 500); // Limit length to prevent excessive input
-}
-
-export function sanitizeName(name: string): string {
-  return sanitizeInput(name).slice(0, 100);
-}
-
-export function sanitizeDestination(destination: string): string {
-  return sanitizeInput(destination).slice(0, 150);
-}
-
-export function sanitizeActivity(activity: string): string {
-  return sanitizeInput(activity).slice(0, 200);
-}
-
 // Date validation
-export function isValidDateString(dateString: string): boolean {
-  if (!dateString) return false;
-  
-  const date = new Date(dateString);
-  return date instanceof Date && !isNaN(date.getTime()) && dateString === date.toISOString().split('T')[0];
-}
-
 export function isValidDateRange(startDate: string, endDate: string): boolean {
-  if (!isValidDateString(startDate) || !isValidDateString(endDate)) {
-    return false;
-  }
-  
   const start = new Date(startDate);
   const end = new Date(endDate);
   
@@ -106,6 +74,26 @@ export function validateMessageContent(content: string): boolean {
   ];
   
   return !suspiciousPatterns.some(pattern => pattern.test(content));
+}
+
+// Input sanitization
+export function sanitizeInput(input: string): string {
+  return input
+    .trim()
+    .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+    .slice(0, 500); // Limit length to prevent excessive input
+}
+
+export function sanitizeName(name: string): string {
+  return sanitizeInput(name).slice(0, 100);
+}
+
+export function sanitizeDestination(destination: string): string {
+  return sanitizeInput(destination).slice(0, 150);
+}
+
+export function sanitizeActivity(activity: string): string {
+  return sanitizeInput(activity).slice(0, 200);
 }
 
 // Rate limiting helper (client-side basic implementation)
