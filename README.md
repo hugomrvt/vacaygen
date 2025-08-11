@@ -132,4 +132,4 @@ For support, please open an issue on GitHub
 
 ---
 
-**Made with ❤️ for busy professionals who need perfect vacation messages**
+**Made by [Hugo Mourlevat](https://xn--pn8htg0i.to/) with ❤️ for busy professionals who need perfect vacation messages**
