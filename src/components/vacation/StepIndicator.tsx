@@ -31,7 +31,7 @@ export function StepIndicator({ currentStep, totalSteps, steps, messageGenerated
           const IconComponent = iconMap[step.icon as keyof typeof iconMap] || Calendar;
 
           return (
-            <div key={stepNumber} className="flex items-center flex-1">
+            <div key={stepNumber} className="flex items-center justify-center flex-1">
               {/* Step Circle */}
               <div className="flex flex-col items-center">
                 <div
