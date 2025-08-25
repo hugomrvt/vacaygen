@@ -33,7 +33,7 @@ export function StepIndicator({ currentStep, totalSteps, steps, messageGenerated
           return (
             <div key={stepNumber} className="flex items-center justify-center flex-1">
               {/* Step Circle */}
-              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center justify-center">
                 <div
                   className={`
                     w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300
