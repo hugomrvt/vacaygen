@@ -24,8 +24,38 @@ export function escapeHtml(unsafe: string): string {
  * Sanitise arbitrary HTML returned by the generator.
  */
 export function sanitizeHtml(html: string): string {
- return DOMPurify.sanitize(html, { SAFE_FOR_JQUERY: true });
+ return DOMPurify.sanitize(html);
 }
+
+/* ------------------------------------------------------------------
+   RATE LIMITING
+   ------------------------------------------------------------------ */
+
+class RateLimiter {
+  private attempts: number[] = [];
+  
+  constructor(private maxAttempts: number, private windowMs: number) {}
+  
+  canAttempt(): boolean {
+    const now = Date.now();
+    this.attempts = this.attempts.filter(time => now - time < this.windowMs);
+    
+    if (this.attempts.length >= this.maxAttempts) {
+      return false;
+    }
+    
+    this.attempts.push(now);
+    return true;
+  }
+  
+  getRemainingTime(): number {
+    if (this.attempts.length === 0) return 0;
+    const oldestAttempt = Math.min(...this.attempts);
+    return Math.max(0, this.windowMs - (Date.now() - oldestAttempt));
+  }
+}
+
+export const messageGenerationLimiter = new RateLimiter(20, 5 * 60 * 1000); // 20 attempts per 5 minutes
 
 /* ------------------------------------------------------------------
    VALIDATION HELPERS

@@ -20,12 +20,12 @@ export function useMessageGenerator(): UseMessageGeneratorReturn {
 
   const generateVacationMessage = async (data: VacationData, style: string) => {
     // Check rate limiting
-    const clientId = 'client'; // In a real app, this would be a user identifier
-    if (!messageGenerationLimiter.isAllowed(clientId)) {
-      const remaining = messageGenerationLimiter.getRemainingRequests(clientId);
+    if (!messageGenerationLimiter.canAttempt()) {
+      const remainingMs = messageGenerationLimiter.getRemainingTime();
+      const remainingMin = Math.ceil(remainingMs / 60000);
       toast({
-        title: 'Limite atteinte',
-        description: `Trop de demandes. ${remaining} générations restantes.`,
+        title: t('toast.rateLimit.title'),
+        description: t('toast.rateLimit.desc').replace('{minutes}', remainingMin.toString()),
         variant: 'destructive'
       });
       return;
