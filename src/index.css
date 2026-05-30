@@ -1,82 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Away - Brutalist Design System */
+/* ================================= */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Import Brutalist Global Styles */
+@import './styles/globals.css';
 
+/* Override Tailwind's default colors with Brutalist theme */
 @layer base {
   :root {
-    --background: 220 25% 8%;
-    --foreground: 220 10% 95%;
-
-    --card: 220 20% 12%;
-    --card-foreground: 220 10% 95%;
-
-    --popover: 220 20% 12%;
-    --popover-foreground: 220 10% 95%;
-
-    --primary: 217 91% 60%;
-    --primary-foreground: 220 10% 10%;
-
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 220 10% 85%;
-
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 60%;
-
-    --accent: 220 15% 18%;
-    --accent-foreground: 220 10% 95%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 220 10% 95%;
-
-    --border: 220 15% 22%;
-    --input: 220 15% 18%;
-    --ring: 217 91% 60%;
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 220 20% 10%;
-    --sidebar-foreground: 220 10% 85%;
-    --sidebar-primary: 217 91% 60%;
-    --sidebar-primary-foreground: 220 10% 10%;
-    --sidebar-accent: 220 15% 16%;
-    --sidebar-accent-foreground: 220 10% 85%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 217 91% 60%;
-
+    /* Primary Colors - Brutalist */
+    --primary: #FF4500; /* Orange électrique */
+    --primary-foreground: #000000;
+    
+    /* Secondary Colors */
+    --secondary: #0066FF; /* Bleu électrique */
+    --secondary-foreground: #FFFFFF;
+    
+    /* Neutral Colors */
+    --background: #FFFFFF;
+    --foreground: #000000;
+    
+    /* Semantic Colors */
+    --destructive: #FF0000;
+    --destructive-foreground: #FFFFFF;
+    --success: #00AA00;
+    --success-foreground: #FFFFFF;
+    --warning: #FF8800;
+    --warning-foreground: #000000;
+    --muted: #F5F5F5;
+    --muted-foreground: #666666;
+    
+    /* Border & Input */
+    --border: #000000;
+    --input: #000000;
+    --ring: #FF4500;
+    
+    /* Card & Popover */
+    --card: #FFFFFF;
+    --card-foreground: #000000;
+    --card-border: #000000;
+    --popover: #FFFFFF;
+    --popover-foreground: #000000;
+    --popover-border: #000000;
+    
+    /* Sidebar */
+    --sidebar-background: #000000;
+    --sidebar-foreground: #FFFFFF;
+    --sidebar-primary: #FF4500;
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: #0066FF;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: #333333;
+    --sidebar-ring: #FF4500;
+    
+    /* Radius - Brutalist: No rounded corners */
+    --radius: 0;
+  }
+  
+  /* Dark Mode */
+  .dark {
+    --background: #000000;
+    --foreground: #FFFFFF;
+    --card: #000000;
+    --card-foreground: #FFFFFF;
+    --card-border: #FFFFFF;
+    --popover: #000000;
+    --popover-foreground: #FFFFFF;
+    --popover-border: #FFFFFF;
+    --muted: #111111;
+    --muted-foreground: #AAAAAA;
+    --border: #FFFFFF;
+    --input: #FFFFFF;
+    --ring: #FF4500;
   }
 }
 
+/* Base Styles */
 @layer base {
   * {
     @apply border-border;
   }
-
+  
+  html {
+    @apply scroll-smooth antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, hsl(220, 25%, 8%) 0%, hsl(220, 20%, 12%) 100%);
-    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
+/* Brutalist Component Overrides */
 @layer components {
+  /* Glass Card - Brutalist Version */
   .glass-card {
-    @apply bg-card/80 backdrop-blur-sm border border-border/50 shadow-xl;
+    @apply bg-card/80 backdrop-blur-sm border-2 border-card-border;
   }
   
-  .metric-card {
-    @apply glass-card rounded-xl p-6 hover:bg-card/90 transition-all duration-300;
-  }
-  
+  /* Gradient Text */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
   }
   
+  /* Metric Card */
+  .metric-card {
+    @apply glass-card p-6 transition-all duration-300;
+  }
+}
+
+/* Brutalist Utility Classes */
+@layer utilities {
+  /* Text utilities */
+  .text-brutal {
+    @apply font-bold tracking-wider uppercase;
+  }
+  
+  /* Border utilities */
+  .border-brutal {
+    @apply border-2 border-black;
+  }
+  
+  /* Shadow utilities (minimal for brutalist) */
+  .shadow-brutal {
+    @apply shadow-[2px_2px_0px_0px_rgba(0,0,0,1)];
+  }
+  
+  /* Animation utilities */
+  .animate-pulse-brutal {
+    animation: pulse-brutal 2s ease-in-out infinite;
+  }
+  
+  .animate-glitch {
+    animation: glitch 0.5s ease-in-out infinite;
+  }
+}
+
+/* Keyframes for Brutalist Animations */
+@keyframes pulse-brutal {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-2px, 0);
+  }
+  80% {
+    transform: translate(2px, 0);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
 }
