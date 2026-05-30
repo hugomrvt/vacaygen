@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import './styles/globals.css';
 
 /* Away - Brutalist Design System */
 /* ================================= */
@@ -8,9 +9,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Brutalist Global Styles */
-@import './styles/globals.css';
 
 /* Override Tailwind's default colors with Brutalist theme */
 @layer base {
@@ -79,6 +77,8 @@
     --border: #FFFFFF;
     --input: #FFFFFF;
     --ring: #FF4500;
+    --sidebar-background: #FFFFFF;
+    --sidebar-foreground: #000000;
   }
 }
 

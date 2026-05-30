@@ -1,9 +1,8 @@
-import { Toaster } from "/@/components/ui/toaster";
-import { Toaster as Sonner } from "/@/components/ui/sonner";
-import { TooltipProvider } from "/@/components/ui/tooltip";
+import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TranslationProvider } from "/@/hooks/useTranslation";
+import { useToast, Toaster } from "/@/hooks/use-toast";
 
 // Pages
 import Index from "./pages/Index";
@@ -13,24 +12,24 @@ import HistoryPage from "./pages/History";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TranslationProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
+const App = () => {
+  const { toasts, toast, dismiss } = useToast();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TranslationProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/templates" element={<TemplatesPage />} />
             <Route path="/history" element={<HistoryPage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-      </TooltipProvider>
-    </TranslationProvider>
-  </QueryClientProvider>
-);
+        <Toaster toasts={toasts} onDismiss={dismiss} />
+      </TranslationProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
