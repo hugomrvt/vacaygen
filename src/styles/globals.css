@@ -1,0 +1,346 @@
+/* Away - Brutalist Design System */
+/* ======================================== */
+
+/* CSS Custom Properties for Brutalist Theme */
+@layer base {
+  :root {
+    /* Primary Colors */
+    --primary: #FF4500; /* Orange électrique */
+    --primary-foreground: #000000;
+    --primary-light: #FF6B35;
+    --primary-dark: #E03D00;
+    
+    /* Secondary Colors */
+    --secondary: #0066FF; /* Bleu électrique */
+    --secondary-foreground: #FFFFFF;
+    --secondary-light: #3385FF;
+    --secondary-dark: #0044CC;
+    
+    /* Neutral Colors */
+    --background: #FFFFFF;
+    --foreground: #000000;
+    
+    /* Semantic Colors */
+    --destructive: #FF0000;
+    --destructive-foreground: #FFFFFF;
+    --success: #00AA00;
+    --success-foreground: #FFFFFF;
+    --warning: #FF8800;
+    --warning-foreground: #000000;
+    --muted: #F5F5F5;
+    --muted-foreground: #666666;
+    
+    /* Border & Input */
+    --border: #000000;
+    --input: #000000;
+    --ring: #FF4500;
+    
+    /* Card & Popover */
+    --card: #FFFFFF;
+    --card-foreground: #000000;
+    --card-border: #000000;
+    --popover: #FFFFFF;
+    --popover-foreground: #000000;
+    --popover-border: #000000;
+    
+    /* Sidebar */
+    --sidebar-background: #000000;
+    --sidebar-foreground: #FFFFFF;
+    --sidebar-primary: #FF4500;
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: #0066FF;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: #333333;
+    --sidebar-ring: #FF4500;
+    
+    /* Radius - Brutalist: No rounded corners */
+    --radius: 0;
+    --radius-sm: 0;
+    --radius-md: 0;
+    --radius-lg: 0;
+    
+    /* Shadows - Brutalist: No shadows or minimal */
+    --shadow-sm: 0 0 0 0 rgba(0, 0, 0, 0);
+    --shadow-md: 0 0 0 0 rgba(0, 0, 0, 0);
+    --shadow-lg: 0 0 0 0 rgba(0, 0, 0, 0);
+    
+    /* Typography */
+    --font-display: 'Space Grotesk', Inter, system-ui, sans-serif;
+    --font-sans: Inter, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+  }
+  
+  /* Dark Mode */
+  .dark {
+    --background: #000000;
+    --foreground: #FFFFFF;
+    --card: #000000;
+    --card-foreground: #FFFFFF;
+    --card-border: #FFFFFF;
+    --popover: #000000;
+    --popover-foreground: #FFFFFF;
+    --popover-border: #FFFFFF;
+    --muted: #111111;
+    --muted-foreground: #AAAAAA;
+    --border: #FFFFFF;
+    --input: #FFFFFF;
+    --ring: #FF4500;
+    --sidebar-background: #FFFFFF;
+    --sidebar-foreground: #000000;
+  }
+}
+
+/* Reset & Base Styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply scroll-smooth antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Brutalist: Remove all default margins/paddings */
+  h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+    @apply m-0 p-0;
+  }
+  
+  /* Brutalist: Strong typography */
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+  
+  h2 {
+    @apply text-2xl md:text-3xl;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  
+  h3 {
+    @apply text-xl md:text-2xl;
+    font-family: var(--font-display);
+  }
+  
+  p {
+    @apply leading-7;
+  }
+  
+  /* Brutalist: High contrast links */
+  a {
+    @apply underline underline-offset-4 hover:no-underline transition-all;
+    text-decoration-thickness: 2px;
+  }
+  
+  /* Brutalist: Strong focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+  
+  /* Brutalist: Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-none;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-dark;
+  }
+}
+
+/* Brutalist Components */
+@layer components {
+  /* Brutalist Button */
+  .btn-brutal {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wider;
+    @apply bg-primary text-primary-foreground;
+    @apply border-2 border-black;
+    @apply transition-all duration-200;
+    @apply hover:bg-primary-light hover:border-primary-dark;
+    @apply active:bg-primary-dark active:border-black;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-brutal-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wider;
+    @apply bg-secondary text-secondary-foreground;
+    @apply border-2 border-black;
+    @apply transition-all duration-200;
+    @apply hover:bg-secondary-light hover:border-secondary-dark;
+    @apply active:bg-secondary-dark active:border-black;
+  }
+  
+  .btn-brutal-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wider;
+    @apply bg-transparent text-foreground;
+    @apply border-2 border-black;
+    @apply transition-all duration-200;
+    @apply hover:bg-black hover:text-white;
+    @apply active:bg-gray-800 active:text-white;
+  }
+  
+  /* Brutalist Card */
+  .card-brutal {
+    @apply bg-card text-card-foreground;
+    @apply border-2 border-card-border;
+    @apply p-6;
+  }
+  
+  /* Brutalist Input */
+  .input-brutal {
+    @apply w-full px-4 py-3 text-sm;
+    @apply bg-transparent;
+    @apply border-2 border-input;
+    @apply placeholder:text-muted-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  }
+  
+  /* Brutalist Badge */
+  .badge-brutal {
+    @apply inline-flex items-center px-3 py-1 text-xs font-bold uppercase;
+    @apply bg-primary text-primary-foreground;
+    @apply border-1 border-black;
+  }
+  
+  /* Brutalist Glass Card (for overlay effects) */
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-sm;
+    @apply border-2 border-card-border;
+    @apply p-6;
+  }
+  
+  /* Brutalist Divider */
+  .divider-brutal {
+    @apply h-px bg-border my-8;
+  }
+  
+  /* Brutalist Tag/Chip */
+  .tag-brutal {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium;
+    @apply bg-muted text-muted-foreground;
+    @apply border-1 border-border;
+    @apply rounded-none;
+  }
+}
+
+/* Brutalist Utilities */
+@layer utilities {
+  /* Text utilities */
+  .text-brutal {
+    @apply font-bold tracking-wider uppercase;
+  }
+  
+  .text-primary-brutal {
+    @apply text-primary font-bold;
+  }
+  
+  .text-secondary-brutal {
+    @apply text-secondary font-bold;
+  }
+  
+  /* Background utilities */
+  .bg-primary-brutal {
+    @apply bg-primary border-2 border-black;
+  }
+  
+  .bg-secondary-brutal {
+    @apply bg-secondary border-2 border-black;
+  }
+  
+  /* Border utilities */
+  .border-brutal {
+    @apply border-2 border-black;
+  }
+  
+  /* Shadow utilities (minimal for brutalist) */
+  .shadow-brutal {
+    @apply shadow-[2px_2px_0px_0px_rgba(0,0,0,1)];
+  }
+  
+  /* Animation utilities */
+  .animate-pulse-brutal {
+    @apply animate-pulse-brutal;
+  }
+  
+  .animate-glitch {
+    @apply animate-glitch;
+  }
+  
+  /* Gradient utilities (for accents) */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-r from-primary to-secondary;
+  }
+}
+
+/* Brutalist Layout */
+@layer utilities {
+  .container-brutal {
+    @apply mx-auto max-w-4xl px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-brutal {
+    @apply py-12 md:py-16;
+  }
+  
+  .header-brutal {
+    @apply py-8 md:py-12;
+  }
+  
+  .footer-brutal {
+    @apply py-8 md:py-12 border-t-2 border-border;
+  }
+}
+
+/* Responsive Brutalist Adjustments */
+@media (max-width: 768px) {
+  .btn-brutal {
+    @apply px-4 py-2 text-xs;
+  }
+  
+  .card-brutal {
+    @apply p-4;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    @apply hidden;
+  }
+  
+  body {
+    @apply bg-white text-black;
+  }
+}

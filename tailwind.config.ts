@@ -1,5 +1,7 @@
-
 import type { Config } from "tailwindcss";
+
+// Brutalist Theme for Away
+// Colors: Orange #FF4500 (primary), Blue #0066FF (secondary), Black/White (high contrast)
 
 export default {
 	darkMode: ["class"],
@@ -22,70 +24,102 @@ export default {
 			fontFamily: {
 				'display': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'mono': ['JetBrains Mono', 'Fira Code', 'monospace'],
 			},
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+				// Brutalist Primary Colors
+				'primary': {
+					DEFAULT: '#FF4500', // Orange électrique
+					foreground: '#000000',
+					light: '#FF6B35',
+					dark: '#E03D00',
 				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+				'secondary': {
+					DEFAULT: '#0066FF', // Bleu électrique
+					foreground: '#FFFFFF',
+					light: '#3385FF',
+					dark: '#0044CC',
 				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+				
+				// Neutral Colors (High Contrast)
+				'background': '#FFFFFF',
+				'foreground': '#000000',
+				
+				// Accent Colors
+				'accent': {
+					DEFAULT: '#FF4500', // Same as primary for consistency
+					foreground: '#FFFFFF',
 				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+				
+				// Semantic Colors
+				'destructive': {
+					DEFAULT: '#FF0000', // Red (Brutalist)
+					foreground: '#FFFFFF',
 				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+				'muted': {
+					DEFAULT: '#F5F5F5',
+					foreground: '#666666',
 				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+				'success': {
+					DEFAULT: '#00AA00', // Green (Brutalist)
+					foreground: '#FFFFFF',
 				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+				'warning': {
+					DEFAULT: '#FF8800', // Orange (Brutalist)
+					foreground: '#000000',
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				
+				// Border & Input Colors
+				'border': '#000000', // Black borders for brutalist look
+				'input': '#000000',
+				'ring': '#FF4500',
+				
+				// Card Colors (High Contrast)
+				'card': {
+					DEFAULT: '#FFFFFF',
+					foreground: '#000000',
+					border: '#000000',
 				},
-				success: {
-					DEFAULT: 'hsl(var(--success))',
-					foreground: 'hsl(var(--success-foreground))'
+				
+				// Popover Colors
+				'popover': {
+					DEFAULT: '#FFFFFF',
+					foreground: '#000000',
+					border: '#000000',
 				},
-				warning: {
-					DEFAULT: 'hsl(var(--warning))',
-					foreground: 'hsl(var(--warning-foreground))'
+				
+				// Sidebar Colors (if needed)
+				'sidebar': {
+					DEFAULT: '#000000',
+					foreground: '#FFFFFF',
+					primary: '#FF4500',
+					'primary-foreground': '#000000',
+					accent: '#0066FF',
+					'accent-foreground': '#FFFFFF',
+					border: '#333333',
+					ring: '#FF4500',
 				},
-				chart: {
-					'1': 'hsl(var(--chart-1))',
-					'2': 'hsl(var(--chart-2))',
-					'3': 'hsl(var(--chart-3))',
-					'4': 'hsl(var(--chart-4))'
-				}
+				
+				// Chart Colors
+				'chart': {
+					'1': '#FF4500',
+					'2': '#0066FF',
+					'3': '#00AA00',
+					'4': '#FF0000',
+				},
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				// Brutalist: No rounded corners (or minimal)
+				'none': '0',
+				'sm': '0',
+				'md': '0',
+				'lg': '0',
+				'xl': '0',
+				'2xl': '0',
+				'3xl': '0',
+				// For special cases (buttons, badges)
+				'brutal-sm': '4px',
+				'brutal-md': '8px',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -103,11 +137,43 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'pulse-brutal': {
+					'0%, 100%': {
+						opacity: '1',
+						transform: 'scale(1)',
+					},
+					'50%': {
+						opacity: '0.8',
+						transform: 'scale(1.02)',
+					}
+				},
+				'glitch': {
+					'0%': {
+						transform: 'translate(0)',
+					},
+					'20%': {
+						transform: 'translate(-2px, 2px)',
+					},
+					'40%': {
+						transform: 'translate(2px, -2px)',
+					},
+					'60%': {
+						transform: 'translate(-2px, 0)',
+					},
+					'80%': {
+						transform: 'translate(2px, 0)',
+					},
+					'100%': {
+						transform: 'translate(0)',
+					}
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-brutal': 'pulse-brutal 2s ease-in-out infinite',
+				'glitch': 'glitch 0.5s ease-in-out infinite',
 			}
 		}
 	},

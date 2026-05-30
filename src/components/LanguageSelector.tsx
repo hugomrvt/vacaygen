@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/Button";
 import { useTranslation } from '@/hooks/useTranslation';
 import { Globe } from 'lucide-react';
 

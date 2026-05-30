@@ -15,13 +15,13 @@ const TranslationContext = createContext<TranslationContextType | undefined>(und
 const translations = {
   fr: {
     // SEO
-    'seo.title': 'VacayGen - Générateur de Messages de Vacances IA Gratuit',
-    'seo.description': 'Créez des messages d\'absence professionnels et personnalisés en quelques secondes avec VacayGen. IA gratuite, 8 styles disponibles, compatible tous supports.',
-    'seo.keywords': 'message vacances, générateur IA, absence bureau, out of office, message automatique, IA gratuit, vacances, congés, message professionnel',
+    'seo.title': 'Away - Générateur de Messages d\'Absence Brutaliste',
+    'seo.description': 'Créez des messages d\'absence percutants et personnalisés en quelques secondes avec Away. 8 styles uniques, design brutaliste, 100% local et gratuit.',
+    'seo.keywords': 'message absence, générateur, out of office, brutaliste, design, professionnel, créatif, gratuit, sans IA, local',
 
     // Header
-    'app.title': 'VacayGen',
-    'app.subtitle': 'Comme de nombreux professionnels, créez des messages de vacances parfaits en quelques clics. Professionnel, personnel ou créatif - trouvez le ton qui vous correspond !',
+    'app.title': 'Away',
+    'app.subtitle': 'Créez des messages d\'absence qui font une déclaration. 8 styles uniques, design brutaliste, 100% local.',
     'app.badge.free': 'Gratuit',
     'app.badge.instant': 'Instantané',
     'app.badge.styles': '8 Styles',
@@ -141,25 +141,78 @@ const translations = {
     'toast.copy.error.desc': 'Impossible de copier le message. Essayez de le sélectionner manuellement.',
 
     // Footer
-    'footer.created': 'Vibe Coded par',
+    'footer.created': 'Créé par',
     
-    'footer.secure': '🔒 Données sécurisées',
-    'footer.instant': '⚡ Génération instantanée',
-    'footer.compatible': '🌍 Compatible toutes plateformes',
+    'footer.secure': '🔒 100% Local',
+    'footer.instant': '⚡ Instantané',
+    'footer.compatible': '🌍 Sans Tracking',
+    'footer.tagline': 'Parce que votre absence mérite une déclaration.',
 
     // Loading Screen
-    'loading.title': 'VacayGen',
-    'loading.subtitle': 'Votre assistant pour créer des messages de vacances parfaits',
-    'loading.features.generation.title': 'Génération automatique',
-    'loading.features.generation.desc': 'Messages de vacances ou d\'absences personnalisés en quelques secondes',
-    'loading.features.styles.title': 'Styles adaptés',
-    'loading.features.styles.desc': 'Différents tons selon vos destinataires (famille, collègues, clients)',
+    'loading.title': 'Away',
+    'loading.subtitle': 'Votre outil pour créer des messages d\'absence percutants',
+    'loading.features.generation.title': 'Génération instantanée',
+    'loading.features.generation.desc': 'Messages d\'absence personnalisés en quelques secondes',
+    'loading.features.styles.title': '8 Styles Uniques',
+    'loading.features.styles.desc': 'Du professionnel au décalé, trouvez votre ton',
     'loading.features.time.title': 'Gain de temps',
-    'loading.features.time.desc': 'Plus besoin de réfléchir, VacayGen s\'occupe de tout',
-    'loading.features.free.title': '100% gratuit',
-    'loading.features.free.desc': 'Aucune inscription requise, utilisez-le immédiatement',
+    'loading.features.time.desc': 'Plus besoin de réfléchir, Away s\'occupe de tout',
+    'loading.features.free.title': '100% Gratuit',
+    'loading.features.free.desc': 'Aucune inscription, aucun tracking, zéro BS',
     'loading.progress': 'Chargement',
-    'loading.preparing': 'Préparation de votre expérience VacayGen...',
+    'loading.preparing': 'Préparation de votre expérience Away...',
+
+    // Conversation UI
+    'conversation.title': 'Conversation',
+    'conversation.send': 'Envoyer',
+    'conversation.clear': 'Effacer',
+    'conversation.history': 'Historique',
+    'conversation.welcome': 'Bonjour ! Je suis Away, votre assistant pour créer des messages d\'absence percutants. Par où commençons-nous ?',
+    'conversation.askForInfo': 'Pour générer un message, j\'ai besoin de : {fields}. Pouvez-vous me donner ces informations ?',
+    'conversation.error': 'Désolé, une erreur est survenue lors de la génération du message.',
+    'conversation.savedAsTemplate': 'Template enregistré ! Vous pouvez le retrouver dans la section "Mes Templates".',
+
+    // Templates
+    'templates.title': 'Mes Templates',
+    'templates.subtitle': 'Gérez vos templates personnalisés pour gagner du temps.',
+    'templates.new': 'Nouveau Template',
+    'templates.newButton': 'Créer un Template',
+    'templates.name': 'Nom',
+    'templates.namePlaceholder': 'Ex: Message professionnel court',
+    'templates.style': 'Style',
+    'templates.content': 'Contenu',
+    'templates.contentPlaceholder': 'Écrivez votre message ici...',
+    'templates.save': 'Enregistrer',
+    'templates.cancel': 'Annuler',
+    'templates.edit': 'Modifier',
+    'templates.delete': 'Supprimer',
+    'templates.copy': 'Copier',
+    'templates.use': 'Utiliser',
+    'templates.empty': 'Aucun template enregistré.',
+    'templates.createFirst': 'Créer mon premier template',
+
+    // History
+    'history.title': 'Historique',
+    'history.subtitle': 'Retrouvez tous vos messages générés précédemment.',
+    'history.clearAll': 'Tout effacer',
+    'history.filter': 'Filtrer par style',
+    'history.allStyles': 'Tous les styles',
+    'history.empty': 'Aucun message dans l\'historique.',
+    'history.emptyHint': 'Générez un message pour commencer à remplir votre historique.',
+    'history.messageSingular': 'message',
+    'history.messagePlural': 'messages',
+
+    // Templates
+    'templates.templateSingular': 'template',
+    'templates.templatePlural': 'templates',
+
+    // Email
+    'email.subject': 'Message d\'absence',
+    'email.openInClient': 'Ouvrir dans le client email',
+
+    // Download
+    'download.text': 'Télécharger en texte',
+    'download.filename': 'message-absence-{date}.txt',
 
     // Legal
     'legal.notice': 'Mentions légales',
@@ -260,13 +313,13 @@ const translations = {
   },
   en: {
     // SEO
-    'seo.title': 'VacayGen - Free AI Vacation Message Generator',
-    'seo.description': 'Create professional and personalized out-of-office messages in seconds with VacayGen. Free AI, 8 styles available, compatible with all platforms.',
-    'seo.keywords': 'vacation message, AI generator, out of office, automatic message, free AI, vacation, leave, professional message',
+    'seo.title': 'Away - Brutalist Out-of-Office Message Generator',
+    'seo.description': 'Create bold and personalized out-of-office messages in seconds with Away. 8 unique styles, brutalist design, 100% local and free.',
+    'seo.keywords': 'out of office, generator, brutalist, design, professional, creative, free, no AI, local, privacy',
 
     // Header
-    'app.title': 'VacayGen',
-    'app.subtitle': 'Like many professionals, create perfect vacation messages in seconds. Professional, personal, or creative - discover your perfect tone!',
+    'app.title': 'Away',
+    'app.subtitle': 'Create out-of-office messages that make a statement. 8 unique styles, brutalist design, 100% local.',
     'app.badge.free': 'Free',
     'app.badge.instant': 'Instant',
     'app.badge.styles': '8 Styles',
@@ -386,25 +439,78 @@ const translations = {
     'toast.copy.error.desc': 'Unable to copy message. Try selecting it manually.',
 
     // Footer
-    'footer.created': 'Vibe Coded by',
+    'footer.created': 'Created by',
     'footer.messages.count': '{count} message{count, plural, =1 {} other {s}} generated',
-    'footer.secure': '🔒 Secure data',
-    'footer.instant': '⚡ Instant generation',
-    'footer.compatible': '🌍 Compatible with all platforms',
+    'footer.secure': '🔒 100% Local',
+    'footer.instant': '⚡ Instant',
+    'footer.compatible': '🌍 No Tracking',
+    'footer.tagline': 'Because your absence deserves a statement.',
 
     // Loading Screen
-    'loading.title': 'VacayGen',
-    'loading.subtitle': 'Your assistant for creating perfect vacation messages',
-    'loading.features.generation.title': 'Automatic generation',
-    'loading.features.generation.desc': 'Personalized vacation or absence messages in seconds',
-    'loading.features.styles.title': 'Adapted styles',
-    'loading.features.styles.desc': 'Different tones for your recipients (family, colleagues, clients)',
-    'loading.features.time.title': 'Time saving',
-    'loading.features.time.desc': 'No need to think, VacayGen takes care of everything',
-    'loading.features.free.title': '100% free',
-    'loading.features.free.desc': 'No registration required, use it immediately',
+    'loading.title': 'Away',
+    'loading.subtitle': 'Your tool for creating bold out-of-office messages',
+    'loading.features.generation.title': 'Instant Generation',
+    'loading.features.generation.desc': 'Personalized out-of-office messages in seconds',
+    'loading.features.styles.title': '8 Unique Styles',
+    'loading.features.styles.desc': 'From professional to quirky, find your tone',
+    'loading.features.time.title': 'Time Saving',
+    'loading.features.time.desc': 'No need to think, Away takes care of everything',
+    'loading.features.free.title': '100% Free',
+    'loading.features.free.desc': 'No registration, no tracking, zero BS',
     'loading.progress': 'Loading',
-    'loading.preparing': 'Preparing your VacayGen experience...',
+    'loading.preparing': 'Preparing your Away experience...',
+
+    // Conversation UI
+    'conversation.title': 'Conversation',
+    'conversation.send': 'Send',
+    'conversation.clear': 'Clear',
+    'conversation.history': 'History',
+    'conversation.welcome': 'Hello! I am Away, your assistant for creating bold out-of-office messages. Where should we start?',
+    'conversation.askForInfo': 'To generate a message, I need: {fields}. Can you provide these?',
+    'conversation.error': 'Sorry, an error occurred while generating the message.',
+    'conversation.savedAsTemplate': 'Template saved! You can find it in the "My Templates" section.',
+
+    // Templates
+    'templates.title': 'My Templates',
+    'templates.subtitle': 'Manage your custom templates to save time.',
+    'templates.new': 'New Template',
+    'templates.newButton': 'Create a Template',
+    'templates.name': 'Name',
+    'templates.namePlaceholder': 'Ex: Short professional message',
+    'templates.style': 'Style',
+    'templates.content': 'Content',
+    'templates.contentPlaceholder': 'Write your message here...',
+    'templates.save': 'Save',
+    'templates.cancel': 'Cancel',
+    'templates.edit': 'Edit',
+    'templates.delete': 'Delete',
+    'templates.copy': 'Copy',
+    'templates.use': 'Use',
+    'templates.empty': 'No templates saved yet.',
+    'templates.createFirst': 'Create your first template',
+
+    // History
+    'history.title': 'History',
+    'history.subtitle': 'Find all your previously generated messages.',
+    'history.clearAll': 'Clear All',
+    'history.filter': 'Filter by style',
+    'history.allStyles': 'All Styles',
+    'history.empty': 'No messages in history yet.',
+    'history.emptyHint': 'Generate a message to start filling your history.',
+    'history.messageSingular': 'message',
+    'history.messagePlural': 'messages',
+
+    // Templates
+    'templates.templateSingular': 'template',
+    'templates.templatePlural': 'templates',
+
+    // Email
+    'email.subject': 'Out of Office Message',
+    'email.openInClient': 'Open in Email Client',
+
+    // Download
+    'download.text': 'Download as Text',
+    'download.filename': 'away-message-{date}.txt',
 
     // Legal
     'legal.notice': 'Legal Notice',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Shield, Database, Eye, Lock } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription } from "@/components/ui/Alert";
 import { useTranslation } from '@/hooks/useTranslation';
 
 export function LegalNoticeContent() {
