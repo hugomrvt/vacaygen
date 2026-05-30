@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Palette } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import StyleCard from '../StyleCard';

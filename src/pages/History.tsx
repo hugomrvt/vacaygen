@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/hooks/useTranslation';
-import { useHistory, useMessageGenerator } from '@/hooks/useLocalStorage';
+import { useHistory } from '@/hooks/useLocalStorage';
+import { useMessageGenerator } from '@/hooks/useMessageGenerator';
 import { HistoryManager } from '@/components/history/HistoryManager';
 import { Button } from '@/components/ui/Button';
 import { ArrowLeft, Clock } from 'lucide-react';

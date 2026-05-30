@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/Card"';
-import { Badge } from "@/components/ui/Badge"';
+import { Card, CardContent } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { useTranslation } from '@/hooks/useTranslation';
 
 export interface StyleCardProps {

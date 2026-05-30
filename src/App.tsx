@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { TranslationProvider } from "/@/hooks/useTranslation";
-import { useToast, Toaster } from "/@/hooks/use-toast";
+import { TranslationProvider } from "@/hooks/useTranslation";
+import { useToast, Toaster } from "@/hooks/use-toast";
 
 // Pages
 import Index from "./pages/Index";

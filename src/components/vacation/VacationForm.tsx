@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from "@/components/ui/Button"';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"';
-import { DatePicker } from "@/components/ui/DatePicker"';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { TogglePills } from "@/components/ui/TogglePills"';
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { DatePicker } from "@/components/ui/DatePicker";
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { TogglePills } from "@/components/ui/TogglePills";
 import { formatDateToISO, isValidDateRange } from '@/lib/dateUtils';
 import { useTranslation } from '@/hooks/useTranslation';
 import { UseVacationFormReturn } from '@/hooks/useVacationForm';
