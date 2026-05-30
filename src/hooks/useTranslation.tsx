@@ -162,6 +162,58 @@ const translations = {
     'loading.progress': 'Chargement',
     'loading.preparing': 'Préparation de votre expérience Away...',
 
+    // Conversation UI
+    'conversation.title': 'Conversation',
+    'conversation.send': 'Envoyer',
+    'conversation.clear': 'Effacer',
+    'conversation.history': 'Historique',
+    'conversation.welcome': 'Bonjour ! Je suis Away, votre assistant pour créer des messages d\'absence percutants. Par où commençons-nous ?',
+    'conversation.askForInfo': 'Pour générer un message, j\'ai besoin de : {fields}. Pouvez-vous me donner ces informations ?',
+    'conversation.error': 'Désolé, une erreur est survenue lors de la génération du message.',
+    'conversation.savedAsTemplate': 'Template enregistré ! Vous pouvez le retrouver dans la section "Mes Templates".',
+
+    // Templates
+    'templates.title': 'Mes Templates',
+    'templates.subtitle': 'Gérez vos templates personnalisés pour gagner du temps.',
+    'templates.new': 'Nouveau Template',
+    'templates.newButton': 'Créer un Template',
+    'templates.name': 'Nom',
+    'templates.namePlaceholder': 'Ex: Message professionnel court',
+    'templates.style': 'Style',
+    'templates.content': 'Contenu',
+    'templates.contentPlaceholder': 'Écrivez votre message ici...',
+    'templates.save': 'Enregistrer',
+    'templates.cancel': 'Annuler',
+    'templates.edit': 'Modifier',
+    'templates.delete': 'Supprimer',
+    'templates.copy': 'Copier',
+    'templates.use': 'Utiliser',
+    'templates.empty': 'Aucun template enregistré.',
+    'templates.createFirst': 'Créer mon premier template',
+
+    // History
+    'history.title': 'Historique',
+    'history.subtitle': 'Retrouvez tous vos messages générés précédemment.',
+    'history.clearAll': 'Tout effacer',
+    'history.filter': 'Filtrer par style',
+    'history.allStyles': 'Tous les styles',
+    'history.empty': 'Aucun message dans l\'historique.',
+    'history.emptyHint': 'Générez un message pour commencer à remplir votre historique.',
+    'history.messageSingular': 'message',
+    'history.messagePlural': 'messages',
+
+    // Templates
+    'templates.templateSingular': 'template',
+    'templates.templatePlural': 'templates',
+
+    // Email
+    'email.subject': 'Message d\'absence',
+    'email.openInClient': 'Ouvrir dans le client email',
+
+    // Download
+    'download.text': 'Télécharger en texte',
+    'download.filename': 'message-absence-{date}.txt',
+
     // Legal
     'legal.notice': 'Mentions légales',
     'legal.terms': 'Conditions d\'utilisation',
@@ -407,6 +459,58 @@ const translations = {
     'loading.features.free.desc': 'No registration, no tracking, zero BS',
     'loading.progress': 'Loading',
     'loading.preparing': 'Preparing your Away experience...',
+
+    // Conversation UI
+    'conversation.title': 'Conversation',
+    'conversation.send': 'Send',
+    'conversation.clear': 'Clear',
+    'conversation.history': 'History',
+    'conversation.welcome': 'Hello! I am Away, your assistant for creating bold out-of-office messages. Where should we start?',
+    'conversation.askForInfo': 'To generate a message, I need: {fields}. Can you provide these?',
+    'conversation.error': 'Sorry, an error occurred while generating the message.',
+    'conversation.savedAsTemplate': 'Template saved! You can find it in the "My Templates" section.',
+
+    // Templates
+    'templates.title': 'My Templates',
+    'templates.subtitle': 'Manage your custom templates to save time.',
+    'templates.new': 'New Template',
+    'templates.newButton': 'Create a Template',
+    'templates.name': 'Name',
+    'templates.namePlaceholder': 'Ex: Short professional message',
+    'templates.style': 'Style',
+    'templates.content': 'Content',
+    'templates.contentPlaceholder': 'Write your message here...',
+    'templates.save': 'Save',
+    'templates.cancel': 'Cancel',
+    'templates.edit': 'Edit',
+    'templates.delete': 'Delete',
+    'templates.copy': 'Copy',
+    'templates.use': 'Use',
+    'templates.empty': 'No templates saved yet.',
+    'templates.createFirst': 'Create your first template',
+
+    // History
+    'history.title': 'History',
+    'history.subtitle': 'Find all your previously generated messages.',
+    'history.clearAll': 'Clear All',
+    'history.filter': 'Filter by style',
+    'history.allStyles': 'All Styles',
+    'history.empty': 'No messages in history yet.',
+    'history.emptyHint': 'Generate a message to start filling your history.',
+    'history.messageSingular': 'message',
+    'history.messagePlural': 'messages',
+
+    // Templates
+    'templates.templateSingular': 'template',
+    'templates.templatePlural': 'templates',
+
+    // Email
+    'email.subject': 'Out of Office Message',
+    'email.openInClient': 'Open in Email Client',
+
+    // Download
+    'download.text': 'Download as Text',
+    'download.filename': 'away-message-{date}.txt',
 
     // Legal
     'legal.notice': 'Legal Notice',

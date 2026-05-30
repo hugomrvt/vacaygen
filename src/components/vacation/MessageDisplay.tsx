@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
-import { Copy, RefreshCw } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Textarea } from '@/components/ui/Textarea';
+import { Copy, RefreshCw, Heart, Mail, Download } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeInput, validateMessageContent } from '@/lib/securityUtils';
@@ -12,14 +12,22 @@ interface MessageDisplayProps {
   message: string;
   isGenerating: boolean;
   onRegenerate: () => void;
+  onSaveAsTemplate?: (content: string, styleId?: string) => void;
+  styleId?: string;
 }
 
-export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageDisplayProps) {
+export function MessageDisplay({ 
+  message, 
+  isGenerating, 
+  onRegenerate,
+  onSaveAsTemplate,
+  styleId 
+}: MessageDisplayProps) {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [editableMessage, setEditableMessage] = useState(message);
 
-  // Mettre à jour le message éditable quand le message original change
+  // Update editable message when original message changes
   useEffect(() => {
     setEditableMessage(message);
   }, [message]);
@@ -62,16 +70,43 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
     return { words, characters };
   };
 
+  const handleSaveAsTemplate = () => {
+    if (onSaveAsTemplate && editableMessage) {
+      onSaveAsTemplate(editableMessage, styleId);
+    }
+  };
+
+  const handleEmail = () => {
+    // Create mailto link with the message
+    const subject = encodeURIComponent('Out of Office Message');
+    const body = encodeURIComponent(editableMessage);
+    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+    window.open(mailtoLink, '_blank');
+  };
+
+  const handleDownload = () => {
+    // Create a downloadable text file
+    const blob = new Blob([editableMessage], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `away-message-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   if (isGenerating) {
     return (
-      <Card className="glass-card">
+      <Card className="border-2 border-black">
         <CardHeader>
           <CardTitle className="text-xl">
             {t('generated.generating')}
           </CardTitle>
-        <CardDescription>
-          {t('generated.generating.subtitle')}
-        </CardDescription>
+          <CardDescription>
+            {t('generated.generating.subtitle')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-center py-12">
@@ -84,7 +119,7 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
 
   if (!message) {
     return (
-      <Card className="glass-card opacity-60">
+      <Card className="border-2 border-black opacity-60">
         <CardHeader>
           <CardTitle className="text-xl">
             {t('generated.waiting.title')}
@@ -100,17 +135,17 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
   const stats = getMessageStats(editableMessage);
 
   return (
-    <Card className="glass-card">
+    <Card className="border-2 border-black">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-xl">
             {t('generated.message.title')}
           </CardTitle>
           <div className="flex gap-2">
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-xs border-1 border-black">
               {stats.words} {t('generated.stats.words')}
             </Badge>
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-xs border-1 border-black">
               {stats.characters} {t('generated.stats.characters')}
             </Badge>
           </div>
@@ -125,7 +160,7 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
           <Textarea
             value={editableMessage}
             onChange={(e) => handleMessageChange(e.target.value)}
-            className="resize-none text-sm whitespace-pre-wrap leading-relaxed"
+            className="resize-none text-sm whitespace-pre-wrap leading-relaxed border-2 border-input"
             style={{ height: 'auto', minHeight: '120px', whiteSpace: 'pre-wrap' }}
             rows={Math.max(6, editableMessage.split('\n').length + 2)}
             placeholder={t('generated.message.placeholder')}
@@ -134,27 +169,57 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-wrap gap-3">
           <Button 
             onClick={handleCopy}
-            variant="default"
-            className="flex-1"
+            variant="primary"
+            className="flex-1 sm:flex-none"
+            leftIcon={<Copy className="w-4 h-4" />}
           >
-            <Copy className="mr-2 h-4 w-4" />
-            {t('generated.actions.copy')}
+            {t('generated.copy')}
           </Button>
+          
+          <Button 
+            onClick={handleEmail}
+            variant="secondary"
+            className="flex-1 sm:flex-none"
+            leftIcon={<Mail className="w-4 h-4" />}
+          >
+            Email
+          </Button>
+          
+          <Button 
+            onClick={handleDownload}
+            variant="outline"
+            className="flex-1 sm:flex-none"
+            leftIcon={<Download className="w-4 h-4" />}
+          >
+            Télécharger
+          </Button>
+          
+          {onSaveAsTemplate && (
+            <Button 
+              onClick={handleSaveAsTemplate}
+              variant="ghost"
+              className="flex-1 sm:flex-none"
+              leftIcon={<Heart className="w-4 h-4" />}
+            >
+              Template
+            </Button>
+          )}
+          
           <Button 
             onClick={onRegenerate}
             variant="outline"
-            className="flex-1"
+            className="flex-1 sm:flex-none"
+            leftIcon={<RefreshCw className="w-4 h-4" />}
           >
-            <RefreshCw className="mr-2 h-4 w-4" />
-            {t('generated.actions.regenerate')}
+            {t('generated.regenerate')}
           </Button>
         </div>
 
         {/* Usage Tips */}
-        <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="mt-6 p-4 bg-primary/5 rounded-none border border-primary/20">
           <h4 className="font-medium text-sm mb-2 text-primary">
             💡 {t('generated.tips.title')}
           </h4>
@@ -168,3 +233,5 @@ export function MessageDisplay({ message, isGenerating, onRegenerate }: MessageD
     </Card>
   );
 }
+
+export default MessageDisplay;

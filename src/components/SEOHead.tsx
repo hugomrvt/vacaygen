@@ -121,7 +121,7 @@ const SEOHead = ({ title, description, image, url }: SEOHeadProps) => {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "VacayGen",
+      "name": title || t('app.title'),
       "description": metaDescription,
       "url": url || window.location.href,
       "applicationCategory": "ProductivityApplication",
@@ -135,7 +135,17 @@ const SEOHead = ({ title, description, image, url }: SEOHeadProps) => {
         "@type": "Person",
         "name": "Hugo Mourlevat",
         "url": "https://www.linkedin.com/in/hugomrvt/"
-      }
+      },
+      "inLanguage": ["fr", "en"],
+      "featureList": [
+        "Génération instantanée de messages",
+        "8 styles uniques",
+        "Design brutaliste",
+        "100% local, sans tracking",
+        "Templates personnalisables",
+        "Intégration email",
+        "Historique des messages"
+      ]
     };
 
     jsonLd.textContent = JSON.stringify(structuredData);

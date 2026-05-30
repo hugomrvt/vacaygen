@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { VacationData } from '@/lib/messageTemplates';
+import { VacationData } from '@/types';
 import { 
   sanitizeName, 
   sanitizeDestination, 
-  sanitizeActivity,
+  sanitizeActivity, 
   isValidDateRange as securityIsValidDateRange,
   isValidBackupContacts,
   isValidDestination,
   isValidActivity
 } from '@/lib/securityUtils';
+import { useSettings } from '@/hooks/useLocalStorage';
 
 export interface UseVacationFormReturn {
   formData: VacationData;
@@ -18,6 +19,8 @@ export interface UseVacationFormReturn {
   isValid: boolean;
   isBasicInfoComplete: boolean;
   isRecipientsComplete: boolean;
+  resetForm: () => void;
+  loadFromData: (data: Partial<VacationData>) => void;
 }
 
 const initialFormData: VacationData = {
@@ -31,6 +34,28 @@ const initialFormData: VacationData = {
 
 export function useVacationForm(): UseVacationFormReturn {
   const [formData, setFormData] = useState<VacationData>(initialFormData);
+  const { settings, updateSetting } = useSettings();
+
+  // Load saved form data from localStorage
+  useEffect(() => {
+    try {
+      const savedFormData = localStorage.getItem('away_form_data');
+      if (savedFormData) {
+        setFormData(JSON.parse(savedFormData));
+      }
+    } catch (error) {
+      console.error('Error loading form data from localStorage:', error);
+    }
+  }, []);
+
+  // Save form data to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('away_form_data', JSON.stringify(formData));
+    } catch (error) {
+      console.error('Error saving form data to localStorage:', error);
+    }
+  }, [formData]);
 
   const updateField = (field: keyof VacationData, value: any) => {
     let sanitizedValue = value;
@@ -80,6 +105,15 @@ export function useVacationForm(): UseVacationFormReturn {
   
   const isValid = isBasicInfoComplete && isRecipientsComplete && isBackupContactValid;
 
+  const resetForm = () => {
+    setFormData(initialFormData);
+    localStorage.removeItem('away_form_data');
+  };
+
+  const loadFromData = (data: Partial<VacationData>) => {
+    setFormData(prev => ({ ...prev, ...data }));
+  };
+
   return {
     formData,
     setFormData,
@@ -87,6 +121,8 @@ export function useVacationForm(): UseVacationFormReturn {
     toggleRecipient,
     isValid: Boolean(isValid),
     isBasicInfoComplete: Boolean(isBasicInfoComplete),
-    isRecipientsComplete: Boolean(isRecipientsComplete)
+    isRecipientsComplete: Boolean(isRecipientsComplete),
+    resetForm,
+    loadFromData,
   };
 }
